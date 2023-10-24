@@ -37,7 +37,7 @@ class MainView: UIViewController {
         
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(spacingElements * 7)
-            $0.leading.equalToSuperview().inset(leftRightPadding)
+            $0.leading.equalToSuperview().inset(padding)
         }
         
         let staticLabel = UILabel()
@@ -48,7 +48,7 @@ class MainView: UIViewController {
 
         staticLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(spacingElements)
-            $0.leading.equalToSuperview().inset(leftRightPadding)
+            $0.leading.equalToSuperview().inset(padding)
         }
         
         let infoView = UIView()
@@ -58,7 +58,7 @@ class MainView: UIViewController {
         
         infoView.snp.makeConstraints {
             $0.top.equalTo(staticLabel.snp.bottom).offset(spacingElements * 7)
-            $0.leading.trailing.equalToSuperview().inset(leftRightPadding)
+            $0.leading.trailing.equalToSuperview().inset(padding)
             $0.height.equalTo(250)
         }
         
@@ -125,7 +125,7 @@ class MainView: UIViewController {
         infoView.addSubview(infoSV)
         
         infoSV.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(leftRightPadding)
+            $0.leading.equalToSuperview().inset(padding)
             $0.bottom.equalToSuperview().inset(spacingElements)
         }
                 
@@ -136,7 +136,7 @@ class MainView: UIViewController {
         
         separatorView.snp.makeConstraints {
             $0.top.equalTo(infoView.snp.bottom).offset(spacingElements * 5)
-            $0.leading.trailing.equalToSuperview().inset(leftRightPadding)
+            $0.leading.trailing.equalToSuperview().inset(padding)
             $0.height.equalTo(2)
         }
         
@@ -147,8 +147,8 @@ class MainView: UIViewController {
         view.addSubview(cellTitle)
         
         cellTitle.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(leftRightPadding)
-            $0.leading.equalToSuperview().inset(leftRightPadding)
+            $0.top.equalTo(separatorView.snp.bottom).offset(padding)
+            $0.leading.equalToSuperview().inset(padding)
         }
         
         let layout = UICollectionViewFlowLayout()
@@ -167,7 +167,7 @@ class MainView: UIViewController {
         
         exercisesCV.snp.makeConstraints {
             $0.top.equalTo(cellTitle.snp.bottom).offset(spacingElements)
-            $0.leading.trailing.equalToSuperview().inset(leftRightPadding)
+            $0.leading.trailing.equalToSuperview().inset(padding)
             $0.bottom.equalToSuperview().inset(150)
         }
         

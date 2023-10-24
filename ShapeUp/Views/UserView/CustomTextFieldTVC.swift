@@ -29,7 +29,7 @@ extension CustomTextFieldTVC {
         dataArray.0?.layer.borderWidth = customBorderWidth
         dataArray.0?.layer.borderColor = borderColor?.cgColor
         
-        let mainViewPadding = UIView.init(frame: CGRect(x: 0, y: 0, width: leftRightPadding, height: 0))
+        let mainViewPadding = UIView.init(frame: CGRect(x: 0, y: 0, width: padding, height: 0))
         dataArray.0?.leftView = mainViewPadding
         dataArray.0?.leftViewMode = .always
 

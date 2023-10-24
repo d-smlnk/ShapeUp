@@ -88,7 +88,7 @@ class UserView: UIViewController {
         
         sexSelectionSV.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(spacingElements)
-            $0.horizontalEdges.equalToSuperview().inset(leftRightPadding)
+            $0.horizontalEdges.equalToSuperview().inset(padding)
         }
           
         let userDataTableView = UITableView()
@@ -113,13 +113,13 @@ class UserView: UIViewController {
          
         insertUserDataBtn.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(spacingElements * 20)
-            $0.leading.trailing.equalToSuperview().inset(leftRightPadding)
+            $0.leading.trailing.equalToSuperview().inset(padding)
             $0.height.equalTo(heightForSingleElements)
         }
         
         userDataTableView.snp.makeConstraints {
             $0.top.equalTo(sexSelectionSV.snp.bottom).offset(spacingElements * 2)
-            $0.horizontalEdges.equalToSuperview().inset(leftRightPadding)
+            $0.horizontalEdges.equalToSuperview().inset(padding)
             $0.bottom.equalTo(insertUserDataBtn.snp.top).inset(spacingElements)
         }
         
