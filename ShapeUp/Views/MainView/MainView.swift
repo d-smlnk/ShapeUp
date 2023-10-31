@@ -27,38 +27,38 @@ class MainView: UIViewController {
     }
     
     private func setupLayout() {
-        view.backgroundColor = mainColor
+        view.backgroundColor = DesignColorTemplates.mainColor
     
         let nameLabel = UILabel()
         nameLabel.text = "Hi Dmytro Samoilenko,"
         nameLabel.font = .systemFont(ofSize: 25, weight: .medium)
-        nameLabel.textColor = customTextColor
+        nameLabel.textColor = DesignColorTemplates.customTextColor
         view.addSubview(nameLabel)
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(spacingElements * 7)
-            $0.leading.equalToSuperview().inset(padding)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(Paddings.spacing * 7)
+            $0.leading.equalToSuperview().inset(Paddings.padding)
         }
         
         let staticLabel = UILabel()
         staticLabel.text = "Get In Shape!"
         staticLabel.font = .systemFont(ofSize: 25, weight: .heavy)
-        staticLabel.textColor = customTextColor
+        staticLabel.textColor = DesignColorTemplates.customTextColor
         view.addSubview(staticLabel)
 
         staticLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(spacingElements)
-            $0.leading.equalToSuperview().inset(padding)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(Paddings.spacing)
+            $0.leading.equalToSuperview().inset(Paddings.padding)
         }
         
         let infoView = UIView()
-        infoView.backgroundColor = secondaryColor
-        infoView.layer.cornerRadius = customCornerRadius
+        infoView.backgroundColor = DesignColorTemplates.secondaryColor
+        infoView.layer.cornerRadius = SizeOFElements.customCornerRadius
         view.addSubview(infoView)
         
         infoView.snp.makeConstraints {
-            $0.top.equalTo(staticLabel.snp.bottom).offset(spacingElements * 7)
-            $0.leading.trailing.equalToSuperview().inset(padding)
+            $0.top.equalTo(staticLabel.snp.bottom).offset(Paddings.spacing * 7)
+            $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
             $0.height.equalTo(250)
         }
         
@@ -94,23 +94,23 @@ class MainView: UIViewController {
         
         let infoSV = UIStackView(arrangedSubviews: infoArray.map({ (title, stringGoal, intGoal) in
             let container = UIView()
-            container.layer.cornerRadius = customCornerRadius
-            container.layer.borderWidth = customBorderWidth
-            container.layer.borderColor = borderColor?.cgColor
+            container.layer.cornerRadius = SizeOFElements.customCornerRadius
+            container.layer.borderWidth = SizeOFElements.customBorderWidth
+            container.layer.borderColor = DesignColorTemplates.borderColor?.cgColor
             
             let label = UILabel()
             let labelText = "\(title) \(stringGoal ?? "")\(intGoal?.description ?? "")"
             
             label.text = labelText
-            label.textColor = customTextColor
-            label.font = .systemFont(ofSize: fontSize, weight: .medium)
+            label.textColor = DesignColorTemplates.customTextColor
+            label.font = .systemFont(ofSize: Fonts.fontSize, weight: .medium)
             label.numberOfLines = 0
             label.setContentHuggingPriority(.required, for: .vertical)
             
             container.addSubview(label)
             
             label.snp.makeConstraints {
-                $0.edges.equalTo(container).inset(spacingElements)
+                $0.edges.equalTo(container).inset(Paddings.spacing)
             }
             
             if labelText.contains("\n") {
@@ -121,34 +121,34 @@ class MainView: UIViewController {
         }))
         
         infoSV.axis = .vertical
-        infoSV.spacing = CGFloat(spacingElements)
+        infoSV.spacing = CGFloat(Paddings.spacing)
         infoView.addSubview(infoSV)
         
         infoSV.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(padding)
-            $0.bottom.equalToSuperview().inset(spacingElements)
+            $0.leading.equalToSuperview().inset(Paddings.padding)
+            $0.bottom.equalToSuperview().inset(Paddings.spacing)
         }
                 
         let separatorView = UIView()
-        separatorView.backgroundColor = borderColor
+        separatorView.backgroundColor = DesignColorTemplates.borderColor
         
         view.addSubview(separatorView)
         
         separatorView.snp.makeConstraints {
-            $0.top.equalTo(infoView.snp.bottom).offset(spacingElements * 5)
-            $0.leading.trailing.equalToSuperview().inset(padding)
+            $0.top.equalTo(infoView.snp.bottom).offset(Paddings.spacing * 5)
+            $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
             $0.height.equalTo(2)
         }
         
         let cellTitle = UILabel()
         cellTitle.text = "Your exercises"
-        cellTitle.textColor = customTextColor
+        cellTitle.textColor = DesignColorTemplates.customTextColor
         cellTitle.font = .systemFont(ofSize: 25, weight: .heavy)
         view.addSubview(cellTitle)
         
         cellTitle.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(padding)
-            $0.leading.equalToSuperview().inset(padding)
+            $0.top.equalTo(separatorView.snp.bottom).offset(Paddings.padding)
+            $0.leading.equalToSuperview().inset(Paddings.padding)
         }
         
         let layout = UICollectionViewFlowLayout()
@@ -166,8 +166,8 @@ class MainView: UIViewController {
         view.addSubview(exercisesCV)
         
         exercisesCV.snp.makeConstraints {
-            $0.top.equalTo(cellTitle.snp.bottom).offset(spacingElements)
-            $0.leading.trailing.equalToSuperview().inset(padding)
+            $0.top.equalTo(cellTitle.snp.bottom).offset(Paddings.spacing)
+            $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
             $0.bottom.equalToSuperview().inset(150)
         }
         

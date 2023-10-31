@@ -19,18 +19,3 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
-
-//extension UITextField {
-//    convenience init(placeholder: String) {
-//        self.init()
-//        
-//        let border = CALayer()
-//        let width = CGFloat(2.0)
-//        border.borderColor = UIColor.red.cgColor
-//        border.frame = CGRect(x: 0, y: frame.size.height - width, width: frame.size.width, height: width)
-//        border.borderWidth = width
-//        layer.addSublayer(border)
-//        layer.masksToBounds = true
-//        self.placeholder = placeholder
-//    }
-//}

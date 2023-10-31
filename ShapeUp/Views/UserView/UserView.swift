@@ -32,7 +32,7 @@ class UserView: UIViewController {
     
    
     private func setupLayout() {
-        view.backgroundColor = mainColor
+        view.backgroundColor = DesignColorTemplates.mainColor
         
         let womanSexImage = UIImageView(image: UIImage(named: "womanSex"))
         let manSexImage = UIImageView(image: UIImage(named: "manSex"))
@@ -46,7 +46,7 @@ class UserView: UIViewController {
         
         let sexSelectionSV = UIStackView(arrangedSubviews: sexSelectionArray.map({ (image, title) in
             bgView = UIView()
-            bgView.backgroundColor = secondaryColor
+            bgView.backgroundColor = DesignColorTemplates.secondaryColor
             bgView.layer.cornerRadius = 67.5//bgView.bounds.height / 2
             bgView.layer.masksToBounds = true
 
@@ -58,17 +58,17 @@ class UserView: UIViewController {
             bgView.addSubview(image)
             
             image.snp.makeConstraints {
-                $0.edges.equalToSuperview().inset(spacingElements * 4)
+                $0.edges.equalToSuperview().inset(Paddings.spacing * 4)
             }
             
             let label = UILabel()
             label.text = title
             label.textColor = .black
-            label.font = .systemFont(ofSize: fontSize, weight: .heavy)
+            label.font = .systemFont(ofSize: Fonts.fontSize, weight: .heavy)
             bgView.addSubview(label)
             
             label.snp.makeConstraints {
-                $0.bottom.equalTo(bgView.snp.bottom).inset(spacingElements)
+                $0.bottom.equalTo(bgView.snp.bottom).inset(Paddings.spacing)
                 $0.centerX.equalTo(bgView.snp.centerX)
             }
             
@@ -87,8 +87,8 @@ class UserView: UIViewController {
         view.addSubview(sexSelectionSV)
         
         sexSelectionSV.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(spacingElements)
-            $0.horizontalEdges.equalToSuperview().inset(padding)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(Paddings.spacing)
+            $0.horizontalEdges.equalToSuperview().inset(Paddings.padding)
         }
           
         let userDataTableView = UITableView()
@@ -101,26 +101,25 @@ class UserView: UIViewController {
         
         let insertUserDataBtn = UIButton()
         insertUserDataBtn.setTitle("Submit", for: .normal)
-        insertUserDataBtn.backgroundColor = secondaryColor
-        insertUserDataBtn.layer.cornerRadius = customCornerRadius
-        insertUserDataBtn.setTitleColor(customTextColor, for: .normal)
-        insertUserDataBtn.layer.borderWidth = customBorderWidth
-        insertUserDataBtn.layer.borderColor = borderColor?.cgColor
-//        insertUserDataBtn.isEnabled = false
+        insertUserDataBtn.backgroundColor = DesignColorTemplates.secondaryColor
+        insertUserDataBtn.layer.cornerRadius = SizeOFElements.customCornerRadius
+        insertUserDataBtn.setTitleColor(DesignColorTemplates.customTextColor, for: .normal)
+        insertUserDataBtn.layer.borderWidth = SizeOFElements.customBorderWidth
+        insertUserDataBtn.layer.borderColor = DesignColorTemplates.borderColor?.cgColor
         insertUserDataBtn.addTarget(self, action: #selector(insertUserData), for: .touchUpInside)
         
         view.addSubview(insertUserDataBtn)
          
         insertUserDataBtn.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(spacingElements * 20)
-            $0.leading.trailing.equalToSuperview().inset(padding)
-            $0.height.equalTo(heightForSingleElements)
+            $0.bottom.equalToSuperview().inset(Paddings.spacing * 20)
+            $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
+            $0.height.equalTo(SizeOFElements.heightForSingleElements)
         }
         
         userDataTableView.snp.makeConstraints {
-            $0.top.equalTo(sexSelectionSV.snp.bottom).offset(spacingElements * 2)
-            $0.horizontalEdges.equalToSuperview().inset(padding)
-            $0.bottom.equalTo(insertUserDataBtn.snp.top).inset(spacingElements)
+            $0.top.equalTo(sexSelectionSV.snp.bottom).offset(Paddings.spacing * 2)
+            $0.horizontalEdges.equalToSuperview().inset(Paddings.padding)
+            $0.bottom.equalTo(insertUserDataBtn.snp.top).inset(Paddings.spacing)
         }
         
         
@@ -129,7 +128,7 @@ class UserView: UIViewController {
     @objc func chooseSex(sender: UITapGestureRecognizer) {
         if let selectedBgView = sender.view {
             for bgView in sexSelectionViews {
-                bgView.backgroundColor = (bgView == selectedBgView) ? borderColor : secondaryColor
+                bgView.backgroundColor = (bgView == selectedBgView) ? DesignColorTemplates.borderColor : DesignColorTemplates.secondaryColor
             }
         }
     }

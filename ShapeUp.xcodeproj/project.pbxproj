@@ -24,8 +24,7 @@
 		220106992AE2C4E900132B3A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106982AE2C4E900132B3A /* UserModel.swift */; };
 		2201069B2AE2C50800132B3A /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201069A2AE2C50800132B3A /* ExerciseModel.swift */; };
 		2201069D2AE2C53300132B3A /* NutritionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201069C2AE2C53300132B3A /* NutritionModel.swift */; };
-		220106A02AE2CD6F00132B3A /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201069F2AE2CD6F00132B3A /* Design.swift */; };
-		220106A42AE2CF7900132B3A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106A32AE2CF7900132B3A /* Extensions.swift */; };
+		220106A42AE2CF7900132B3A /* UIColor_HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106A32AE2CF7900132B3A /* UIColor_HEX.swift */; };
 		220106A92AE2E59100132B3A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 220106A82AE2E59000132B3A /* SnapKit */; };
 		220106AB2AE2E59100132B3A /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 220106AA2AE2E59100132B3A /* SnapKit-Dynamic */; };
 		22603E932AE3FB9C00D2E183 /* CustomTextFieldTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */; };
@@ -33,6 +32,20 @@
 		22603E982AE59F4300D2E183 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 22603E972AE59F4300D2E183 /* DGCharts */; };
 		22603E9A2AE59F4300D2E183 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 22603E992AE59F4300D2E183 /* DGChartsDynamic */; };
 		22603E9C2AE5C3D900D2E183 /* MusclesGroupsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */; };
+		22DC551C2AEAAD6200C3556C /* AddExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC551B2AEAAD6200C3556C /* AddExerciseViewController.swift */; };
+		22DC551F2AEAAFB100C3556C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC551E2AEAAFB100C3556C /* CustomTextField.swift */; };
+		22DC55222AEB160900C3556C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC55212AEB160900C3556C /* FSCalendar */; };
+		22DC55292AEFE1E100C3556C /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC55282AEFE1E100C3556C /* Realm */; };
+		22DC552B2AEFE1E100C3556C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC552A2AEFE1E100C3556C /* RealmSwift */; };
+		22DC552D2AEFE20F00C3556C /* RealmExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC552C2AEFE20F00C3556C /* RealmExerciseService.swift */; };
+		22DC55312AF009B600C3556C /* ExerciseContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC55302AF009B600C3556C /* ExerciseContentController.swift */; };
+		22DC55332AF009E400C3556C /* ProgramContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC55322AF009E400C3556C /* ProgramContentController.swift */; };
+		22DC55352AF01FA800C3556C /* ExerciseContentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC55342AF01FA800C3556C /* ExerciseContentTVC.swift */; };
+		22DC55372AF1078100C3556C /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC55362AF1078100C3556C /* PieChart.swift */; };
+		22DC553B2AF107ED00C3556C /* DesignColorTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC553A2AF107ED00C3556C /* DesignColorTemplates.swift */; };
+		22DC553D2AF1081200C3556C /* Paddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC553C2AF1081200C3556C /* Paddings.swift */; };
+		22DC553F2AF1082600C3556C /* SizeOFElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC553E2AF1082600C3556C /* SizeOFElements.swift */; };
+		22DC55412AF1083D00C3556C /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC55402AF1083D00C3556C /* Fonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,11 +87,21 @@
 		220106982AE2C4E900132B3A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2201069A2AE2C50800132B3A /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
 		2201069C2AE2C53300132B3A /* NutritionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModel.swift; sourceTree = "<group>"; };
-		2201069F2AE2CD6F00132B3A /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
-		220106A32AE2CF7900132B3A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		220106A32AE2CF7900132B3A /* UIColor_HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_HEX.swift; sourceTree = "<group>"; };
 		22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldTVC.swift; sourceTree = "<group>"; };
 		22603E942AE564B700D2E183 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusclesGroupsCVC.swift; sourceTree = "<group>"; };
+		22DC551B2AEAAD6200C3556C /* AddExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewController.swift; sourceTree = "<group>"; };
+		22DC551E2AEAAFB100C3556C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		22DC552C2AEFE20F00C3556C /* RealmExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmExerciseService.swift; sourceTree = "<group>"; };
+		22DC55302AF009B600C3556C /* ExerciseContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseContentController.swift; sourceTree = "<group>"; };
+		22DC55322AF009E400C3556C /* ProgramContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramContentController.swift; sourceTree = "<group>"; };
+		22DC55342AF01FA800C3556C /* ExerciseContentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseContentTVC.swift; sourceTree = "<group>"; };
+		22DC55362AF1078100C3556C /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		22DC553A2AF107ED00C3556C /* DesignColorTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignColorTemplates.swift; sourceTree = "<group>"; };
+		22DC553C2AF1081200C3556C /* Paddings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paddings.swift; sourceTree = "<group>"; };
+		22DC553E2AF1082600C3556C /* SizeOFElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeOFElements.swift; sourceTree = "<group>"; };
+		22DC55402AF1083D00C3556C /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +109,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DC55292AEFE1E100C3556C /* Realm in Frameworks */,
 				22603E9A2AE59F4300D2E183 /* DGChartsDynamic in Frameworks */,
+				22DC552B2AEFE1E100C3556C /* RealmSwift in Frameworks */,
 				220106A92AE2E59100132B3A /* SnapKit in Frameworks */,
 				22603E982AE59F4300D2E183 /* DGCharts in Frameworks */,
+				22DC55222AEB160900C3556C /* FSCalendar in Frameworks */,
 				220106AB2AE2E59100132B3A /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,7 +161,7 @@
 			children = (
 				220106562AE2BC9100132B3A /* AppDelegate.swift */,
 				220106582AE2BC9100132B3A /* SceneDelegate.swift */,
-				220106A22AE2CF6500132B3A /* Extensions */,
+				22DC552C2AEFE20F00C3556C /* RealmExerciseService.swift */,
 				220106A12AE2CD8A00132B3A /* Common */,
 				220106882AE2C21800132B3A /* Views */,
 				220106862AE2C20800132B3A /* Presenters */,
@@ -180,7 +206,7 @@
 				22603E942AE564B700D2E183 /* MainTabBarController.swift */,
 				22603E9D2AE6BF3C00D2E183 /* UserView */,
 				22603E9E2AE6BF4B00D2E183 /* MainView */,
-				2201068E2AE2C2E000132B3A /* ExerciseListView.swift */,
+				22DC55422AF108F700C3556C /* ExerciseView */,
 				220106902AE2C30000132B3A /* NutritionView.swift */,
 			);
 			path = Views;
@@ -199,7 +225,9 @@
 		220106A12AE2CD8A00132B3A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				2201069F2AE2CD6F00132B3A /* Design.swift */,
+				220106A22AE2CF6500132B3A /* Extensions */,
+				22DC55392AF107DA00C3556C /* Design */,
+				22DC55382AF107C700C3556C /* Methods */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -207,7 +235,7 @@
 		220106A22AE2CF6500132B3A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				220106A32AE2CF7900132B3A /* Extensions.swift */,
+				220106A32AE2CF7900132B3A /* UIColor_HEX.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -228,6 +256,54 @@
 				22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		22DC55382AF107C700C3556C /* Methods */ = {
+			isa = PBXGroup;
+			children = (
+				22DC551E2AEAAFB100C3556C /* CustomTextField.swift */,
+				22DC55362AF1078100C3556C /* PieChart.swift */,
+			);
+			path = Methods;
+			sourceTree = "<group>";
+		};
+		22DC55392AF107DA00C3556C /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				22DC553A2AF107ED00C3556C /* DesignColorTemplates.swift */,
+				22DC553C2AF1081200C3556C /* Paddings.swift */,
+				22DC553E2AF1082600C3556C /* SizeOFElements.swift */,
+				22DC55402AF1083D00C3556C /* Fonts.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		22DC55422AF108F700C3556C /* ExerciseView */ = {
+			isa = PBXGroup;
+			children = (
+				2201068E2AE2C2E000132B3A /* ExerciseListView.swift */,
+				22DC551B2AEAAD6200C3556C /* AddExerciseViewController.swift */,
+				22DC55432AF1097100C3556C /* ExercisePage */,
+				22DC55442AF1098500C3556C /* ProgramPage */,
+			);
+			path = ExerciseView;
+			sourceTree = "<group>";
+		};
+		22DC55432AF1097100C3556C /* ExercisePage */ = {
+			isa = PBXGroup;
+			children = (
+				22DC55302AF009B600C3556C /* ExerciseContentController.swift */,
+				22DC55342AF01FA800C3556C /* ExerciseContentTVC.swift */,
+			);
+			path = ExercisePage;
+			sourceTree = "<group>";
+		};
+		22DC55442AF1098500C3556C /* ProgramPage */ = {
+			isa = PBXGroup;
+			children = (
+				22DC55322AF009E400C3556C /* ProgramContentController.swift */,
+			);
+			path = ProgramPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +327,9 @@
 				220106AA2AE2E59100132B3A /* SnapKit-Dynamic */,
 				22603E972AE59F4300D2E183 /* DGCharts */,
 				22603E992AE59F4300D2E183 /* DGChartsDynamic */,
+				22DC55212AEB160900C3556C /* FSCalendar */,
+				22DC55282AEFE1E100C3556C /* Realm */,
+				22DC552A2AEFE1E100C3556C /* RealmSwift */,
 			);
 			productName = ShapeUp;
 			productReference = 220106532AE2BC9100132B3A /* ShapeUp.app */;
@@ -327,6 +406,8 @@
 			packageReferences = (
 				220106A52AE2DA0700132B3A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				22603E962AE59F4300D2E183 /* XCRemoteSwiftPackageReference "Charts" */,
+				22DC55202AEB160900C3556C /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				22DC55272AEFE1E100C3556C /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 220106542AE2BC9100132B3A /* Products */;
 			projectDirPath = "";
@@ -370,23 +451,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DC55412AF1083D00C3556C /* Fonts.swift in Sources */,
+				22DC553B2AF107ED00C3556C /* DesignColorTemplates.swift in Sources */,
 				220106572AE2BC9100132B3A /* AppDelegate.swift in Sources */,
 				2201068D2AE2C2CD00132B3A /* MainView.swift in Sources */,
 				220106972AE2C49200132B3A /* NutritionPresenter.swift in Sources */,
+				22DC55312AF009B600C3556C /* ExerciseContentController.swift in Sources */,
 				220106952AE2C46600132B3A /* ExerciseListPresenter.swift in Sources */,
 				2201068B2AE2C2A500132B3A /* UserView.swift in Sources */,
+				22DC553F2AF1082600C3556C /* SizeOFElements.swift in Sources */,
 				220106932AE2C41800132B3A /* UserPresenter.swift in Sources */,
+				22DC551F2AEAAFB100C3556C /* CustomTextField.swift in Sources */,
+				22DC552D2AEFE20F00C3556C /* RealmExerciseService.swift in Sources */,
+				22DC55372AF1078100C3556C /* PieChart.swift in Sources */,
+				22DC55352AF01FA800C3556C /* ExerciseContentTVC.swift in Sources */,
 				220106912AE2C30000132B3A /* NutritionView.swift in Sources */,
+				22DC553D2AF1081200C3556C /* Paddings.swift in Sources */,
+				22DC55332AF009E400C3556C /* ProgramContentController.swift in Sources */,
 				22603E9C2AE5C3D900D2E183 /* MusclesGroupsCVC.swift in Sources */,
 				2201068F2AE2C2E000132B3A /* ExerciseListView.swift in Sources */,
 				2201069D2AE2C53300132B3A /* NutritionModel.swift in Sources */,
 				220106992AE2C4E900132B3A /* UserModel.swift in Sources */,
 				22603E952AE564B700D2E183 /* MainTabBarController.swift in Sources */,
-				220106A02AE2CD6F00132B3A /* Design.swift in Sources */,
+				22DC551C2AEAAD6200C3556C /* AddExerciseViewController.swift in Sources */,
 				220106592AE2BC9100132B3A /* SceneDelegate.swift in Sources */,
 				2201069B2AE2C50800132B3A /* ExerciseModel.swift in Sources */,
 				22603E932AE3FB9C00D2E183 /* CustomTextFieldTVC.swift in Sources */,
-				220106A42AE2CF7900132B3A /* Extensions.swift in Sources */,
+				220106A42AE2CF7900132B3A /* UIColor_HEX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,6 +834,22 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		22DC55202AEB160900C3556C /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+		22DC55272AEFE1E100C3556C /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -765,6 +872,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 22603E962AE59F4300D2E183 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGChartsDynamic;
+		};
+		22DC55212AEB160900C3556C /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22DC55202AEB160900C3556C /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+		22DC55282AEFE1E100C3556C /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22DC55272AEFE1E100C3556C /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		22DC552A2AEFE1E100C3556C /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22DC55272AEFE1E100C3556C /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

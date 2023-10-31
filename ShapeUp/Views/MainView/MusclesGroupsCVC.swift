@@ -20,8 +20,8 @@ class MusclesGroupsCVC: UICollectionViewCell {
     }
     
      func setupLayout() {
-        contentView.backgroundColor = secondaryColor
-        contentView.layer.cornerRadius = customCornerRadius
+         contentView.backgroundColor = DesignColorTemplates.secondaryColor
+         contentView.layer.cornerRadius = SizeOFElements.customCornerRadius
         
         if let musclesDataArrayInCVC = musclesDataArrayInCVC {
             
@@ -37,7 +37,7 @@ class MusclesGroupsCVC: UICollectionViewCell {
             
             let exerciseTypeLabel = UILabel()
             exerciseTypeLabel.text = musclesDataArrayInCVC.1
-            exerciseTypeLabel.textColor = customTextColor
+            exerciseTypeLabel.textColor = DesignColorTemplates.customTextColor
             exerciseTypeLabel.font = .systemFont(ofSize: 17, weight: .bold)
             contentView.addSubview(exerciseTypeLabel)
             
