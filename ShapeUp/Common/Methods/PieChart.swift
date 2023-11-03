@@ -15,13 +15,14 @@ func createPieChart(doneNum: Int, totalNum: Int, labelText: String) -> UIStackVi
     pieChartSvWithDesc.spacing = CGFloat(-Paddings.spacing)
 
     let pieChart = PieChartView()
+    pieChart.highlightPerTapEnabled = false
     pieChart.widthAnchor.constraint(equalToConstant: 120).isActive = true
     pieChart.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
     let chartDoneLabel = String(doneNum)
     let chartDoneLabelText = chartDoneLabel.count > 4 ? "..." : chartDoneLabel
     let attributes: [NSAttributedString.Key : Any] = [
-        .font: UIFont.systemFont(ofSize: 25, weight: .heavy),
+        .font: UIFont.systemFont(ofSize: Fonts.titleFontSize, weight: .heavy),
         .foregroundColor: UIColor.white
     ]
 
@@ -30,7 +31,7 @@ func createPieChart(doneNum: Int, totalNum: Int, labelText: String) -> UIStackVi
     chartDescription.textAlignment = .center
     chartDescription.numberOfLines = 0
     chartDescription.textColor = DesignColorTemplates.customTextColor
-    chartDescription.font = .systemFont(ofSize: 17, weight: .medium)
+    chartDescription.font = .systemFont(ofSize: Fonts.simpleTextFontSize, weight: .medium)
 
     pieChart.centerAttributedText = NSAttributedString(string: chartDoneLabelText, attributes: attributes)
     pieChart.holeColor = DesignColorTemplates.borderColor

@@ -20,8 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.rootViewController = MainTabBarController()
-//        window?.rootViewController = AddExerciseViewController()
-//        window?.rootViewController = AddExercisePage()
+//        window?.rootViewController = AddExerciseVC()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

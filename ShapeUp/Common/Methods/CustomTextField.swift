@@ -49,7 +49,7 @@ func customTextField(imageName: String, placeholder: String, contentType: UIText
         paragraphStyle.alignment = .left
         paragraphStyle.firstLineHeadIndent = padding.left
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: Fonts.fontSize, weight: .light),
+            .font: UIFont.systemFont(ofSize: Fonts.simpleTextFontSize, weight: .light),
             .foregroundColor: DesignColorTemplates.customTextColor ?? .black,
             .paragraphStyle: paragraphStyle
         ]
