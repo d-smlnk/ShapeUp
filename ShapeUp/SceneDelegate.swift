@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.rootViewController = MainTabBarController()
-//        window?.rootViewController = AddExerciseVC()
+//        window?.rootViewController = ChooseMuscleForExistedExerciseVC()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

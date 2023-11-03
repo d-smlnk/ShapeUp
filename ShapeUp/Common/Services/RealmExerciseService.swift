@@ -10,6 +10,8 @@ import RealmSwift
 
 class RealmExerciseService: Object {
     @Persisted(primaryKey: true) dynamic var exerciseName: String
+    @Persisted dynamic var muscleGroupOfExercise: String
+    @Persisted dynamic var exerciseDate: Date
     @Persisted dynamic var exerciseRep: Int
     @Persisted dynamic var exerciseSet: Int
     @Persisted dynamic var exerciseComent: String

@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ChooseMuscleForExistedExerciseVC: UIViewController {
+class ChooseMuscleForNewExerciseVC: UIViewController {
+    static var muscleGroupNameDelegate: String?
+    static var muscleGroupImageDelegate: UIImage?
     
     private let musclesDataArray = [
     (UIImage(named: "Neck") ?? UIImage(), "Neck"),
@@ -51,7 +53,7 @@ class ChooseMuscleForExistedExerciseVC: UIViewController {
         let labelSV = UIStackView(arrangedSubviews: [headerSV, titleOfTV])
         labelSV.axis = .vertical
         labelSV.distribution = .fillEqually
-        labelSV.spacing = CGFloat(SizeOFElements.heightForSingleElements)
+        labelSV.spacing = CGFloat(SizeOFElements.heightForSingleElements / 2)
         
         view.addSubview(labelSV)
         
@@ -64,7 +66,7 @@ class ChooseMuscleForExistedExerciseVC: UIViewController {
         
         musclesGroupTV.delegate = self
         musclesGroupTV.dataSource = self
-        musclesGroupTV.register(ChooseMuscleForExistedExerciseTVC.self, forCellReuseIdentifier: "musclesGroup")
+        musclesGroupTV.register(ChooseMuscleForNewExerciseTVC.self, forCellReuseIdentifier: "musclesGroup")
         
         musclesGroupTV.backgroundColor = DesignColorTemplates.secondaryColor
         musclesGroupTV.separatorStyle = .none
@@ -80,13 +82,13 @@ class ChooseMuscleForExistedExerciseVC: UIViewController {
 
 //MARK: TABLEVIEW DELEGATE & DATASOURCE
 
-extension ChooseMuscleForExistedExerciseVC: UITableViewDataSource, UITableViewDelegate {
+extension ChooseMuscleForNewExerciseVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return musclesDataArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "musclesGroup", for: indexPath) as? ChooseMuscleForExistedExerciseTVC else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "musclesGroup", for: indexPath) as? ChooseMuscleForNewExerciseTVC else { return UITableViewCell() }
         cell.musclesGroup = musclesDataArray[indexPath.row]
         cell.selectionStyle = .none
         cell.configure()
@@ -94,12 +96,11 @@ extension ChooseMuscleForExistedExerciseVC: UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let createExerciseVC = CreateExerciseVC()
+        let cell = tableView.cellForRow(at: indexPath) as? ChooseMuscleForNewExerciseTVC
+        ChooseMuscleForNewExerciseVC.muscleGroupNameDelegate = cell?.musclesGroup?.1
+        ChooseMuscleForNewExerciseVC.muscleGroupImageDelegate = cell?.musclesGroup?.0
         
-        if let presentationController = createExerciseVC.presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium()]
-        }
-        present(createExerciseVC, animated: true)
+        halfScreenPresent(self, presentedVC: CreateExerciseVC())
     }
 }
     

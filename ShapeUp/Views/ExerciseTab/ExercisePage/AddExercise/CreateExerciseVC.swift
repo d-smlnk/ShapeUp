@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CreateExerciseVC: UIViewController {
+    
+    static let exerciseNameTF = UITextField()
+    private let choosenMuscleGroupName = ChooseMuscleForNewExerciseVC.muscleGroupNameDelegate
+    private let choosenMuscleGroupImage = ChooseMuscleForNewExerciseVC.muscleGroupImageDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +23,7 @@ class CreateExerciseVC: UIViewController {
         view.backgroundColor = DesignColorTemplates.borderColor
         
         let categoryLabel = UILabel()
-        categoryLabel.text = "Test"
+        categoryLabel.text = choosenMuscleGroupName
         categoryLabel.font = .systemFont(ofSize: Fonts.titleFontSize, weight: .bold)
         categoryLabel.textColor = DesignColorTemplates.secondaryColor
         categoryLabel.setContentHuggingPriority(.required, for: .horizontal)
@@ -30,12 +35,12 @@ class CreateExerciseVC: UIViewController {
             $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(Paddings.padding)
         }
         
-        let exerciseNameTF = UITextField()
-        customTextField(imageName: "HandsMuscles", placeholder: "Exercise name", contentType: .name, textField: exerciseNameTF)
+        CreateExerciseVC.exerciseNameTF.autocapitalizationType = .words
+        customTextField(image: choosenMuscleGroupImage ?? UIImage(), placeholder: "Exercise name", contentType: .name, textField: CreateExerciseVC.exerciseNameTF)
         
-        view.addSubview(exerciseNameTF)
+        view.addSubview(CreateExerciseVC.exerciseNameTF)
         
-        exerciseNameTF.snp.makeConstraints {
+        CreateExerciseVC.exerciseNameTF.snp.makeConstraints {
             $0.top.equalTo(categoryLabel.snp.bottom).offset(Paddings.padding)
             $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
         }
@@ -45,6 +50,7 @@ class CreateExerciseVC: UIViewController {
         saveBtn.layer.cornerRadius = SizeOFElements.customCornerRadius
         saveBtn.backgroundColor = DesignColorTemplates.customTextColor
         saveBtn.titleLabel?.font = .systemFont(ofSize: Fonts.separateTextFontSize, weight: .bold)
+        saveBtn.addTarget(self, action: #selector(addExerciseToRealm1), for: .touchUpInside)
         
         view.addSubview(saveBtn)
         
@@ -54,5 +60,9 @@ class CreateExerciseVC: UIViewController {
             $0.width.equalTo(view.frame.width / 2)
         }
     }
-
+    
+    @objc private func addExerciseToRealm1() {
+        addExerciseToRealm()
+        dismiss(animated: true)
+    }
 }

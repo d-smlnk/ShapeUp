@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChooseMuscleForExistedExerciseTVC: UITableViewCell {
+class ChooseMuscleForNewExerciseTVC: UITableViewCell {
 
     var musclesGroup: (UIImage, String)?
     private let muscleImage = UIImageView()
@@ -61,6 +61,7 @@ class ChooseMuscleForExistedExerciseTVC: UITableViewCell {
         
         let goNextBtn = UIButton()
         goNextBtn.setImage(UIImage(named: "GoNext"), for: .normal)
+        goNextBtn.addTarget(self, action: #selector(presentVC), for: .touchUpInside)
         
         contentView.addSubview(goNextBtn)
         
@@ -70,4 +71,9 @@ class ChooseMuscleForExistedExerciseTVC: UITableViewCell {
             $0.height.width.equalTo(50)
         }
     }
+    
+    @objc private func presentVC() {
+        halfScreenPresent(ChooseMuscleForNewExerciseVC(), presentedVC: CreateExerciseVC())
+    }
+
 }

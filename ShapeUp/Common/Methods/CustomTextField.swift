@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-func customTextField(imageName: String, placeholder: String, contentType: UITextContentType, textField: UITextField) {
+func customTextField(image: UIImage, placeholder: String, contentType: UITextContentType, textField: UITextField) {
     
     let textFieldCellArray: [(UIImage, String, UITextContentType, UITextField)] = [
-        (UIImage(named: imageName) ?? UIImage(), placeholder, .name, textField)
+        (image, placeholder, .name, textField)
     ]
     
     let textStackView = UIStackView(arrangedSubviews: textFieldCellArray.map( { item in

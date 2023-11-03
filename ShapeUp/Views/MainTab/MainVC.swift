@@ -14,20 +14,20 @@ import DGCharts
 
 class MainVC: UIViewController {
     
-    private let musclesDataArray = [
-    (UIImage(named: "Neck") ?? UIImage(), "Neck", 8),
-    (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", 18),
-    (UIImage(named: "BackMuscle") ?? UIImage(), "Back", 13),
-    (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", 10),
-    (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", 14),
-    (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", 16),
-    (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", 15),
-    (UIImage(named: "Forearm") ?? UIImage(), "Forearm", 6),
-    (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", 5),
-    (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", 3),
-    (UIImage(named: "Cardio") ?? UIImage(), "Cardio", 3),
-    (UIImage(named: "Yoga") ?? UIImage(), "Yoga", 20),
-    (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", 30),
+    private let musclesDataArray: [(UIImage, String, Int)] = [
+        (UIImage(named: "Neck") ?? UIImage(), "Neck", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Neck").count),
+        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Chest").count),
+        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Back").count),
+        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Legs").count),
+        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Shoulders").count),
+        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Biceps").count),
+        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Triceps").count),
+        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Forearm").count),
+        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Core").count),
+        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Calves").count),
+        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Cardio").count),
+        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Yoga").count),
+        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Crossfit").count)
     ]
     
     override func viewDidLoad() {
