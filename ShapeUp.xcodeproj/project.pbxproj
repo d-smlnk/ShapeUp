@@ -27,6 +27,7 @@
 		220106A42AE2CF7900132B3A /* UIColor_HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106A32AE2CF7900132B3A /* UIColor_HEX.swift */; };
 		220106A92AE2E59100132B3A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 220106A82AE2E59000132B3A /* SnapKit */; };
 		224498522AFAD80100557632 /* FilterElementsByGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224498512AFAD80100557632 /* FilterElementsByGroupPresenter.swift */; };
+		224498542AFBFE7000557632 /* SetsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224498532AFBFE7000557632 /* SetsTVC.swift */; };
 		22603E932AE3FB9C00D2E183 /* CustomTextFieldTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */; };
 		22603E952AE564B700D2E183 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E942AE564B700D2E183 /* MainTabBarController.swift */; };
 		22603E982AE59F4300D2E183 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 22603E972AE59F4300D2E183 /* DGCharts */; };
@@ -99,6 +100,7 @@
 		2201069C2AE2C53300132B3A /* NutritionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModel.swift; sourceTree = "<group>"; };
 		220106A32AE2CF7900132B3A /* UIColor_HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_HEX.swift; sourceTree = "<group>"; };
 		224498512AFAD80100557632 /* FilterElementsByGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterElementsByGroupPresenter.swift; sourceTree = "<group>"; };
+		224498532AFBFE7000557632 /* SetsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsTVC.swift; sourceTree = "<group>"; };
 		22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldTVC.swift; sourceTree = "<group>"; };
 		22603E942AE564B700D2E183 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusclesGroupsCVC.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 			children = (
 				2201068E2AE2C2E000132B3A /* ExerciseVC.swift */,
 				22B5F2AF2AF9145400B47D6D /* ExerciseListTVC.swift */,
+				224498532AFBFE7000557632 /* SetsTVC.swift */,
 				22DC551B2AEAAD6200C3556C /* AddExerciseVC.swift */,
 				22DC55432AF1097100C3556C /* ExercisePage */,
 				22DC55442AF1098500C3556C /* ProgramPage */,
@@ -541,6 +544,7 @@
 				22DC55482AF142ED00C3556C /* ChooseMuscleForNewExerciseTVC.swift in Sources */,
 				22B5F2A02AF3F88800B47D6D /* CreateExerciseVC.swift in Sources */,
 				22DC55462AF1418C00C3556C /* ChooseMuscleForNewExerciseVC.swift in Sources */,
+				224498542AFBFE7000557632 /* SetsTVC.swift in Sources */,
 				22DC553B2AF107ED00C3556C /* DesignColorTemplates.swift in Sources */,
 				22B5F2B02AF9145400B47D6D /* ExerciseListTVC.swift in Sources */,
 				220106572AE2BC9100132B3A /* AppDelegate.swift in Sources */,

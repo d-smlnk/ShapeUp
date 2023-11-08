@@ -15,8 +15,9 @@ class ExerciseListTVC: UITableViewCell {
 
     private let exerciseLabel = UILabel()
     private let dropDownMenuBtn = UIButton()
-    private let exerciseIV = UIImageView()
-
+    
+    private let setsTV = UITableView()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
@@ -27,20 +28,8 @@ class ExerciseListTVC: UITableViewCell {
     }
     
     private func setupLayout() {
-
-        contentView.snp.makeConstraints {
-            $0.height.equalTo(SizeOFElements.heightForSingleElements)
-            $0.edges.equalToSuperview()
-        }
                 
         backgroundColor = DesignColorTemplates.mainColor
-        
-        contentView.addSubview(exerciseIV)
-        
-        exerciseIV.snp.makeConstraints {
-            $0.top.leading.bottom.equalToSuperview().inset(Paddings.padding)
-            $0.width.equalTo(exerciseIV.snp.height)
-        }
         
         exerciseLabel.textColor = .black
         exerciseLabel.font = .systemFont(ofSize: Fonts.smallTitleFontSize, weight: .semibold)
@@ -50,16 +39,19 @@ class ExerciseListTVC: UITableViewCell {
         exerciseLabel.snp.makeConstraints {
             $0.height.equalTo(SizeOFElements.heightForSingleElements)
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(exerciseIV.snp.trailing).offset(Paddings.spacing)
+            $0.leading.equalToSuperview().inset(Paddings.spacing)
         }
         
         dropDownMenuBtn.addTarget(self, action: #selector(btn), for: .touchUpInside)
         contentView.addSubview(dropDownMenuBtn)
         
         dropDownMenuBtn.snp.makeConstraints {
-            $0.top.trailing.bottom.equalToSuperview().inset(Paddings.padding)
-            $0.width.equalTo(dropDownMenuBtn.snp.height)
+            $0.height.width.equalTo(SizeOFElements.heightForSingleElements / 2)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(Paddings.spacing)
         }
+        
+
     }
     
     func configure() {
@@ -68,8 +60,41 @@ class ExerciseListTVC: UITableViewCell {
         dropDownMenuBtn.setImage(UIImage(named: "DropDownMenu"), for: .normal)
         dropDownMenuBtn.setImage(UIImage(named: "HideDroppedMenu"), for: .selected)
     }
-    
+    #warning("FIXOUT SETSTV")
     @objc func btn() {
         dropDownMenuBtn.isSelected = !dropDownMenuBtn.isSelected
+       
+        if dropDownMenuBtn.isSelected {
+            contentView.snp.makeConstraints {
+                $0.height.equalTo(200)
+                $0.edges.equalToSuperview()
+            }
+            
+            setsTV.backgroundColor = .red
+            setsTV.allowsSelection = false
+            setsTV.delegate = self
+            setsTV.dataSource = self
+            setsTV.register(SetsTVC.self, forCellReuseIdentifier: SetsTVC.reuseIdentifier)
+            
+            contentView.addSubview(setsTV)
+
+        } else if !dropDownMenuBtn.isSelected {
+            setsTV.removeFromSuperview()
+        }
+        self.layoutIfNeeded()
     }
+}
+
+extension ExerciseListTVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell =  tableView.dequeueReusableCell(withIdentifier: SetsTVC.reuseIdentifier, for: indexPath) as? SetsTVC
+        
+        return cell ?? UITableViewCell()
+    }
+    
+    
 }
