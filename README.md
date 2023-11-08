@@ -33,14 +33,19 @@ ShapeUp! – це фітнес-додаток призначений для до
 
   ● Технології:
 
-Realm - В додатку буде використовуватися база данних Realm для збереження фізичних вправ, програм тренувань та енергетичної цінності доданих продуктів. Додаток буде зберігати всі дані локально на пристрої.
+UIKit
+
+SnapKit
+
+RxSwift
+
+Firebase - В додатку буде реєстрація та авторизація клієнта, та деякі базові вправи вже будуть додані для зручності юзера.
+
+Realm - В додатку буде використовуватися база данних Realm для збереження фізичних вправ, програм тренувань та енергетичної цінності доданих продуктів. Додаток буде зберігати деякі дані локально на пристрої.
 
 Alamofire - В додатку буде використовуватися технологія Alamofire для підключення до API бази даних яка містить базові продукти та їх енергетичну цінність.  
 
-Аналоги додатку ShapeUp!:
-ShapeUp! не має прямих аналогів, оскільки це практично комбінація кількох додатків. Ідея створення ShapeUp! виникла через необхідність поєднання функцій двох окремих додатків, FatSecret та GymTracker, що не завжди було зручно. Тепер уся інформація щодо тренувань та харчування доступна в одному додатку.
-"FatSecret" - це додаток для ведення обліку калорій, який також дозволяє користувачам вести календар змін ваги та додавати фотографії страв у стрічку. Однією з корисних функцій є можливість підбору рецептів з урахуванням власних вподобань та кількості калорій.
-"GymTracker" - це додаток для ведення журналу тренувань, де користувачі можуть вести облік вправ, вказувати вагу та кількість підходів. Додаток фокусується на простоті ведення тренувань без складних функцій.
+
 
   ● Опис структури об'єктів:
 
@@ -105,15 +110,18 @@ Here are some reasons why MVP is an excellent choice:
 4.	Support for multiple languages: Since the application is planning to support multiple languages, MVP makes the work with localization more efficient. This makes it possible to have separate resources and translations for each language and easily switch between them in the presenter.
 
   ● Technologies:
+  
+UIKit
+
+SnapKit
+
+RxSwift
+
+Firebase - There will be client registration and authorization in the app, and some basic exercises will already be added for the convenience of the user.
 
 Realm - The application will use the Realm database to store exercise, training programs, and energy value of the added products. The app will store all data locally on the device.
 
 Alamofire - The application will use Alamofire technology to connect to the API database containing basic products and their energy value.  
-
-Analogs of the ShapeUp! app:
-ShapeUp! has no direct analogues, as it is practically a combination of several applications. The idea of creating ShapeUp! arose from the need to combine the functions of two separate applications, FatSecret and GymTracker, which was not always convenient. Now all the information about training and nutrition is available in one app.
-"FatSecret is a calorie tracking app that also allows users to keep a weight change calendar and add photos of food to their feed. One of the useful features is the ability to select recipes based on your own preferences and calorie count.
-"GymTracker is a workout log app where users can keep track of exercises, specify weight and number of reps. The application focuses on the simplicity of training without complex features.
 
   ● Description of the structure of objects:
 
