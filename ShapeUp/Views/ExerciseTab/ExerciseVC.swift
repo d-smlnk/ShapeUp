@@ -11,6 +11,7 @@
 
 import UIKit
 import FSCalendar
+import RealmSwift
 
 class ExerciseVC: UIViewController {
 
@@ -18,7 +19,10 @@ class ExerciseVC: UIViewController {
     private let indicatorView = UIView()
     private var emptyExerciseSV = UIStackView()
     private var trainingsCalendar = FSCalendar()
-
+    private let exerciseListTV = UITableView()
+    static var choosenDate = Date()
+    private var pickedExerciseDataArray: Results<RealmPickedExerciseService>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -95,6 +99,7 @@ class ExerciseVC: UIViewController {
         trainingsCalendar.appearance.titleTodayColor = DesignColorTemplates.customTextColor
         trainingsCalendar.appearance.selectionColor = DesignColorTemplates.borderColor
         trainingsCalendar.tintColor = .darkGray
+        trainingsCalendar.select(Date())
         trainingsCalendar.scope = .week
         
         calendarView.addSubview(trainingsCalendar)
@@ -126,7 +131,21 @@ class ExerciseVC: UIViewController {
             $0.width.equalTo(view.frame.size.width / 7)
             $0.height.equalTo(indicatorViewHeight)
         }
-
+        
+        exerciseListTV.backgroundColor = .clear
+        exerciseListTV.allowsSelection = false
+        exerciseListTV.bounces = false
+        exerciseListTV.delegate = self
+        exerciseListTV.dataSource = self
+        exerciseListTV.register(ExerciseListTVC.self, forCellReuseIdentifier: ExerciseListTVC.reuseIdentifier)
+        
+        view.addSubview(exerciseListTV)
+        
+        exerciseListTV.snp.makeConstraints {
+            $0.top.equalTo(calendarView.snp.bottom).offset(50)
+            $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
+            $0.bottom.equalTo(addExerciseBtn.snp.top).offset(-Paddings.spacing)
+        }
     }
     
     @objc func dragMainView(_ gesture: UISwipeGestureRecognizer) {
@@ -171,7 +190,6 @@ class ExerciseVC: UIViewController {
     }
     
     @objc func addExercise() {
-        print("Pressed")
         let addExercise = AddExerciseVC()
         addExercise.modalPresentationStyle = .popover
         present(addExercise, animated: true)
@@ -182,6 +200,11 @@ class ExerciseVC: UIViewController {
 //MARK: FSCalendar Delegate & Data Source
 extension ExerciseVC: FSCalendarDelegate, FSCalendarDataSource {
     
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        ExerciseVC.choosenDate = date
+        exerciseListTV.reloadData()
+    }
+    
     func maximumDate(for calendar: FSCalendar) -> Date {
         return Calendar.current.startOfDay(for: Date())
     }
@@ -190,12 +213,56 @@ extension ExerciseVC: FSCalendarDelegate, FSCalendarDataSource {
         return 1
     }
     
-    
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
 
         calendar.snp.updateConstraints {
             $0.height.equalTo(bounds.height)
         }
         self.view.layoutIfNeeded()
+    }
+}
+
+//MARK: UITableView Delegate & Data Source
+
+extension ExerciseVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        let dateOnly = Calendar.current.startOfDay(for: ExerciseVC.choosenDate)
+        pickedExerciseDataArray = realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly)!)
+        
+        if pickedExerciseDataArray?.count ?? 0 > 0 {
+            emptyExerciseSV.isHidden = true
+        } else {
+            emptyExerciseSV.isHidden = false
+        }
+        return pickedExerciseDataArray?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ExerciseListTVC.reuseIdentifier, for: indexPath) as? ExerciseListTVC
+        cell?.pickedExerciseData = pickedExerciseDataArray?[indexPath.row]
+        cell?.configure()
+        return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if let objectToDelete = pickedExerciseDataArray?[indexPath.row] {
+                do {
+                    let realm = try Realm()
+                    try realm.write {
+                        realm.delete(objectToDelete)
+                    }
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                } catch {
+                    print("Ошибка при удалении объекта из Realm: \(error)")
+                }
+            }
+        }
+        
     }
 }

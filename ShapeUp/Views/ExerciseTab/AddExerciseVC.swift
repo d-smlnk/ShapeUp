@@ -100,6 +100,7 @@ class AddExerciseVC: UIViewController {
 }
 
 //MARK: SearchBar Delegate
+#warning("MAKE SEARCHBAR DELEGATE")
 extension AddExerciseVC: UISearchBarDelegate {
     
 }

@@ -9,6 +9,8 @@ import UIKit
 
 class CustomTextFieldTVC: UITableViewCell {
     
+    static let reuseIdentifier = "CustomTextFieldTVC"
+    
     var dataArray: (UITextField?, String?)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

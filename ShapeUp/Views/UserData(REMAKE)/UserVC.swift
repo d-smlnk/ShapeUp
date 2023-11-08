@@ -94,7 +94,7 @@ class UserVC: UIViewController {
         let userDataTableView = UITableView()
         userDataTableView.delegate = self
         userDataTableView.dataSource = self
-        userDataTableView.register(CustomTextFieldTVC.self, forCellReuseIdentifier: "customTextField")
+        userDataTableView.register(CustomTextFieldTVC.self, forCellReuseIdentifier: CustomTextFieldTVC.reuseIdentifier)
         userDataTableView.backgroundColor = .clear
         userDataTableView.separatorStyle = .none
         view.addSubview(userDataTableView)
@@ -146,7 +146,7 @@ extension UserVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "customTextField", for: indexPath) as? CustomTextFieldTVC else { return CustomTextFieldTVC() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTextFieldTVC.reuseIdentifier, for: indexPath) as? CustomTextFieldTVC else { return CustomTextFieldTVC() }
         let data = dataArrayInTV[indexPath.row] 
         cell.backgroundColor = .clear
         cell.dataArray = data

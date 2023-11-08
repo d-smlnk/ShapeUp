@@ -66,7 +66,7 @@ class ChooseMuscleForNewExerciseVC: UIViewController {
         
         musclesGroupTV.delegate = self
         musclesGroupTV.dataSource = self
-        musclesGroupTV.register(ChooseMuscleForNewExerciseTVC.self, forCellReuseIdentifier: "musclesGroup")
+        musclesGroupTV.register(ChooseMuscleForNewExerciseTVC.self, forCellReuseIdentifier: ChooseMuscleForNewExerciseTVC.reuseIdentifier)
         
         musclesGroupTV.backgroundColor = DesignColorTemplates.secondaryColor
         musclesGroupTV.separatorStyle = .none
@@ -88,7 +88,7 @@ extension ChooseMuscleForNewExerciseVC: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "musclesGroup", for: indexPath) as? ChooseMuscleForNewExerciseTVC else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChooseMuscleForNewExerciseTVC.reuseIdentifier, for: indexPath) as? ChooseMuscleForNewExerciseTVC else { return UITableViewCell() }
         cell.musclesGroup = musclesDataArray[indexPath.row]
         cell.selectionStyle = .none
         cell.configure()

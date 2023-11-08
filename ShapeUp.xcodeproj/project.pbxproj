@@ -26,6 +26,7 @@
 		2201069D2AE2C53300132B3A /* NutritionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201069C2AE2C53300132B3A /* NutritionModel.swift */; };
 		220106A42AE2CF7900132B3A /* UIColor_HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106A32AE2CF7900132B3A /* UIColor_HEX.swift */; };
 		220106A92AE2E59100132B3A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 220106A82AE2E59000132B3A /* SnapKit */; };
+		224498522AFAD80100557632 /* FilterElementsByGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224498512AFAD80100557632 /* FilterElementsByGroupPresenter.swift */; };
 		22603E932AE3FB9C00D2E183 /* CustomTextFieldTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */; };
 		22603E952AE564B700D2E183 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E942AE564B700D2E183 /* MainTabBarController.swift */; };
 		22603E982AE59F4300D2E183 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 22603E972AE59F4300D2E183 /* DGCharts */; };
@@ -37,6 +38,8 @@
 		22B5F2AA2AF552B900B47D6D /* HalfScreenPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2A92AF552B900B47D6D /* HalfScreenPresent.swift */; };
 		22B5F2AC2AF5627400B47D6D /* ChooseExistedExerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2AB2AF5627400B47D6D /* ChooseExistedExerciseVC.swift */; };
 		22B5F2AE2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2AD2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift */; };
+		22B5F2B02AF9145400B47D6D /* ExerciseListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2AF2AF9145400B47D6D /* ExerciseListTVC.swift */; };
+		22B5F2B22AF917B300B47D6D /* RealmPickedExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2B12AF917B300B47D6D /* RealmPickedExerciseService.swift */; };
 		22DC551C2AEAAD6200C3556C /* AddExerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC551B2AEAAD6200C3556C /* AddExerciseVC.swift */; };
 		22DC551F2AEAAFB100C3556C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC551E2AEAAFB100C3556C /* CustomTextField.swift */; };
 		22DC55222AEB160900C3556C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC55212AEB160900C3556C /* FSCalendar */; };
@@ -95,6 +98,7 @@
 		2201069A2AE2C50800132B3A /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
 		2201069C2AE2C53300132B3A /* NutritionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModel.swift; sourceTree = "<group>"; };
 		220106A32AE2CF7900132B3A /* UIColor_HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_HEX.swift; sourceTree = "<group>"; };
+		224498512AFAD80100557632 /* FilterElementsByGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterElementsByGroupPresenter.swift; sourceTree = "<group>"; };
 		22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldTVC.swift; sourceTree = "<group>"; };
 		22603E942AE564B700D2E183 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusclesGroupsCVC.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 		22B5F2A92AF552B900B47D6D /* HalfScreenPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfScreenPresent.swift; sourceTree = "<group>"; };
 		22B5F2AB2AF5627400B47D6D /* ChooseExistedExerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseExistedExerciseVC.swift; sourceTree = "<group>"; };
 		22B5F2AD2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseExistedExerciseTVC.swift; sourceTree = "<group>"; };
+		22B5F2AF2AF9145400B47D6D /* ExerciseListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListTVC.swift; sourceTree = "<group>"; };
+		22B5F2B12AF917B300B47D6D /* RealmPickedExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPickedExerciseService.swift; sourceTree = "<group>"; };
 		22DC551B2AEAAD6200C3556C /* AddExerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseVC.swift; sourceTree = "<group>"; };
 		22DC551E2AEAAFB100C3556C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		22DC552C2AEFE20F00C3556C /* RealmExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmExerciseService.swift; sourceTree = "<group>"; };
@@ -207,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				22B5F2A72AF5421700B47D6D /* AddExerciseToRealmPresenter.swift */,
+				224498512AFAD80100557632 /* FilterElementsByGroupPresenter.swift */,
 				220106922AE2C41800132B3A /* UserPresenter.swift */,
 				220106942AE2C46600132B3A /* ExerciseListPresenter.swift */,
 				220106962AE2C49200132B3A /* NutritionPresenter.swift */,
@@ -218,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				22B5F2982AF3CCAA00B47D6D /* TabBar */,
-				22603E9D2AE6BF3C00D2E183 /* UserData */,
+				22603E9D2AE6BF3C00D2E183 /* UserData(REMAKE) */,
 				22603E9E2AE6BF4B00D2E183 /* MainTab */,
 				22DC55422AF108F700C3556C /* ExerciseTab */,
 				22B5F2992AF3CCC000B47D6D /* NutritionTab */,
@@ -255,13 +262,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		22603E9D2AE6BF3C00D2E183 /* UserData */ = {
+		22603E9D2AE6BF3C00D2E183 /* UserData(REMAKE) */ = {
 			isa = PBXGroup;
 			children = (
 				2201068A2AE2C2A500132B3A /* UserVC.swift */,
 				22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */,
 			);
-			path = UserData;
+			path = "UserData(REMAKE)";
 			sourceTree = "<group>";
 		};
 		22603E9E2AE6BF4B00D2E183 /* MainTab */ = {
@@ -286,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				22DC552C2AEFE20F00C3556C /* RealmExerciseService.swift */,
+				22B5F2B12AF917B300B47D6D /* RealmPickedExerciseService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -360,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				2201068E2AE2C2E000132B3A /* ExerciseVC.swift */,
+				22B5F2AF2AF9145400B47D6D /* ExerciseListTVC.swift */,
 				22DC551B2AEAAD6200C3556C /* AddExerciseVC.swift */,
 				22DC55432AF1097100C3556C /* ExercisePage */,
 				22DC55442AF1098500C3556C /* ProgramPage */,
@@ -533,6 +542,7 @@
 				22B5F2A02AF3F88800B47D6D /* CreateExerciseVC.swift in Sources */,
 				22DC55462AF1418C00C3556C /* ChooseMuscleForNewExerciseVC.swift in Sources */,
 				22DC553B2AF107ED00C3556C /* DesignColorTemplates.swift in Sources */,
+				22B5F2B02AF9145400B47D6D /* ExerciseListTVC.swift in Sources */,
 				220106572AE2BC9100132B3A /* AppDelegate.swift in Sources */,
 				2201068D2AE2C2CD00132B3A /* MainVC.swift in Sources */,
 				220106972AE2C49200132B3A /* NutritionPresenter.swift in Sources */,
@@ -544,6 +554,7 @@
 				220106932AE2C41800132B3A /* UserPresenter.swift in Sources */,
 				22B5F2A62AF40AA200B47D6D /* UIButton_Back.swift in Sources */,
 				22DC551F2AEAAFB100C3556C /* CustomTextField.swift in Sources */,
+				22B5F2B22AF917B300B47D6D /* RealmPickedExerciseService.swift in Sources */,
 				22DC552D2AEFE20F00C3556C /* RealmExerciseService.swift in Sources */,
 				22DC55372AF1078100C3556C /* PieChart.swift in Sources */,
 				22DC55352AF01FA800C3556C /* ExercisePageTVC.swift in Sources */,
@@ -554,6 +565,7 @@
 				22603E9C2AE5C3D900D2E183 /* MusclesGroupsCVC.swift in Sources */,
 				2201068F2AE2C2E000132B3A /* ExerciseVC.swift in Sources */,
 				22B5F2AE2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift in Sources */,
+				224498522AFAD80100557632 /* FilterElementsByGroupPresenter.swift in Sources */,
 				2201069D2AE2C53300132B3A /* NutritionModel.swift in Sources */,
 				220106992AE2C4E900132B3A /* UserModel.swift in Sources */,
 				22603E952AE564B700D2E183 /* MainTabBarController.swift in Sources */,

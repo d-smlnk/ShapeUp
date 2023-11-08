@@ -14,7 +14,9 @@ import DGCharts
 
 class MainVC: UIViewController {
     
-    private let musclesDataArray: [(UIImage, String, Int)] = [
+    #warning("FIXOUT WHY filterElementsByGroup DONT WORKING")
+    private var exercisesCV: UICollectionView?
+    private var musclesDataArray: [(UIImage, String, Int)] = [
         (UIImage(named: "Neck") ?? UIImage(), "Neck", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Neck").count),
         (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Chest").count),
         (UIImage(named: "BackMuscle") ?? UIImage(), "Back", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Back").count),
@@ -28,7 +30,26 @@ class MainVC: UIViewController {
         (UIImage(named: "Cardio") ?? UIImage(), "Cardio", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Cardio").count),
         (UIImage(named: "Yoga") ?? UIImage(), "Yoga", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Yoga").count),
         (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Crossfit").count)
-    ]
+    ] {
+        didSet {
+            exercisesCV?.reloadData()
+        }
+    }
+//private let musclesDataArray: [(UIImage, String, Int)] = [
+//    (UIImage(named: "Neck") ?? UIImage(), "Neck", filterElementsByGroup(realmDB: RealmPickedExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Neck").count),
+//        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Chest").count),
+//        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Back").count),
+//        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Legs").count),
+//        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Shoulders").count),
+//        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Biceps").count),
+//        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Triceps").count),
+//        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Forearm").count),
+//        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Core").count),
+//        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Calves").count),
+//        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Cardio").count),
+//        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Yoga").count),
+//        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Crossfit").count)
+//    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,17 +185,17 @@ class MainVC: UIViewController {
         layout.itemSize = CGSize(width: 180, height: 200)
         layout.scrollDirection = .horizontal
         
-        let exercisesCV = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        exercisesCV.showsHorizontalScrollIndicator = false
-        exercisesCV.dataSource = self
-        exercisesCV.delegate = self
+        exercisesCV = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        exercisesCV?.showsHorizontalScrollIndicator = false
+        exercisesCV?.dataSource = self
+        exercisesCV?.delegate = self
         
-        exercisesCV.register(MusclesGroupsCVC.self, forCellWithReuseIdentifier: "musclesCVC")
-        exercisesCV.backgroundColor = .clear
+        exercisesCV?.register(MusclesGroupsCVC.self, forCellWithReuseIdentifier: MusclesGroupsCVC.reuseIdentifier)
+        exercisesCV?.backgroundColor = .clear
         
-        view.addSubview(exercisesCV)
+        view.addSubview(exercisesCV ?? UICollectionView())
         
-        exercisesCV.snp.makeConstraints {
+        exercisesCV?.snp.makeConstraints {
             $0.top.equalTo(cellTitle.snp.bottom).offset(Paddings.spacing)
             $0.leading.trailing.equalToSuperview().inset(Paddings.padding)
             $0.bottom.equalToSuperview().inset(150)
@@ -191,7 +212,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "musclesCVC", for: indexPath) as? MusclesGroupsCVC
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusclesGroupsCVC.reuseIdentifier, for: indexPath) as? MusclesGroupsCVC
         let musclesData = musclesDataArray[indexPath.item]
         cell?.musclesDataArrayInCVC = musclesData
         cell?.configure()

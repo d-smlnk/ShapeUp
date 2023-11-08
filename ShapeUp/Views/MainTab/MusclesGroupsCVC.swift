@@ -8,6 +8,9 @@
 import UIKit
 
 class MusclesGroupsCVC: UICollectionViewCell {
+    
+    static let reuseIdentifier = "MusclesGroupsCVC"
+    
     var musclesDataArrayInCVC: (UIImage, String, Int)?
     private let cellImage = UIImageView()
     private let exerciseTypeLabel = UILabel()

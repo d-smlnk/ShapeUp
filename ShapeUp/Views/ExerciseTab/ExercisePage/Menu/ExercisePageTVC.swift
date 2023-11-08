@@ -10,6 +10,8 @@ import RealmSwift
 
 class ExercisePageTVC: UITableViewCell {
     
+    static let reuseIdentifier = "ExercisePageTVC"
+    
     var musclesGroup: (UIImage, String, Int)?
     private let muscleImage = UIImageView()
     private let muscleGroupLabel = UILabel()

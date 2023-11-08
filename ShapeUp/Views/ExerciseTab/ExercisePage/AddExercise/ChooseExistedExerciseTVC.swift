@@ -12,7 +12,7 @@ class ChooseExistedExerciseTVC: UITableViewCell {
     
     static let reuseIdentifier = "ChooseExistedExerciseTVC"
     
-    private let exerciseNameLabel = UILabel()
+    let exerciseNameLabel = UILabel()
     var realmData : RealmExerciseService?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

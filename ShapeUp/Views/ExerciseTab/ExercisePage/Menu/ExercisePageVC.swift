@@ -12,7 +12,10 @@ class ExercisePageVC: UIViewController {
     
     static var muscleGroupNameDelegate: String?
     
-    private let musclesDataArray: [(UIImage, String, Int)] = [
+    private let muscleGroupTV = UITableView(frame: .zero, style: .grouped)
+
+    #warning("REMAKE ExercisePageVC musclesDataArray")
+    private var musclesDataArray: [(UIImage, String, Int)] = [
         (UIImage(named: "Neck") ?? UIImage(), "Neck", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Neck").count),
         (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Chest").count),
         (UIImage(named: "BackMuscle") ?? UIImage(), "Back", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Back").count),
@@ -26,12 +29,18 @@ class ExercisePageVC: UIViewController {
         (UIImage(named: "Cardio") ?? UIImage(), "Cardio", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Cardio").count),
         (UIImage(named: "Yoga") ?? UIImage(), "Yoga", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Yoga").count),
         (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Crossfit").count)
-    ]
+    ] {
+        didSet {
+            muscleGroupTV.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
     }
+
+    
     private func setupLayout() {
         view.backgroundColor = DesignColorTemplates.mainColor
         
@@ -50,14 +59,13 @@ class ExercisePageVC: UIViewController {
             $0.height.equalTo(SizeOFElements.heightForSingleElements)
         }
 
-        let muscleGroupTV = UITableView(frame: .zero, style: .grouped)
         muscleGroupTV.backgroundColor = .clear
         muscleGroupTV.separatorStyle = .none
         
         muscleGroupTV.dataSource = self
         muscleGroupTV.delegate = self
         
-        muscleGroupTV.register(ExercisePageTVC.self, forCellReuseIdentifier: "ExerciseTVC")
+        muscleGroupTV.register(ExercisePageTVC.self, forCellReuseIdentifier: ExercisePageTVC.reuseIdentifier)
         
         view.addSubview(muscleGroupTV)
         
@@ -87,7 +95,7 @@ extension ExercisePageVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTVC", for: indexPath) as? ExercisePageTVC
+        let cell = tableView.dequeueReusableCell(withIdentifier: ExercisePageTVC.reuseIdentifier, for: indexPath) as? ExercisePageTVC
         cell?.musclesGroup = musclesDataArray[indexPath.section]
         cell?.configure()
         return cell ?? UITableViewCell()

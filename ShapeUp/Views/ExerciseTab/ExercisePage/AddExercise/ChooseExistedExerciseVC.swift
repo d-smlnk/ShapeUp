@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ChooseExistedExerciseVC: UIViewController {
     
@@ -79,9 +80,18 @@ extension ChooseExistedExerciseVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tableView.cellForRow(at: indexPath) as? ChooseExistedExerciseTVC
-        print(realmData)
-        print(realmData.count)
+        let cell = tableView.cellForRow(at: indexPath) as? ChooseExistedExerciseTVC
+        
+        let settings = RealmPickedExerciseService()
+        do {
+            try realm.write({
+                settings.exerciseName = cell?.exerciseNameLabel.text ?? "No exercise name"
+                settings.exerciseDate = ExerciseVC.choosenDate
+//                #warning("turn on realm")
+                realm.add(settings)
+            })
+        } catch {}
+        dismiss(animated: true)
     }
     
     

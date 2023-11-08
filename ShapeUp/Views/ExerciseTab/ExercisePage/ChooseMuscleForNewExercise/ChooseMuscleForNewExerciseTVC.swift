@@ -8,6 +8,8 @@
 import UIKit
 
 class ChooseMuscleForNewExerciseTVC: UITableViewCell {
+    
+    static let reuseIdentifier = "ChooseMuscleForNewExerciseTVC"
 
     var musclesGroup: (UIImage, String)?
     private let muscleImage = UIImageView()

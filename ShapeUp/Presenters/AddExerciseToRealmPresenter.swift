@@ -7,7 +7,7 @@
 
 import Foundation
 import RealmSwift
-#warning("Turn on realm")
+//#warning("Turn on realm")
 public let realm = try! Realm()
 let objects = realm.objects(RealmExerciseService.self)
 
