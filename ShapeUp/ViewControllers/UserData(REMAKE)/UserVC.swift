@@ -50,23 +50,24 @@ class UserVC: UIViewController {
             bgView.backgroundColor = DS.DesignColorTemplates.secondaryColor
             bgView.layer.cornerRadius = 67.5//bgView.bounds.height / 2
             bgView.layer.masksToBounds = true
-
-            bgView.snp.makeConstraints {
-                $0.height.equalTo(bgView.snp.width)
-                $0.width.lessThanOrEqualTo(135)
-            }
-
+            bgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseSex)))
+            sexSelectionViews.append(bgView)
             bgView.addSubview(image)
-            
-            image.snp.makeConstraints {
-                $0.edges.equalToSuperview().inset(DS.Paddings.spacing * 4)
-            }
-            
+ 
             let label = UILabel()
             label.text = title
             label.textColor = .black
             label.font = .systemFont(ofSize: DS.Fonts.simpleTextFontSize, weight: .heavy)
             bgView.addSubview(label)
+            
+            bgView.snp.makeConstraints {
+                $0.height.equalTo(bgView.snp.width)
+                $0.width.lessThanOrEqualTo(135)
+            }
+            
+            image.snp.makeConstraints {
+                $0.edges.equalToSuperview().inset(DS.Paddings.spacing * 4)
+            }
             
             label.snp.makeConstraints {
                 $0.bottom.equalTo(bgView.snp.bottom).inset(DS.Paddings.spacing)
@@ -76,9 +77,6 @@ class UserVC: UIViewController {
             image.snp.makeConstraints {
                 $0.height.equalTo(image.snp.width)
             }
-            
-            bgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseSex)))
-            sexSelectionViews.append(bgView)
 
             return bgView
         }))
@@ -86,11 +84,6 @@ class UserVC: UIViewController {
         sexSelectionSV.distribution = .equalCentering
         sexSelectionSV.isUserInteractionEnabled = true
         view.addSubview(sexSelectionSV)
-        
-        sexSelectionSV.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing)
-            $0.horizontalEdges.equalToSuperview().inset(DS.Paddings.padding)
-        }
           
         let userDataTableView = UITableView()
         userDataTableView.delegate = self
@@ -108,8 +101,12 @@ class UserVC: UIViewController {
         insertUserDataBtn.layer.borderWidth = DS.SizeOFElements.customBorderWidth
         insertUserDataBtn.layer.borderColor = DS.DesignColorTemplates.borderColor?.cgColor
         insertUserDataBtn.addTarget(self, action: #selector(insertUserData), for: .touchUpInside)
-        
         view.addSubview(insertUserDataBtn)
+        
+        sexSelectionSV.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing)
+            $0.horizontalEdges.equalToSuperview().inset(DS.Paddings.padding)
+        }
          
         insertUserDataBtn.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(DS.Paddings.spacing * 20)
@@ -121,9 +118,7 @@ class UserVC: UIViewController {
             $0.top.equalTo(sexSelectionSV.snp.bottom).offset(DS.Paddings.spacing * 2)
             $0.horizontalEdges.equalToSuperview().inset(DS.Paddings.padding)
             $0.bottom.equalTo(insertUserDataBtn.snp.top).inset(DS.Paddings.spacing)
-        }
-        
-        
+        }        
     }
     
     @objc func chooseSex(sender: UITapGestureRecognizer) {

@@ -40,24 +40,26 @@ class MusclesGroupsCVC: UICollectionViewCell {
         cellImage.contentMode = .scaleAspectFit
         contentView.addSubview(cellImage)
         
+        exerciseTypeLabel.textColor = DS.DesignColorTemplates.customTextColor
+        exerciseTypeLabel.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .bold)
+        contentView.addSubview(exerciseTypeLabel)
+        
+        exerciseNumLabel.textColor = .lightGray
+        exerciseNumLabel.font = .systemFont(ofSize: DS.Fonts.simpleTextFontSize, weight: .bold)
+        contentView.addSubview(exerciseNumLabel)
+        
+        //MARK: CONSTRAINTS
+        
         cellImage.snp.makeConstraints {
             $0.top.equalToSuperview().inset(4)
             $0.leading.equalToSuperview()
             $0.bottom.equalToSuperview().inset(70)
         }
         
-        exerciseTypeLabel.textColor = DS.DesignColorTemplates.customTextColor
-        exerciseTypeLabel.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .bold)
-        contentView.addSubview(exerciseTypeLabel)
-        
         exerciseTypeLabel.snp.makeConstraints {
             $0.top.equalTo(cellImage.snp.bottom)
             $0.leading.equalToSuperview().inset(4)
         }
-        
-        exerciseNumLabel.textColor = .lightGray
-        exerciseNumLabel.font = .systemFont(ofSize: DS.Fonts.simpleTextFontSize, weight: .bold)
-        contentView.addSubview(exerciseNumLabel)
         
         exerciseNumLabel.snp.makeConstraints {
             $0.top.equalTo(exerciseTypeLabel.snp.bottom)

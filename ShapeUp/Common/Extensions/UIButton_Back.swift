@@ -24,8 +24,8 @@ extension UIViewController {
         self.view.addSubview(btn)
         
         btn.snp.makeConstraints {
-            $0.height.width.equalTo(SizeOFElements.heightForSingleElements)
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(Paddings.padding)
+            $0.height.width.equalTo(DS.SizeOFElements.heightForSingleElements)
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
         }
         return btn
     }

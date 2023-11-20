@@ -54,24 +54,22 @@ class ChooseMuscleForNewExerciseVC: UIViewController {
         labelSV.axis = .vertical
         labelSV.distribution = .fillEqually
         labelSV.spacing = CGFloat(DS.SizeOFElements.heightForSingleElements / 2)
-        
         view.addSubview(labelSV)
+                
+        let musclesGroupTV = UITableView(frame: .zero, style: .grouped)
+        musclesGroupTV.delegate = self
+        musclesGroupTV.dataSource = self
+        musclesGroupTV.register(ChooseMuscleForNewExerciseTVC.self, forCellReuseIdentifier: ChooseMuscleForNewExerciseTVC.reuseIdentifier)
+        musclesGroupTV.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        musclesGroupTV.separatorStyle = .none
+        view.addSubview(musclesGroupTV)
+        
+        //MARK: CONSTRAINTS
         
         labelSV.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
             $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
         }
-        
-        let musclesGroupTV = UITableView(frame: .zero, style: .grouped)
-        
-        musclesGroupTV.delegate = self
-        musclesGroupTV.dataSource = self
-        musclesGroupTV.register(ChooseMuscleForNewExerciseTVC.self, forCellReuseIdentifier: ChooseMuscleForNewExerciseTVC.reuseIdentifier)
-        
-        musclesGroupTV.backgroundColor = DS.DesignColorTemplates.secondaryColor
-        musclesGroupTV.separatorStyle = .none
-            
-        view.addSubview(musclesGroupTV)
         
         musclesGroupTV.snp.makeConstraints {
             $0.top.equalTo(labelSV.snp.bottom).offset(DS.Paddings.spacing)

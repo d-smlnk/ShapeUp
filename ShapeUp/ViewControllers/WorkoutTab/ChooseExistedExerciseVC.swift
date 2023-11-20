@@ -10,7 +10,7 @@ import RealmSwift
 
 class ChooseExistedExerciseVC: UIViewController {
     
-    let realmData = realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", ExercisePageVC.muscleGroupNameDelegate ?? "")
+    let realmData = RealmPresenter.realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", ExercisePageVC.muscleGroupNameDelegate ?? "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,24 +39,22 @@ class ChooseExistedExerciseVC: UIViewController {
         labelSV.axis = .vertical
         labelSV.distribution = .fillEqually
         labelSV.spacing = CGFloat(DS.SizeOFElements.heightForSingleElements / 2)
-        
         view.addSubview(labelSV)
+        
+        let musclesGroupTV = UITableView(frame: .zero, style: .grouped)
+        musclesGroupTV.delegate = self
+        musclesGroupTV.dataSource = self
+        musclesGroupTV.register(ChooseExistedExerciseTVC.self, forCellReuseIdentifier: ChooseExistedExerciseTVC.reuseIdentifier)
+        musclesGroupTV.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        musclesGroupTV.separatorStyle = .none
+        view.addSubview(musclesGroupTV)
+        
+        //MARK: CONSTRAINTS
         
         labelSV.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
             $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
         }
-        
-        let musclesGroupTV = UITableView(frame: .zero, style: .grouped)
-        
-        musclesGroupTV.delegate = self
-        musclesGroupTV.dataSource = self
-        musclesGroupTV.register(ChooseExistedExerciseTVC.self, forCellReuseIdentifier: ChooseExistedExerciseTVC.reuseIdentifier)
-        
-        musclesGroupTV.backgroundColor = DS.DesignColorTemplates.secondaryColor
-        musclesGroupTV.separatorStyle = .none
-        
-        view.addSubview(musclesGroupTV)
         
         musclesGroupTV.snp.makeConstraints {
             $0.top.equalTo(labelSV.snp.bottom).offset(DS.Paddings.spacing)
@@ -84,10 +82,10 @@ extension ChooseExistedExerciseVC: UITableViewDataSource, UITableViewDelegate {
         
         let settings = RealmPickedExerciseService()
         do {
-            try realm.write({
+            try RealmPresenter.realm.write({
                 settings.exerciseName = cell?.exerciseNameLabel.text ?? "No exercise name"
-                settings.exerciseDate = ExerciseVC.choosenDate
-                realm.add(settings)
+                settings.exerciseDate = WorkoutRoutineVC.choosenDate
+                RealmPresenter.realm.add(settings)
             })
         } catch {}
         dismiss(animated: true)

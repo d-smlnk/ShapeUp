@@ -17,7 +17,7 @@ class MainTabBarController: UITabBarController {
     
     private func generateTabBar() {
         viewControllers = [
-            generateVC(vc: ExerciseVC(), title: "Workout", image: UIImage(named: "WorkoutImg")),
+            generateVC(vc: WorkoutRoutineVC(), title: "Workout", image: UIImage(named: "WorkoutImg")),
             generateVC(vc: MainVC(), title: "", image: UIImage(named: "mainTabBarBtn")),
             generateVC(vc: NutritionVC(), title: "Meal", image: UIImage(named: "MealImg"))
         ]
@@ -47,9 +47,9 @@ class MainTabBarController: UITabBarController {
         tabBar.itemWidth = width / 5
         tabBar.itemPositioning = .centered
         
-        roundLayer.fillColor = DesignColorTemplates.secondaryColor?.cgColor
-        tabBar.tintColor = DesignColorTemplates.customTextColor
-        tabBar.unselectedItemTintColor = DesignColorTemplates.borderColor
+        roundLayer.fillColor = DS.DesignColorTemplates.secondaryColor?.cgColor
+        tabBar.tintColor = DS.DesignColorTemplates.customTextColor
+        tabBar.unselectedItemTintColor = DS.DesignColorTemplates.borderColor
     }
 
 }

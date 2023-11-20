@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RealmSwift
+
+class RealmWeightAndSet: Object {
+    @Persisted dynamic var weight: String
+    @Persisted dynamic var rep: String
+}

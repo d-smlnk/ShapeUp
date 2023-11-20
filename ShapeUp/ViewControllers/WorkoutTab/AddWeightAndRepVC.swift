@@ -37,6 +37,8 @@ class AddWeightAndRepVC: UIViewController {
         saveData.setTitle("Save and exit", for: .normal)
         view.addSubview(saveData)
         
+        //MARK: CONSTRAINTS
+
         saveData.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing)
@@ -56,9 +58,9 @@ class AddWeightAndRepVC: UIViewController {
 
 extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dateOnly = Calendar.current.startOfDay(for: ExerciseVC.choosenDate)
+        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
         
-        weightAndSetData = realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
+        weightAndSetData = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
 
         return weightAndSetData?.count ?? 0
     }
@@ -73,19 +75,19 @@ extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
     @objc func saveWeightAndSet() {
         do {
             let settings = RealmWeightAndSet()
-            try realm.write {
+            try RealmPresenter.realm.write {
                 settings.weight = AddWeightAndRepTVC.weightTF.text ?? "0"
                 settings.rep = AddWeightAndRepTVC.repTF.text ?? "0"
                 weightAndSetData?.first?.weightAndRep.append(settings)
-                realm.add(settings)
+                RealmPresenter.realm.add(settings)
             }
         } catch {
             print("Error to add weight and/or set \(error)")
         }
         
-        let dateOnly = Calendar.current.startOfDay(for: ExerciseVC.choosenDate)
+        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
 
-        weightAndSetData = realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
+        weightAndSetData = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
         print(weightAndSetData!)
         
         weightAndSetData!.forEach({ item in

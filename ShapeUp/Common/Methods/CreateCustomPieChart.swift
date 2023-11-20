@@ -10,11 +10,10 @@ import DGCharts
 import UIKit
 
 class CreateCustomPieChart {
-    
     static func createPieChart(doneNum: Int, totalNum: Int, labelText: String) -> UIStackView {
         let pieChartSvWithDesc = UIStackView()
         pieChartSvWithDesc.axis = .vertical
-        pieChartSvWithDesc.spacing = CGFloat(-Paddings.spacing)
+        pieChartSvWithDesc.spacing = CGFloat(-DS.Paddings.spacing)
         
         let pieChart = PieChartView()
         pieChart.highlightPerTapEnabled = false
@@ -24,7 +23,7 @@ class CreateCustomPieChart {
         let chartDoneLabel = String(doneNum)
         let chartDoneLabelText = chartDoneLabel.count > 4 ? "..." : chartDoneLabel
         let attributes: [NSAttributedString.Key : Any] = [
-            .font: UIFont.systemFont(ofSize: Fonts.titleFontSize, weight: .heavy),
+            .font: UIFont.systemFont(ofSize: DS.Fonts.titleFontSize, weight: .heavy),
             .foregroundColor: UIColor.white
         ]
         
@@ -32,11 +31,11 @@ class CreateCustomPieChart {
         chartDescription.text = labelText
         chartDescription.textAlignment = .center
         chartDescription.numberOfLines = 0
-        chartDescription.textColor = DesignColorTemplates.customTextColor
-        chartDescription.font = .systemFont(ofSize: Fonts.simpleTextFontSize, weight: .medium)
+        chartDescription.textColor = DS.DesignColorTemplates.customTextColor
+        chartDescription.font = .systemFont(ofSize: DS.Fonts.simpleTextFontSize, weight: .medium)
         
         pieChart.centerAttributedText = NSAttributedString(string: chartDoneLabelText, attributes: attributes)
-        pieChart.holeColor = DesignColorTemplates.borderColor
+        pieChart.holeColor = DS.DesignColorTemplates.borderColor
         pieChart.legend.enabled = false
         pieChart.transparentCircleRadiusPercent = CGFloat(0.7)
         
@@ -48,11 +47,11 @@ class CreateCustomPieChart {
             PieChartDataEntry(value: notDoneRatio)
         ]
         
-        let colors: [UIColor] = [DesignColorTemplates.borderColor ?? .red, .clear]
+        let colors: [UIColor] = [DS.DesignColorTemplates.borderColor ?? .red, .clear]
         let dataSet = PieChartDataSet(entries: dataEntries)
         dataSet.drawValuesEnabled = false
         dataSet.colors = colors
-        pieChart.transparentCircleColor = DesignColorTemplates.secondaryColor
+        pieChart.transparentCircleColor = DS.DesignColorTemplates.secondaryColor
         
         let data = PieChartData(dataSet: dataSet)
         pieChart.data = data

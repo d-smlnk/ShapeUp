@@ -1,0 +1,37 @@
+//
+//  FilterRealmElementPresenter.swift
+//  ShapeUp
+//
+//  Created by Дима Самойленко on 07.11.2023.
+//
+
+import Foundation
+import RealmSwift
+
+class RealmPresenter {
+    
+    static let realm = try! Realm()
+    
+    static func filterElementsByGroup<T: Object>(realmDB: T.Type, filterBy key: String, for word: String) -> Results<T> {
+        let result = realm.objects(realmDB).filter("\(key) == %@", word)
+        return result
+    }
+    
+    static func numberOfFilteredElements<T: Object>(realmDB: T.Type, filterBy key: String, for word: String) -> Int {
+        return filterElementsByGroup(realmDB: realmDB, filterBy: key, for: word).count
+    }
+    
+    static func addExerciseToRealm() {
+        let objects = realm.objects(RealmExerciseService.self)
+        do {
+            let settings = RealmExerciseService()
+            try realm.write {
+                settings.exerciseName = CreateExerciseVC.exerciseNameTF.text ?? "No exercise name"
+                settings.muscleGroupOfExercise = ChooseMuscleForNewExerciseVC.muscleGroupNameDelegate ?? "No muscles group"
+                realm.add(settings)
+            }
+            
+        } catch {}
+        print(objects)
+    }
+}

@@ -16,19 +16,19 @@ class ExercisePageVC: UIViewController {
 
     #warning("REMAKE ExercisePageVC musclesDataArray")
     private var musclesDataArray: [(UIImage, String, Int)] = [
-        (UIImage(named: "Neck") ?? UIImage(), "Neck", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Neck").count),
-        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Chest").count),
-        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Back").count),
-        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Legs").count),
-        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Shoulders").count),
-        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Biceps").count),
-        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Triceps").count),
-        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Forearm").count),
-        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Core").count),
-        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Calves").count),
-        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Cardio").count),
-        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Yoga").count),
-        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Crossfit").count)
+        (UIImage(named: "Neck") ?? UIImage(), "Neck", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Neck")),
+        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Chest")),
+        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Back")),
+        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Legs")),
+        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Shoulders")),
+        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Biceps")),
+        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Triceps")),
+        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Forearm")),
+        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Core")),
+        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Calves")),
+        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Cardio")),
+        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Yoga")),
+        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Crossfit"))
     ] {
         didSet {
             muscleGroupTV.reloadData()
@@ -39,7 +39,7 @@ class ExercisePageVC: UIViewController {
         super.viewDidLoad()
         setupLayout()
     }
-
+    
     
     private func setupLayout() {
         view.backgroundColor = DS.DesignColorTemplates.mainColor
@@ -51,23 +51,21 @@ class ExercisePageVC: UIViewController {
         createExerciseBtn.setTitleColor(DS.DesignColorTemplates.customTextColor, for: .normal)
         createExerciseBtn.titleLabel?.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .heavy)
         createExerciseBtn.addTarget(self, action: #selector(goToMuscleGroupMenu), for: .touchUpInside)
-        
         view.addSubview(createExerciseBtn)
+        
+        muscleGroupTV.backgroundColor = .clear
+        muscleGroupTV.separatorStyle = .none
+        muscleGroupTV.dataSource = self
+        muscleGroupTV.delegate = self
+        muscleGroupTV.register(ExercisePageTVC.self, forCellReuseIdentifier: ExercisePageTVC.reuseIdentifier)
+        view.addSubview(muscleGroupTV)
+        
+        //MARK: CONSTRAINTS
         
         createExerciseBtn.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
         }
-
-        muscleGroupTV.backgroundColor = .clear
-        muscleGroupTV.separatorStyle = .none
-        
-        muscleGroupTV.dataSource = self
-        muscleGroupTV.delegate = self
-        
-        muscleGroupTV.register(ExercisePageTVC.self, forCellReuseIdentifier: ExercisePageTVC.reuseIdentifier)
-        
-        view.addSubview(muscleGroupTV)
         
         muscleGroupTV.snp.makeConstraints {
             $0.top.equalTo(createExerciseBtn.snp.bottom).offset(DS.Paddings.spacing)

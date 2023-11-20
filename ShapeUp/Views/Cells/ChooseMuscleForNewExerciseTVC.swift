@@ -36,36 +36,35 @@ class ChooseMuscleForNewExerciseTVC: UITableViewCell {
         contentView.superview?.clipsToBounds = true
         contentView.superview?.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         
+        muscleImage.contentMode = .scaleAspectFit
+        contentView.addSubview(muscleImage)
+        
+        muscleGroupLabel.text = musclesGroup?.1
+        muscleGroupLabel.font = .systemFont(ofSize: DS.Fonts.titleFontSize, weight: .heavy)
+        muscleGroupLabel.textColor = DS.DesignColorTemplates.customTextColor
+        contentView.addSubview(muscleGroupLabel)
+        
+        let goNextBtn = UIButton()
+        goNextBtn.setImage(UIImage(named: "GoNext"), for: .normal)
+        goNextBtn.addTarget(self, action: #selector(presentVC), for: .touchUpInside)
+        contentView.addSubview(goNextBtn)
+        
+        //MARK: CONSTRAINTS
+        
         contentView.snp.makeConstraints {
             $0.height.equalTo(100)
             $0.edges.equalToSuperview()
         }
-        
-        muscleImage.contentMode = .scaleAspectFit
-        
-        contentView.addSubview(muscleImage)
         
         muscleImage.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview().inset(DS.Paddings.padding)
             $0.width.equalTo(40)
         }
         
-        muscleGroupLabel.text = musclesGroup?.1
-        muscleGroupLabel.font = .systemFont(ofSize: DS.Fonts.titleFontSize, weight: .heavy)
-        muscleGroupLabel.textColor = DS.DesignColorTemplates.customTextColor
-        
-        contentView.addSubview(muscleGroupLabel)
-        
         muscleGroupLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(muscleImage.snp.trailing).offset(DS.Paddings.spacing)
         }
-        
-        let goNextBtn = UIButton()
-        goNextBtn.setImage(UIImage(named: "GoNext"), for: .normal)
-        goNextBtn.addTarget(self, action: #selector(presentVC), for: .touchUpInside)
-        
-        contentView.addSubview(goNextBtn)
         
         goNextBtn.snp.makeConstraints {
             $0.centerY.equalToSuperview()

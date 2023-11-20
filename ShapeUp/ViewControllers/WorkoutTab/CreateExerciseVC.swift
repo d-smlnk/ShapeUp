@@ -28,30 +28,29 @@ class CreateExerciseVC: UIViewController {
         categoryLabel.textColor = DS.DesignColorTemplates.secondaryColor
         categoryLabel.setContentHuggingPriority(.required, for: .horizontal)
         categoryLabel.setContentHuggingPriority(.required, for: .vertical)
-        
         view.addSubview(categoryLabel)
-        
-        categoryLabel.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
-        }
-        
+ 
         CreateExerciseVC.exerciseNameTF.autocapitalizationType = .words
-        
         view.addSubview(CreateExerciseVC.exerciseNameTF)
-        
-        CreateExerciseVC.exerciseNameTF.snp.makeConstraints {
-            $0.top.equalTo(categoryLabel.snp.bottom).offset(DS.Paddings.padding)
-            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-        }
-        
+ 
         let saveBtn = UIButton()
         saveBtn.setTitle("Create", for: .normal)
         saveBtn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         saveBtn.backgroundColor = DS.DesignColorTemplates.customTextColor
         saveBtn.titleLabel?.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .bold)
         saveBtn.addTarget(self, action: #selector(addExercise), for: .touchUpInside)
-        
         view.addSubview(saveBtn)
+        
+        //MARK: CONSTRAINTS
+        
+        categoryLabel.snp.makeConstraints {
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
+        }
+        
+        CreateExerciseVC.exerciseNameTF.snp.makeConstraints {
+            $0.top.equalTo(categoryLabel.snp.bottom).offset(DS.Paddings.padding)
+            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
+        }
         
         saveBtn.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -61,7 +60,7 @@ class CreateExerciseVC: UIViewController {
     }
     
     @objc private func addExercise() {
-        addExerciseToRealm()
+        RealmPresenter.addExerciseToRealm()
         dismiss(animated: true)
     }
 }

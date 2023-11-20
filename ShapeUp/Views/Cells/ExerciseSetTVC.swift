@@ -36,6 +36,8 @@ class ExerciseSetTVC: UITableViewCell {
         setAndRepSV.distribution = .fillEqually
         setAndRepSV.spacing = CGFloat(DS.Paddings.spacing)
         contentView.addSubview(setAndRepSV)
+        
+        //MARK: CONSTRAINTS
   
         setAndRepSV.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(DS.Paddings.padding)
@@ -49,7 +51,6 @@ class ExerciseSetTVC: UITableViewCell {
             $0.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
             setAndRepSV.addArrangedSubview($0)
         }
-    
         weightTF.text = data?.weight
         repTF.text = data?.rep
     }

@@ -31,24 +31,25 @@ class ChooseExistedExerciseTVC: UITableViewCell {
     private func setupLayout() {
         backgroundColor = DS.DesignColorTemplates.secondaryColor
         
+        let addExerciseBtn = UIButton()
+        addExerciseBtn.setImage(UIImage(named: "AddExercise"), for: .normal)
+        contentView.addSubview(addExerciseBtn)
+        
+        contentView.addSubview(exerciseNameLabel)
+        
+        //MARK: CONSTRAINTS
+        
         contentView.snp.makeConstraints {
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
             $0.edges.equalToSuperview()
         }
-        
-        let addExerciseBtn = UIButton()
-        addExerciseBtn.setImage(UIImage(named: "AddExercise"), for: .normal)
-        
-        contentView.addSubview(addExerciseBtn)
         
         addExerciseBtn.snp.makeConstraints {
             $0.height.width.equalTo(20)
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(DS.Paddings.padding)
         }
-        
-        contentView.addSubview(exerciseNameLabel)
-        
+
         exerciseNameLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(DS.Paddings.padding)

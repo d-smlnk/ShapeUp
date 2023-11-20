@@ -47,6 +47,8 @@ extension CustomTextFieldTVC {
         
         contentView.addSubview(dataArray.0 ?? UITextField())
         
+        //MARK: CONSTRAINTS
+        
         dataArray.0?.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(DS.Paddings.spacing)
             $0.horizontalEdges.equalToSuperview()

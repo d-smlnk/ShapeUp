@@ -191,7 +191,7 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
     }
     
     @objc func addExercise() {
-        let addExercise = AddExerciseVC()
+        let addExercise = WorkoutMenuVC()
         addExercise.modalPresentationStyle = .popover
         present(addExercise, animated: true)
     }
@@ -248,7 +248,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
         
-        pickedExerciseDataArray = realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+        pickedExerciseDataArray = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
         
         if pickedExerciseDataArray?.count ?? 0 > 0 {
             emptyExerciseSV.isHidden = true
@@ -261,7 +261,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
         
-        let data = realm.objects(RealmPickedExerciseService.self)
+        let data = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
             .filter("exerciseDate >= %@", dateOnly)
             .filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
             .filter("exerciseName == %@", pickedExerciseDataArray?[section].exerciseName ?? "")
@@ -276,7 +276,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
         
         let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
         
-        let data = realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseName ?? "")
+        let data = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseName ?? "")
         
         data.forEach {
             cell?.data = $0.weightAndRep[indexPath.row]
@@ -338,15 +338,15 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == .delete {
             if let objectToDelete = pickedExerciseDataArray?[indexPath.section] {
                 do {
-                    try realm.write {
-                        realm.delete(objectToDelete.weightAndRep[indexPath.row])
+                    try RealmPresenter.realm.write {
+                        RealmPresenter.realm.delete(objectToDelete.weightAndRep[indexPath.row])
                         
                     }
                     let remainingRows = pickedExerciseDataArray?[indexPath.section].weightAndRep.count ?? 0
                     
                     if remainingRows == 0 {
-                        try realm.write {
-                            realm.delete(objectToDelete)
+                        try RealmPresenter.realm.write {
+                            RealmPresenter.realm.delete(objectToDelete)
                         }
                         tableView.reloadData()
                     } else {

@@ -5,10 +5,6 @@
 //  Created by Дима Самойленко on 20.10.2023.
 //
 
-/*
- Головний екран додатку включає в себе профіль користувача, графік (бар чарт), що відображає співвідношення між спожитими калоріями та калоріями, які потрібно спожити, а також налаштування цілей та можливість введення зміни ваги.
- */
-
 import UIKit
 import DGCharts
 
@@ -17,19 +13,19 @@ class MainVC: UIViewController {
     #warning("FIXOUT WHY filterElementsByGroup DONT WORKING")
     private var exercisesCV: UICollectionView?
     private var musclesDataArray: [(UIImage, String, Int)] = [
-        (UIImage(named: "Neck") ?? UIImage(), "Neck", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Neck").count),
-        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Chest").count),
-        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Back").count),
-        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Legs").count),
-        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Shoulders").count),
-        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Biceps").count),
-        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Triceps").count),
-        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Forearm").count),
-        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Core").count),
-        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Calves").count),
-        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Cardio").count),
-        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Yoga").count),
-        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", "Crossfit").count)
+        (UIImage(named: "Neck") ?? UIImage(), "Neck", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Neck")),
+        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Chest")),
+        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Back")),
+        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Legs")),
+        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Shoulders")),
+        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Biceps")),
+        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Triceps")),
+        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Forearm")),
+        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Core")),
+        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Calves")),
+        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Cardio")),
+        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Yoga")),
+        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Crossfit"))
     ] {
         didSet {
             exercisesCV?.reloadData()
@@ -50,56 +46,27 @@ class MainVC: UIViewController {
         nameLabel.textColor = DS.DesignColorTemplates.customTextColor
         view.addSubview(nameLabel)
         
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing * 7)
-            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
-        }
-        
         let staticLabel = UILabel()
         staticLabel.text = "Get In Shape!"
         staticLabel.font = .systemFont(ofSize: DS.Fonts.titleFontSize, weight: .heavy)
         staticLabel.textColor = DS.DesignColorTemplates.customTextColor
         view.addSubview(staticLabel)
-
-        staticLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(DS.Paddings.spacing)
-            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
-        }
         
         let infoView = UIView()
         infoView.backgroundColor = DS.DesignColorTemplates.secondaryColor
         infoView.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         view.addSubview(infoView)
         
-        infoView.snp.makeConstraints {
-            $0.top.equalTo(staticLabel.snp.bottom).offset(DS.Paddings.spacing * 7)
-            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-            $0.height.equalTo(250)
-        }
-        
         let womanImage = UIImage(named: "WomanImg")
+        
         let imageView = UIImageView(image: womanImage)
         infoView.addSubview(imageView)
         
-        imageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(-80)
-            $0.bottom.trailing.equalToSuperview()
-            $0.width.equalTo(imageView.snp.height).dividedBy(2.4)
-        }
         let weightPiechart = CreateCustomPieChart.createPieChart(doneNum: 70, totalNum: 80, labelText: "Goal Weight")
         infoView.addSubview(weightPiechart)
         
         let ccalPiechart = CreateCustomPieChart.createPieChart(doneNum: 1200, totalNum: 1500, labelText: "Eaten today")
         infoView.addSubview(ccalPiechart)
-        
-        weightPiechart.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
-        }
-        
-        ccalPiechart.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(weightPiechart.snp.trailing)
-        }
         
         let infoArray: [(String, String?, Int?)] = [
             ("Goal:", "Losing weight", nil),
@@ -120,7 +87,6 @@ class MainVC: UIViewController {
             label.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .medium)
             label.numberOfLines = 0
             label.setContentHuggingPriority(.required, for: .vertical)
-            
             container.addSubview(label)
             
             label.snp.makeConstraints {
@@ -130,40 +96,23 @@ class MainVC: UIViewController {
             if labelText.contains("\n") {
                 label.lineBreakMode = .byWordWrapping
             }
-            
+
             return container
         }))
         
         infoSV.axis = .vertical
         infoSV.spacing = CGFloat(DS.Paddings.spacing)
         infoView.addSubview(infoSV)
-        
-        infoSV.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
-            $0.bottom.equalToSuperview().inset(DS.Paddings.spacing)
-        }
-                
+         
         let separatorView = UIView()
         separatorView.backgroundColor = DS.DesignColorTemplates.borderColor
-        
         view.addSubview(separatorView)
-        
-        separatorView.snp.makeConstraints {
-            $0.top.equalTo(infoView.snp.bottom).offset(DS.Paddings.spacing * 5)
-            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-            $0.height.equalTo(2)
-        }
         
         let cellTitle = UILabel()
         cellTitle.text = "Your exercises"
         cellTitle.textColor = DS.DesignColorTemplates.customTextColor
         cellTitle.font = .systemFont(ofSize: DS.Fonts.titleFontSize, weight: .heavy)
         view.addSubview(cellTitle)
-        
-        cellTitle.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(DS.Paddings.padding)
-            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
-        }
         
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 180, height: 200)
@@ -173,11 +122,58 @@ class MainVC: UIViewController {
         exercisesCV?.showsHorizontalScrollIndicator = false
         exercisesCV?.dataSource = self
         exercisesCV?.delegate = self
-        
         exercisesCV?.register(MusclesGroupsCVC.self, forCellWithReuseIdentifier: MusclesGroupsCVC.reuseIdentifier)
         exercisesCV?.backgroundColor = .clear
-        
         view.addSubview(exercisesCV ?? UICollectionView())
+        
+        //MARK: CONSTRAINTS
+        
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing * 7)
+            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
+        }
+        
+        staticLabel.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(DS.Paddings.spacing)
+            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
+        }
+        
+        infoView.snp.makeConstraints {
+            $0.top.equalTo(staticLabel.snp.bottom).offset(DS.Paddings.spacing * 7)
+            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
+            $0.height.equalTo(250)
+        }
+        
+        imageView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(-80)
+            $0.bottom.trailing.equalToSuperview()
+            $0.width.equalTo(imageView.snp.height).dividedBy(2.4)
+        }
+        
+        weightPiechart.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
+        }
+        
+        ccalPiechart.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(weightPiechart.snp.trailing)
+        }
+        
+        infoSV.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
+            $0.bottom.equalToSuperview().inset(DS.Paddings.spacing)
+        }
+
+        separatorView.snp.makeConstraints {
+            $0.top.equalTo(infoView.snp.bottom).offset(DS.Paddings.spacing * 5)
+            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
+            $0.height.equalTo(2)
+        }
+        
+        cellTitle.snp.makeConstraints {
+            $0.top.equalTo(separatorView.snp.bottom).offset(DS.Paddings.padding)
+            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
+        }
         
         exercisesCV?.snp.makeConstraints {
             $0.top.equalTo(cellTitle.snp.bottom).offset(DS.Paddings.spacing)

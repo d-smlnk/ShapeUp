@@ -14,7 +14,6 @@ class ProgramPageVC: UIViewController {
         setupLayout()
     }
     
-
     private func setupLayout() {
         view.backgroundColor = DS.DesignColorTemplates.mainColor
         
@@ -24,9 +23,10 @@ class ProgramPageVC: UIViewController {
         addProgramBtn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         addProgramBtn.setTitleColor(DS.DesignColorTemplates.customTextColor, for: .normal)
         addProgramBtn.titleLabel?.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .heavy)
-        
         view.addSubview(addProgramBtn)
         
+        //MARK: CONSTRAINTS
+
         addProgramBtn.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
