@@ -10,7 +10,6 @@ import DGCharts
 
 class MainVC: UIViewController {
     
-    #warning("FIXOUT WHY filterElementsByGroup DONT WORKING")
     private var exercisesCV: UICollectionView?
     private var musclesDataArray: [(UIImage, String, Int)] = [
         (UIImage(named: "Neck") ?? UIImage(), "Neck", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Neck")),

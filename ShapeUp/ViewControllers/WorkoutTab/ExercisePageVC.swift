@@ -14,7 +14,6 @@ class ExercisePageVC: UIViewController {
     
     private let muscleGroupTV = UITableView(frame: .zero, style: .grouped)
 
-    #warning("REMAKE ExercisePageVC musclesDataArray")
     private var musclesDataArray: [(UIImage, String, Int)] = [
         (UIImage(named: "Neck") ?? UIImage(), "Neck", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Neck")),
         (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", RealmPresenter.numberOfFilteredElements(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: "Chest")),

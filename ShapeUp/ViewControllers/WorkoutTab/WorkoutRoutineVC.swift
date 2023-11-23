@@ -229,7 +229,24 @@ extension WorkoutRoutineVC: FSCalendarDelegate, FSCalendarDataSource {
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return 1
+        
+        let data = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
+        
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter
+        }()
+        
+        let dateString = dateFormatter.string(from: date)
+        
+        if data.map ({ item in
+            return dateFormatter.string(from: item.exerciseDate)
+        }).contains(dateString) {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
@@ -259,24 +276,17 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
-        
-        let data = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
-            .filter("exerciseDate >= %@", dateOnly)
-            .filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
-            .filter("exerciseName == %@", pickedExerciseDataArray?[section].exerciseName ?? "")
+        let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: pickedExerciseDataArray?[section].exerciseName ?? "")
         
         return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) : 0
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ExerciseSetTVC.reuseIdentifier, for: indexPath) as? ExerciseSetTVC
+        
         let exerciseName = pickedExerciseDataArray?[indexPath.section].exerciseName
         
-        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
-        
-        let data = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseName ?? "")
+        let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseName ?? "")
         
         data.forEach {
             cell?.data = $0.weightAndRep[indexPath.row]
@@ -360,4 +370,3 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-

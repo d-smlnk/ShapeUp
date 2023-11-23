@@ -21,6 +21,17 @@ class RealmPresenter {
         return filterElementsByGroup(realmDB: realmDB, filterBy: key, for: word).count
     }
     
+    static func filterByDateAndExerciseName<T: Object>(realmDB: T.Type, exerciseName: String) -> Results<T> {
+        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
+        
+        let data = RealmPresenter.realm.objects(realmDB)
+            .filter("exerciseDate >= %@", dateOnly)
+            .filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+            .filter("exerciseName == %@", exerciseName)
+        
+        return data
+    }
+    
     static func addExerciseToRealm() {
         let objects = realm.objects(RealmExerciseService.self)
         do {

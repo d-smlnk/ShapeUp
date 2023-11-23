@@ -58,9 +58,8 @@ class AddWeightAndRepVC: UIViewController {
 
 extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
         
-        weightAndSetData = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
+        weightAndSetData = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
 
         return weightAndSetData?.count ?? 0
     }
@@ -85,10 +84,7 @@ extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
             print("Error to add weight and/or set \(error)")
         }
         
-        let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
-
-        weightAndSetData = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date()).filter("exerciseName == %@", exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
-        print(weightAndSetData!)
+        print(weightAndSetData ?? "")
         
         weightAndSetData!.forEach({ item in
             print(item.weightAndRep.count)

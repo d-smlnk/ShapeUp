@@ -10,8 +10,8 @@ import RealmSwift
 
 class ChooseExistedExerciseVC: UIViewController {
     
-    let realmData = RealmPresenter.realm.objects(RealmExerciseService.self).filter("muscleGroupOfExercise == %@", ExercisePageVC.muscleGroupNameDelegate ?? "")
-
+    let realmData = RealmPresenter.filterElementsByGroup(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: ExercisePageVC.muscleGroupNameDelegate ?? "")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
