@@ -46,11 +46,6 @@ class AddWeightAndRepTVC: UITableViewCell {
             $0.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
             setAndRepSV.addArrangedSubview($0)
         }
-        
-        weightAndSetData?.weightAndRep.forEach {
-            AddWeightAndRepTVC.weightTF.text = $0.weight
-            AddWeightAndRepTVC.repTF.text = $0.rep
-        }
     }
     
 }

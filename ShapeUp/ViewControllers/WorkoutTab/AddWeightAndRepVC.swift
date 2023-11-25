@@ -83,12 +83,7 @@ extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
         } catch {
             print("Error to add weight and/or set \(error)")
         }
-        
-        print(weightAndSetData ?? "")
-        
-        weightAndSetData!.forEach({ item in
-            print(item.weightAndRep.count)
-        })
+     
         dismiss(animated: true)
     }
 }

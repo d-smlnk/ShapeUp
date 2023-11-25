@@ -24,7 +24,7 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
     private var calendarView = UIView()
     private let indicatorView = UIView()
     private var emptyExerciseSV = UIStackView()
-    private var trainingsCalendar = FSCalendar()
+    private let trainingsCalendar = FSCalendar()
     private let exerciseListTV = UITableView()
     static var choosenDate = Date()
     private var pickedExerciseDataArray: Results<RealmPickedExerciseService>?
@@ -107,9 +107,10 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
         exerciseListTV.delegate = self
         exerciseListTV.dataSource = self
         exerciseListTV.register(ExerciseSetTVC.self, forCellReuseIdentifier: ExerciseSetTVC.reuseIdentifier)
+        exerciseListTV.register(AddSetBtnTVC.self, forCellReuseIdentifier: AddSetBtnTVC.reuseIdentifier)
         view.addSubview(exerciseListTV)
         
-        //MARK: CONSTRAINTS
+        //MARK: - CONSTRAINTS
         
         emptyExerciseSV.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -208,7 +209,6 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
     }
     
     @objc func addSet(btn: UIButton) {
-        print("Section", btn.tag)
         exerciseNameTitle = pickedExerciseDataArray?[btn.tag].exerciseName ?? ""
         let vc = AddWeightAndRepVC()
         vc.exerciseNameTitleDelegate = self
@@ -265,7 +265,9 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
         
-        pickedExerciseDataArray = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseDate >= %@", dateOnly).filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+        pickedExerciseDataArray = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
+            .filter("exerciseDate >= %@", dateOnly)
+            .filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
         
         if pickedExerciseDataArray?.count ?? 0 > 0 {
             emptyExerciseSV.isHidden = true
@@ -278,34 +280,34 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: pickedExerciseDataArray?[section].exerciseName ?? "")
         
-        return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) : 0
+        return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) + 1 : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ExerciseSetTVC.reuseIdentifier, for: indexPath) as? ExerciseSetTVC
-        
-        let exerciseName = pickedExerciseDataArray?[indexPath.section].exerciseName
-        
-        let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseName ?? "")
-        
-        data.forEach {
-            cell?.data = $0.weightAndRep[indexPath.row]
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AddSetBtnTVC.reuseIdentifier, for: indexPath) as? AddSetBtnTVC
+            cell?.addSetBtn.addTarget(self, action: #selector(addSet), for: .touchUpInside)
+            return cell ?? UITableViewCell()
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ExerciseSetTVC.reuseIdentifier, for: indexPath) as? ExerciseSetTVC
+
+            let exerciseName = pickedExerciseDataArray?[indexPath.section].exerciseName
+            
+            let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseName ?? "")
+            
+            data.forEach {
+                cell?.data = $0.weightAndRep[indexPath.row]
+            }
+            
+            cell?.configure()
+            return cell ?? UITableViewCell()
         }
-        
-        cell?.configure()
-        return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         let headerView = UIView()
-        headerView.backgroundColor = DS.DesignColorTemplates.mainColor
         
-        let addSetBtn = UIButton()
-        addSetBtn.setImage(UIImage(named: "AddSet"), for: .normal)
-        addSetBtn.tag = section
-        addSetBtn.addTarget(self, action: #selector(addSet), for: .touchUpInside)
-        headerView.addSubview(addSetBtn)
+        headerView.backgroundColor = DS.DesignColorTemplates.mainColor
         
         let exerciseLabel = UILabel()
         exerciseLabel.textColor = .black
@@ -320,16 +322,10 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
         dropDownMenuBtn.tag = section
         headerView.addSubview(dropDownMenuBtn)
         
-        addSetBtn.snp.makeConstraints {
-            $0.height.width.equalTo(DS.SizeOFElements.heightForSingleElements / 2)
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(DS.Paddings.spacing)
-        }
-        
         exerciseLabel.snp.makeConstraints {
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(addSetBtn.snp.trailing).offset(DS.Paddings.spacing)
+            $0.leading.equalToSuperview().offset(DS.Paddings.spacing)
         }
         
         dropDownMenuBtn.snp.makeConstraints {
@@ -341,7 +337,11 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            return .none
+        } else {
+            return .delete
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

@@ -7,6 +7,8 @@
 
 import UIKit
 import RealmSwift
+import RxSwift
+import RxCocoa
 
 class ExerciseSetTVC: UITableViewCell {
 
@@ -15,6 +17,8 @@ class ExerciseSetTVC: UITableViewCell {
     private let weightTF = UITextField(image: UIImage(named: "scale") ?? UIImage(), placeholder: "Weight", contentType: .creditCardNumber)
     private let repTF = UITextField(image: UIImage(named: "reps") ?? UIImage(), placeholder: "Rep", contentType: .creditCardNumber)
     private let setAndRepSV = UIStackView()
+    
+    private let disposeBag = DisposeBag()
     
     var exerciseName: String?
     
@@ -53,6 +57,31 @@ class ExerciseSetTVC: UITableViewCell {
         }
         weightTF.text = data?.weight
         repTF.text = data?.rep
+        
+        weightTF.rx.text.changed
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                do {
+                    try RealmPresenter.realm.write {
+                        self.data?.weight = text ?? ""
+                    }
+                } catch {
+                    print("Error during updating set: \(error)")
+                }
+            })
+            .disposed(by: disposeBag) 
+        
+        repTF.rx.text.changed
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                do {
+                    try RealmPresenter.realm.write {
+                        self.data?.rep = text ?? ""
+                    }
+                } catch {
+                    print("Error during updating set: \(error)")
+                }
+            })
+            .disposed(by: disposeBag)
     }
-    
 }
