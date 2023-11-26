@@ -108,6 +108,7 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
         exerciseListTV.dataSource = self
         exerciseListTV.register(ExerciseSetTVC.self, forCellReuseIdentifier: ExerciseSetTVC.reuseIdentifier)
         exerciseListTV.register(AddSetBtnTVC.self, forCellReuseIdentifier: AddSetBtnTVC.reuseIdentifier)
+        exerciseListTV.register(WorkoutHeaderCellTVC.self, forCellReuseIdentifier: WorkoutHeaderCellTVC.reuseIdentifier)
         view.addSubview(exerciseListTV)
         
         //MARK: - CONSTRAINTS
@@ -280,60 +281,37 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: pickedExerciseDataArray?[section].exerciseName ?? "")
         
-        return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) + 1 : 0
+        return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) + 2 : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutHeaderCellTVC.reuseIdentifier, for: indexPath) as? WorkoutHeaderCellTVC
+            cell?.exerciseLabel.text = pickedExerciseDataArray?[indexPath.section].exerciseName
+            cell?.dropDownMenuBtn.addTarget(self, action: #selector(btn), for: .touchUpInside)
+            cell?.dropDownMenuBtn.tag = indexPath.section
+            return cell ?? UITableViewCell()
+        } else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: AddSetBtnTVC.reuseIdentifier, for: indexPath) as? AddSetBtnTVC
+            cell?.addSetBtn.tag = indexPath.section
             cell?.addSetBtn.addTarget(self, action: #selector(addSet), for: .touchUpInside)
             return cell ?? UITableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ExerciseSetTVC.reuseIdentifier, for: indexPath) as? ExerciseSetTVC
-
+            
             let exerciseName = pickedExerciseDataArray?[indexPath.section].exerciseName
             
             let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseName ?? "")
             
-            data.forEach {
-                cell?.data = $0.weightAndRep[indexPath.row]
+            if indexPath.row < data.flatMap({ $0.weightAndRep }).count {
+                cell?.data = data.flatMap({ $0.weightAndRep })[indexPath.row]
             }
+            
+            cell?.data = pickedExerciseDataArray?[indexPath.section].weightAndRep[indexPath.row - 1]
             
             cell?.configure()
             return cell ?? UITableViewCell()
         }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        
-        headerView.backgroundColor = DS.DesignColorTemplates.mainColor
-        
-        let exerciseLabel = UILabel()
-        exerciseLabel.textColor = .black
-        exerciseLabel.font = .systemFont(ofSize: DS.Fonts.smallTitleFontSize, weight: .semibold)
-        exerciseLabel.text = pickedExerciseDataArray?[section].exerciseName
-        headerView.addSubview(exerciseLabel)
-        
-        let dropDownMenuBtn = UIButton()
-        dropDownMenuBtn.addTarget(self, action: #selector(btn), for: .touchUpInside)
-        dropDownMenuBtn.setImage(UIImage(named: "DropDownMenu"), for: .normal)
-        dropDownMenuBtn.setImage(UIImage(named: "HideDroppedMenu"), for: .selected)
-        dropDownMenuBtn.tag = section
-        headerView.addSubview(dropDownMenuBtn)
-        
-        exerciseLabel.snp.makeConstraints {
-            $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(DS.Paddings.spacing)
-        }
-        
-        dropDownMenuBtn.snp.makeConstraints {
-            $0.height.width.equalTo(DS.SizeOFElements.heightForSingleElements / 2)
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(DS.Paddings.spacing)
-        }
-        return headerView
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -345,28 +323,40 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
         if editingStyle == .delete {
-            if let objectToDelete = pickedExerciseDataArray?[indexPath.section] {
+            guard let objectToDelete = pickedExerciseDataArray?[indexPath.section] else { return }
+            
+            let remainingRows = (pickedExerciseDataArray?[indexPath.section].weightAndRep.count ?? 0) - 1
+            
+            if remainingRows == 0 {
                 do {
-                    try RealmPresenter.realm.write {
-                        RealmPresenter.realm.delete(objectToDelete.weightAndRep[indexPath.row])
-                        
+                    try? RealmPresenter.realm.write {
+                        RealmPresenter.realm.delete(objectToDelete)
                     }
-                    let remainingRows = pickedExerciseDataArray?[indexPath.section].weightAndRep.count ?? 0
-                    
-                    if remainingRows == 0 {
-                        try RealmPresenter.realm.write {
-                            RealmPresenter.realm.delete(objectToDelete)
-                        }
-                        tableView.reloadData()
-                    } else {
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                    }
-                } catch {
-                    print("Ошибка при удалении объекта из Realm: \(error)")
                 }
+                
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+                
+            } else if indexPath.row == 0 {
+                do {
+                    try? RealmPresenter.realm.write {
+                        RealmPresenter.realm.delete(objectToDelete)
+                    }
+                }
+                
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+                
+            } else {
+                do {
+                    try? RealmPresenter.realm.write {
+                        RealmPresenter.realm.delete(objectToDelete.weightAndRep[indexPath.row - 1])
+                    }
+                }
+                
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
             }
         }
     }
-    
 }

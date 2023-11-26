@@ -19,9 +19,7 @@ class ExerciseSetTVC: UITableViewCell {
     private let setAndRepSV = UIStackView()
     
     private let disposeBag = DisposeBag()
-    
-    var exerciseName: String?
-    
+        
     var data: RealmWeightAndSet?
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

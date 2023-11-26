@@ -43,6 +43,7 @@
 		22B5F2B22AF917B300B47D6D /* RealmPickedExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2B12AF917B300B47D6D /* RealmPickedExerciseService.swift */; };
 		22CE76292B0FE97B001FA709 /* RxRealm in Frameworks */ = {isa = PBXBuildFile; productRef = 22CE76282B0FE97B001FA709 /* RxRealm */; };
 		22CE762B2B122397001FA709 /* AddSetBtnTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CE762A2B122396001FA709 /* AddSetBtnTVC.swift */; };
+		22CE762F2B12773C001FA709 /* WorkoutHeaderCellTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CE762E2B12773C001FA709 /* WorkoutHeaderCellTVC.swift */; };
 		22DC551C2AEAAD6200C3556C /* WorkoutMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC551B2AEAAD6200C3556C /* WorkoutMenuVC.swift */; };
 		22DC551F2AEAAFB100C3556C /* UITextField_Image .swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC551E2AEAAFB100C3556C /* UITextField_Image .swift */; };
 		22DC55222AEB160900C3556C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC55212AEB160900C3556C /* FSCalendar */; };
@@ -113,6 +114,7 @@
 		22B5F2AD2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseExistedExerciseTVC.swift; sourceTree = "<group>"; };
 		22B5F2B12AF917B300B47D6D /* RealmPickedExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPickedExerciseService.swift; sourceTree = "<group>"; };
 		22CE762A2B122396001FA709 /* AddSetBtnTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetBtnTVC.swift; sourceTree = "<group>"; };
+		22CE762E2B12773C001FA709 /* WorkoutHeaderCellTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHeaderCellTVC.swift; sourceTree = "<group>"; };
 		22DC551B2AEAAD6200C3556C /* WorkoutMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMenuVC.swift; sourceTree = "<group>"; };
 		22DC551E2AEAAFB100C3556C /* UITextField_Image .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField_Image .swift"; sourceTree = "<group>"; };
 		22DC552C2AEFE20F00C3556C /* RealmExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmExerciseService.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				2236CCBC2AFEAE8A006F7880 /* ExerciseSetTVC.swift */,
+				22CE762E2B12773C001FA709 /* WorkoutHeaderCellTVC.swift */,
 				2236CCBA2AFE805F006F7880 /* AddWeightAndRepTVC.swift */,
 				22CE762A2B122396001FA709 /* AddSetBtnTVC.swift */,
 				22DC55342AF01FA800C3556C /* ExercisePageTVC.swift */,
@@ -538,6 +541,7 @@
 				22DC55332AF009E400C3556C /* ProgramPageVC.swift in Sources */,
 				22603E9C2AE5C3D900D2E183 /* MusclesGroupsCVC.swift in Sources */,
 				2201068F2AE2C2E000132B3A /* WorkoutRoutineVC.swift in Sources */,
+				22CE762F2B12773C001FA709 /* WorkoutHeaderCellTVC.swift in Sources */,
 				22B5F2AE2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift in Sources */,
 				22CE762B2B122397001FA709 /* AddSetBtnTVC.swift in Sources */,
 				224498522AFAD80100557632 /* RealmPresenter.swift in Sources */,
