@@ -20,10 +20,10 @@ class AddWeightAndRepVC: UIViewController {
     }
     
     private func setupLayout() {
-        view.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        view.backgroundColor = DS.DesignColorTemplates.borderColor
                 
         let setAndRepTV = UITableView()
-        setAndRepTV.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        setAndRepTV.backgroundColor = DS.DesignColorTemplates.borderColor
         setAndRepTV.separatorStyle = .none
         setAndRepTV.dataSource = self
         setAndRepTV.delegate = self
@@ -31,10 +31,11 @@ class AddWeightAndRepVC: UIViewController {
         view.addSubview(setAndRepTV)
         
         let saveData = UIButton()
-        saveData.backgroundColor = DS.DesignColorTemplates.borderColor
+        saveData.backgroundColor = DS.DesignColorTemplates.secondaryColor
         saveData.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         saveData.addTarget(self, action: #selector(saveWeightAndSet), for: .touchUpInside)
         saveData.setTitle("Save and exit", for: .normal)
+        saveData.setTitleColor(.black, for: .normal)
         view.addSubview(saveData)
         
         //MARK: CONSTRAINTS

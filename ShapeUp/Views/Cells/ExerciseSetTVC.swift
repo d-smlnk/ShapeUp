@@ -49,8 +49,6 @@ class ExerciseSetTVC: UITableViewCell {
     
     func configure() {
         [weightTF, repTF].forEach {
-            $0.backgroundColor = .lightGray
-            $0.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
             setAndRepSV.addArrangedSubview($0)
         }
         weightTF.text = data?.weight

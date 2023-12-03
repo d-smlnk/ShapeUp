@@ -25,7 +25,7 @@ class AddWeightAndRepTVC: UITableViewCell {
     }
     
     private func setupLayout() {
-        contentView.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        contentView.backgroundColor = DS.DesignColorTemplates.borderColor
                 
         setAndRepSV.axis = .horizontal
         setAndRepSV.distribution = .fillEqually
@@ -42,8 +42,6 @@ class AddWeightAndRepTVC: UITableViewCell {
     
     func configure() {
         [AddWeightAndRepTVC.weightTF, AddWeightAndRepTVC.repTF].forEach {
-            $0.backgroundColor = .lightGray
-            $0.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
             setAndRepSV.addArrangedSubview($0)
         }
     }

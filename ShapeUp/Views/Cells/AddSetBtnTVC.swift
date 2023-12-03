@@ -12,6 +12,7 @@ class AddSetBtnTVC: UITableViewCell {
     static let reuseIdentifier = "AddSetBtnTVC"
     
     let addSetBtn = UIButton()
+    let copyTrainingBtn = UIButton()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,15 +29,36 @@ class AddSetBtnTVC: UITableViewCell {
         addSetBtn.setTitle("Add Set", for: .normal)
         addSetBtn.backgroundColor = DS.DesignColorTemplates.borderColor
         addSetBtn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
-        contentView.addSubview(addSetBtn)
+        
+        copyTrainingBtn.setImage(UIImage(named: "Copy"), for: .normal)
+        copyTrainingBtn.imageView?.contentMode = .scaleAspectFit
+        copyTrainingBtn.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        copyTrainingBtn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
+        
+        let btnSV = UIStackView(arrangedSubviews: [addSetBtn, copyTrainingBtn])
+        btnSV.axis = .horizontal
+        btnSV.spacing = CGFloat(DS.Paddings.spacing)
+        contentView.addSubview(btnSV)
+        
         
         //MARK: CONSTRAINTS
 
-        addSetBtn.snp.makeConstraints {
+        btnSV.snp.makeConstraints {
             $0.top.equalToSuperview().inset(DS.Paddings.spacing)
             $0.leading.trailing.bottom.equalToSuperview().inset(DS.Paddings.padding)
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
         }
+        
+        addSetBtn.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+            $0.width.equalTo(contentView.frame.size.width / 1.5)
+        }
+        
+        copyTrainingBtn.snp.makeConstraints {
+            $0.top.trailing.bottom.equalToSuperview()
+            $0.width.equalTo(contentView.frame.size.width / 3)
+        }
+
     }
 }
 
