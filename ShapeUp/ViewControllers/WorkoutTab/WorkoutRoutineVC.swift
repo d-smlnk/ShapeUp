@@ -290,6 +290,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
             cell?.exerciseLabel.text = pickedExerciseDataArray?[indexPath.section].exerciseName
             cell?.dropDownMenuBtn.addTarget(self, action: #selector(btn), for: .touchUpInside)
             cell?.dropDownMenuBtn.tag = indexPath.section
+            cell?.dropDownMenuBtn.isSelected = isOpenedSections[indexPath.section] ?? false
             return cell ?? UITableViewCell()
         } else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: AddSetBtnTVC.reuseIdentifier, for: indexPath) as? AddSetBtnTVC
@@ -308,7 +309,6 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
             }
             
             cell?.data = pickedExerciseDataArray?[indexPath.section].weightAndRep[indexPath.row - 1]
-            
             cell?.configure()
             return cell ?? UITableViewCell()
         }
@@ -358,5 +358,29 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
                 
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return UISwipeActionsConfiguration(actions: [makeCompleteContextualAction(forRowAt: indexPath)])
+    }
+    
+    private func makeCompleteContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: nil) { (action, swipeButtonView, completion) in
+            self.exerciseNameTitle = self.pickedExerciseDataArray?[indexPath.section].exerciseName ?? ""
+            let vc = ExerciseStatVC()
+            vc.exerciseName = self
+
+            if let presentationController = vc.presentationController as? UISheetPresentationController {
+                presentationController.prefersGrabberVisible = true
+            }
+            
+            self.present(vc, animated: true)
+            completion(true)
+        }
+        let statImg = UIImage(named: "Stat")
+        let resizedImg = statImg?.resized(to: CGSize(width: 30, height: 30))
+        action.image = resizedImg
+        action.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        return action
     }
 }
