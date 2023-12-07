@@ -353,15 +353,6 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
                 
                 tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
                 
-            } else if indexPath.row == 0 {
-                do {
-                    try? RealmPresenter.realm.write {
-                        RealmPresenter.realm.delete(objectToDelete)
-                    }
-                }
-                
-                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
-                
             } else {
                 do {
                     try? RealmPresenter.realm.write {
@@ -376,7 +367,19 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return UISwipeActionsConfiguration(actions: [makeCompleteContextualAction(forRowAt: indexPath)])
+        if indexPath.row == 0 {
+            return UISwipeActionsConfiguration(actions: [makeCompleteContextualAction(forRowAt: indexPath)])
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.row == 0 {
+            return UISwipeActionsConfiguration(actions: [deleteSectionWithClosedSection(tableView, forRowAt: indexPath)])
+        } else {
+            return nil
+        }
     }
     
     private func makeCompleteContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
@@ -395,6 +398,23 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
         let resizedImg = statImg?.resized(to: CGSize(width: 30, height: 30))
         action.image = resizedImg
         action.backgroundColor = DS.DesignColorTemplates.secondaryColor
+        return action
+    }
+    
+    private func deleteSectionWithClosedSection(_ tableView: UITableView, forRowAt indexPath: IndexPath) -> UIContextualAction {
+        guard let objectToDelete = pickedExerciseDataArray?[indexPath.section] else { return UIContextualAction() }
+
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, swipeButtonView, completion) in
+            do {
+                try? RealmPresenter.realm.write {
+                    RealmPresenter.realm.delete(objectToDelete)
+                }
+            }
+            
+            tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+            completion(true)
+        }
+        action.backgroundColor = .systemRed
         return action
     }
 }
