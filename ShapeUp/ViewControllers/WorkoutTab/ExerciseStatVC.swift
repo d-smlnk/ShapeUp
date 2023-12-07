@@ -8,11 +8,18 @@
 import UIKit
 import RealmSwift
 
+protocol ExerciseStatDelegate: UIViewController {
+    var didSelectExercise: RealmPickedExerciseService? { get set }
+    var setDateDelegate: RealmPickedExerciseService? { get set }
+}
+
 class ExerciseStatVC: UIViewController {
-        
-    var data: Results<RealmPickedExerciseService>?
-    weak var exerciseName: ExerciseNameDelegate?
+    weak var exerciseStatDelegate: ExerciseStatDelegate?
     
+    var data: Results<RealmPickedExerciseService>?
+    weak var exerciseNameDelegate: ExerciseNameDelegate?
+    weak var exerciseDateDelegate: ExerciseNameDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -20,8 +27,7 @@ class ExerciseStatVC: UIViewController {
     
     private func setupLayout() {
         view.backgroundColor = DS.DesignColorTemplates.secondaryColor
-        
-        data = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseName == %@", exerciseName?.exerciseNameTitle ?? "")
+        data = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseName == %@", exerciseNameDelegate?.exerciseNameTitle ?? "")
         
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 180, height: 200)
@@ -35,7 +41,7 @@ class ExerciseStatVC: UIViewController {
         view.addSubview(statCV)
                 
         let exerciseLabel = UILabel()
-        exerciseLabel.text = exerciseName?.exerciseNameTitle ?? ""
+        exerciseLabel.text = exerciseNameDelegate?.exerciseNameTitle ?? ""
         exerciseLabel.font = .systemFont(ofSize: DS.Fonts.titleFontSize, weight: .semibold)
         view.addSubview(exerciseLabel)
         
@@ -59,9 +65,25 @@ extension ExerciseStatVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatCVC.reuseIdentifier, for: indexPath) as? StatCVC
-        cell?.data = data?[indexPath.row]
+        let sortedData = data?.sorted(by: { $0.exerciseDate < $1.exerciseDate })
+        cell?.data = sortedData?[indexPath.row]
         cell?.configure()
         return cell ?? UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if exerciseDateDelegate != nil {
+            let selectedCell = collectionView.cellForItem(at: indexPath) as? StatCVC
+            exerciseStatDelegate?.didSelectExercise = selectedCell?.data
+            do {
+                try RealmPresenter.realm.write {
+                    exerciseStatDelegate?.setDateDelegate?.weightAndRep = exerciseStatDelegate?.didSelectExercise?.weightAndRep ?? List<RealmWeightAndSet>()
+                }
+            } catch {
+                print("Failed to add copied set to Realm Data Base")
+            }
+            dismiss(animated: true)
+        }
     }
     
 }

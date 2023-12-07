@@ -15,11 +15,17 @@ import RealmSwift
 
 protocol ExerciseNameDelegate: UIViewController {
     var exerciseNameTitle: String? { get }
+    var execiseDate: Date? { get }
 }
 
-class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
-    var exerciseNameTitle: String?
+class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDelegate {
+    var setDateDelegate: RealmPickedExerciseService?
+
+    var didSelectExercise: RealmPickedExerciseService?
     
+    var execiseDate: Date?
+    var exerciseNameTitle: String?
+
     private var isOpenedSections: [Int: Bool] = [:]
     private var calendarView = UIView()
     private let indicatorView = UIView()
@@ -33,7 +39,7 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
         super.viewDidLoad()
         setupLayout()
     }
-        
+    
     private func setupLayout() {
         view.backgroundColor = DS.DesignColorTemplates.mainColor
         view.isUserInteractionEnabled = true
@@ -215,6 +221,18 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate {
         vc.exerciseNameTitleDelegate = self
         self.halfScreenPresent(vc)
     }
+    
+    @objc func copySet(btn: UIButton) {
+        exerciseNameTitle = pickedExerciseDataArray?[btn.tag].exerciseName ?? ""
+        execiseDate = pickedExerciseDataArray?[btn.tag].exerciseDate ?? Date()
+        setDateDelegate = pickedExerciseDataArray?[btn.tag]
+
+        let vc = ExerciseStatVC()
+        vc.exerciseNameDelegate = self
+        vc.exerciseDateDelegate = self
+        vc.exerciseStatDelegate = self
+        present(vc, animated: true)
+    }
 }
 
 //MARK: FSCalendar Delegate & Data Source
@@ -265,7 +283,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
-        
+
         pickedExerciseDataArray = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
             .filter("exerciseDate >= %@", dateOnly)
             .filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
@@ -280,8 +298,12 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: pickedExerciseDataArray?[section].exerciseName ?? "")
-        
-        return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) + 2 : 1
+        switch didSelectExercise != nil {
+        case true:
+            return isOpenedSections[section] ?? false ? (didSelectExercise?.weightAndRep.count ?? 0) + 2 : 1
+        case false:
+            return isOpenedSections[section] ?? false ? data.map { $0.weightAndRep.count }.reduce(0, +) + 2 : 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -296,18 +318,11 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: AddSetBtnTVC.reuseIdentifier, for: indexPath) as? AddSetBtnTVC
             cell?.addSetBtn.tag = indexPath.section
             cell?.addSetBtn.addTarget(self, action: #selector(addSet), for: .touchUpInside)
+            cell?.copyTrainingBtn.tag = indexPath.section
+            cell?.copyTrainingBtn.addTarget(self, action: #selector(copySet), for: .touchUpInside)
             return cell ?? UITableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ExerciseSetTVC.reuseIdentifier, for: indexPath) as? ExerciseSetTVC
-            
-            let exerciseName = pickedExerciseDataArray?[indexPath.section].exerciseName
-            
-            let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseName ?? "")
-            
-            if indexPath.row < data.flatMap({ $0.weightAndRep }).count {
-                cell?.data = data.flatMap({ $0.weightAndRep })[indexPath.row]
-            }
-            
             cell?.data = pickedExerciseDataArray?[indexPath.section].weightAndRep[indexPath.row - 1]
             cell?.configure()
             return cell ?? UITableViewCell()
@@ -368,8 +383,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
         let action = UIContextualAction(style: .normal, title: nil) { (action, swipeButtonView, completion) in
             self.exerciseNameTitle = self.pickedExerciseDataArray?[indexPath.section].exerciseName ?? ""
             let vc = ExerciseStatVC()
-            vc.exerciseName = self
-
+            vc.exerciseNameDelegate = self
             if let presentationController = vc.presentationController as? UISheetPresentationController {
                 presentationController.prefersGrabberVisible = true
             }
