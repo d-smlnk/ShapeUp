@@ -8,9 +8,9 @@
 import Foundation
 import RealmSwift
 
-class RealmPickedExerciseService: Object {
+class RealmPickedExercisePresenter: Object {
     @Persisted dynamic var exerciseName: String
     @Persisted dynamic var muscleGroupOfExercise: String
     @Persisted dynamic var exerciseDate: Date
-    @Persisted dynamic var weightAndRep: List<RealmWeightAndSet>
+    @Persisted dynamic var weightAndRep: List<RealmWeightAndSetPresenter>
 }

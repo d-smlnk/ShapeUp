@@ -20,7 +20,7 @@ class ExerciseSetTVC: UITableViewCell {
     
     private let disposeBag = DisposeBag()
         
-    var data: RealmWeightAndSet?
+    var data: RealmWeightAndSetPresenter?
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

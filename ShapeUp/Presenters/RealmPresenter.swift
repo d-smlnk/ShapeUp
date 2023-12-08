@@ -33,9 +33,9 @@ class RealmPresenter {
     }
     
     static func addExerciseToRealm() {
-        let objects = realm.objects(RealmExerciseService.self)
+        let objects = realm.objects(RealmExercisePresenter.self)
         do {
-            let settings = RealmExerciseService()
+            let settings = RealmExercisePresenter()
             try realm.write {
                 settings.exerciseName = CreateExerciseVC.exerciseNameTF.text ?? "No exercise name"
                 settings.muscleGroupOfExercise = ChooseMuscleForNewExerciseVC.muscleGroupNameDelegate ?? "No muscles group"

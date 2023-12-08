@@ -19,9 +19,9 @@ protocol ExerciseNameDelegate: UIViewController {
 }
 
 class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDelegate {
-    var setDateDelegate: RealmPickedExerciseService?
+    var setDateDelegate: RealmPickedExercisePresenter?
 
-    var didSelectExercise: RealmPickedExerciseService?
+    var didSelectExercise: RealmPickedExercisePresenter?
     
     var execiseDate: Date?
     var exerciseNameTitle: String?
@@ -33,7 +33,7 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDele
     private let trainingsCalendar = FSCalendar()
     private let exerciseListTV = UITableView()
     static var choosenDate = Date()
-    private var pickedExerciseDataArray: Results<RealmPickedExerciseService>?
+    private var pickedExerciseDataArray: Results<RealmPickedExercisePresenter>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -249,7 +249,7 @@ extension WorkoutRoutineVC: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         
-        let data = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
+        let data = RealmPresenter.realm.objects(RealmPickedExercisePresenter.self)
         
         let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -284,7 +284,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         let dateOnly = Calendar.current.startOfDay(for: WorkoutRoutineVC.choosenDate)
 
-        pickedExerciseDataArray = RealmPresenter.realm.objects(RealmPickedExerciseService.self)
+        pickedExerciseDataArray = RealmPresenter.realm.objects(RealmPickedExercisePresenter.self)
             .filter("exerciseDate >= %@", dateOnly)
             .filter("exerciseDate < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
         
@@ -297,7 +297,7 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: pickedExerciseDataArray?[section].exerciseName ?? "")
+        let data = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExercisePresenter.self, exerciseName: pickedExerciseDataArray?[section].exerciseName ?? "")
         switch didSelectExercise != nil {
         case true:
             return isOpenedSections[section] ?? false ? (didSelectExercise?.weightAndRep.count ?? 0) + 2 : 1

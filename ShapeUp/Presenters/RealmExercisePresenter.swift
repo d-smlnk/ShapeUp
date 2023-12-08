@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class RealmExerciseService: Object {
+class RealmExercisePresenter: Object {
     @Persisted(primaryKey: true) dynamic var exerciseName: String
     @Persisted dynamic var muscleGroupOfExercise: String
 }

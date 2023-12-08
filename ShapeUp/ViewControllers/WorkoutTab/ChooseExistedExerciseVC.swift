@@ -10,7 +10,7 @@ import RealmSwift
 
 class ChooseExistedExerciseVC: UIViewController {
     
-    let realmData = RealmPresenter.filterElementsByGroup(realmDB: RealmExerciseService.self, filterBy: "muscleGroupOfExercise", for: ExercisePageVC.muscleGroupNameDelegate ?? "")
+    let realmData = RealmPresenter.filterElementsByGroup(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: ExercisePageVC.muscleGroupNameDelegate ?? "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +80,7 @@ extension ChooseExistedExerciseVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? ChooseExistedExerciseTVC
         
-        let settings = RealmPickedExerciseService()
+        let settings = RealmPickedExercisePresenter()
         do {
             try RealmPresenter.realm.write({
                 settings.exerciseName = cell?.exerciseNameLabel.text ?? "No exercise name"

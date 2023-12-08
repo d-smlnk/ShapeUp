@@ -10,7 +10,7 @@ import UIKit
 class AddWeightAndRepTVC: UITableViewCell {
     
     static let reuseIdentifier = "AddWeightAndRepTVC"
-    var weightAndSetData: RealmPickedExerciseService?
+    var weightAndSetData: RealmPickedExercisePresenter?
     static let weightTF = UITextField(image: UIImage(named: "scale") ?? UIImage(), placeholder: "Weight", contentType: .creditCardNumber)
     static let repTF = UITextField(image: UIImage(named: "reps") ?? UIImage(), placeholder: "Rep", contentType: .creditCardNumber)
     private let setAndRepSV = UIStackView()

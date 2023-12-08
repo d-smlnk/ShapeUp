@@ -12,7 +12,7 @@ class AddWeightAndRepVC: UIViewController {
     
     weak var exerciseNameTitleDelegate: ExerciseNameDelegate?
     
-    var weightAndSetData: Results<RealmPickedExerciseService>?
+    var weightAndSetData: Results<RealmPickedExercisePresenter>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class AddWeightAndRepVC: UIViewController {
 extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        weightAndSetData = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExerciseService.self, exerciseName: exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
+        weightAndSetData = RealmPresenter.filterByDateAndExerciseName(realmDB: RealmPickedExercisePresenter.self, exerciseName: exerciseNameTitleDelegate?.exerciseNameTitle ?? "NONAME")
 
         return weightAndSetData?.count ?? 0
     }
@@ -74,7 +74,7 @@ extension AddWeightAndRepVC: UITableViewDataSource, UITableViewDelegate {
     
     @objc func saveWeightAndSet() {
         do {
-            let settings = RealmWeightAndSet()
+            let settings = RealmWeightAndSetPresenter()
             try RealmPresenter.realm.write {
                 settings.weight = AddWeightAndRepTVC.weightTF.text ?? "0"
                 settings.rep = AddWeightAndRepTVC.repTF.text ?? "0"

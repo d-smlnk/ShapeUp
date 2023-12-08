@@ -9,14 +9,14 @@ import UIKit
 import RealmSwift
 
 protocol ExerciseStatDelegate: UIViewController {
-    var didSelectExercise: RealmPickedExerciseService? { get set }
-    var setDateDelegate: RealmPickedExerciseService? { get set }
+    var didSelectExercise: RealmPickedExercisePresenter? { get set }
+    var setDateDelegate: RealmPickedExercisePresenter? { get set }
 }
 
 class ExerciseStatVC: UIViewController {
     weak var exerciseStatDelegate: ExerciseStatDelegate?
     
-    var data: Results<RealmPickedExerciseService>?
+    var data: Results<RealmPickedExercisePresenter>?
     weak var exerciseNameDelegate: ExerciseNameDelegate?
     weak var exerciseDateDelegate: ExerciseNameDelegate?
 
@@ -27,7 +27,7 @@ class ExerciseStatVC: UIViewController {
     
     private func setupLayout() {
         view.backgroundColor = DS.DesignColorTemplates.secondaryColor
-        data = RealmPresenter.realm.objects(RealmPickedExerciseService.self).filter("exerciseName == %@", exerciseNameDelegate?.exerciseNameTitle ?? "")
+        data = RealmPresenter.realm.objects(RealmPickedExercisePresenter.self).filter("exerciseName == %@", exerciseNameDelegate?.exerciseNameTitle ?? "")
         
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 180, height: 200)
@@ -77,7 +77,7 @@ extension ExerciseStatVC: UICollectionViewDelegate, UICollectionViewDataSource {
             exerciseStatDelegate?.didSelectExercise = selectedCell?.data
             do {
                 try RealmPresenter.realm.write {
-                    exerciseStatDelegate?.setDateDelegate?.weightAndRep = exerciseStatDelegate?.didSelectExercise?.weightAndRep ?? List<RealmWeightAndSet>()
+                    exerciseStatDelegate?.setDateDelegate?.weightAndRep = exerciseStatDelegate?.didSelectExercise?.weightAndRep ?? List<RealmWeightAndSetPresenter>()
                 }
             } catch {
                 print("Failed to add copied set to Realm Data Base")

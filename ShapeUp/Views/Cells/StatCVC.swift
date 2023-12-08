@@ -12,7 +12,7 @@ class StatCVC: UICollectionViewCell {
     private let dateLabel = UILabel()
     private let setLabel = UILabel()
 
-    var data: RealmPickedExerciseService?
+    var data: RealmPickedExercisePresenter?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
