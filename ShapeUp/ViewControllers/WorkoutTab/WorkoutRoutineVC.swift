@@ -19,7 +19,7 @@ protocol ExerciseNameDelegate: UIViewController {
 }
 
 class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDelegate {
-    var setDateDelegate: RealmPickedExercisePresenter?
+    var setDateDelegate: RealmPickedExercisePresenter? //delegate variable
 
     var didSelectExercise: RealmPickedExercisePresenter?
     
@@ -37,6 +37,7 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.dismissKeyboardOnTap()
         setupLayout()
     }
     

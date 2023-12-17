@@ -1,17 +1,18 @@
 //
-//  WorkoutHeaderCellTVC.swift
+//  NutritionInfoTVC.swift
 //  ShapeUp
 //
-//  Created by Дима Самойленко on 25.11.2023.
+//  Created by Дима Самойленко on 10.12.2023.
 //
 
 import UIKit
 
-class WorkoutHeaderCellTVC: UITableViewCell {
-    static let reuseIdentifier = "WorkoutHeaderCellTVC"
+class NutritionInfoTVC: UITableViewCell {
     
+    static let reuseIdentifier = "NutritionInfoTVC"
+    
+    let mealLabel = UILabel()
     let dropDownMenuBtn = UIButton()
-    let exerciseLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,11 +24,15 @@ class WorkoutHeaderCellTVC: UITableViewCell {
     }
     
     private func setupLayout() {
-        contentView.backgroundColor = DS.DesignColorTemplates.mainColor
+        contentView.superview?.backgroundColor = .clear
+        contentView.backgroundColor = DS.DesignColorTemplates.additionalColor
+        contentView.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
+        contentView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        selectionStyle = .none
         
-        exerciseLabel.textColor = .black
-        exerciseLabel.font = .systemFont(ofSize: DS.Fonts.smallTitleFontSize, weight: .semibold)
-        contentView.addSubview(exerciseLabel)
+        mealLabel.textColor = .black
+        mealLabel.font = .systemFont(ofSize: DS.Fonts.smallTitleFontSize, weight: .semibold)
+        contentView.addSubview(mealLabel)
         
         dropDownMenuBtn.setImage(UIImage(named: "DropDownMenu"), for: .normal)
         dropDownMenuBtn.setImage(UIImage(named: "HideDroppedMenu"), for: .selected)
@@ -35,7 +40,7 @@ class WorkoutHeaderCellTVC: UITableViewCell {
         
         //MARK: - CONSTRAINTS
         
-        exerciseLabel.snp.makeConstraints {
+        mealLabel.snp.makeConstraints {
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(DS.Paddings.spacing)

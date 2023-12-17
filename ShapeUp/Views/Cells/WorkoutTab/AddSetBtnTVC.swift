@@ -25,7 +25,8 @@ class AddSetBtnTVC: UITableViewCell {
     
     private func setupLayout() {
         contentView.backgroundColor = DS.DesignColorTemplates.mainColor
-        
+        selectionStyle = .none
+
         addSetBtn.setTitle("Add Set", for: .normal)
         addSetBtn.backgroundColor = DS.DesignColorTemplates.borderColor
         addSetBtn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius

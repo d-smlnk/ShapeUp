@@ -1,18 +1,22 @@
 //
-//  AddExerciseViewController.swift
+//  SearchFoodVC.swift
 //  ShapeUp
 //
-//  Created by Дима Самойленко on 26.10.2023.
+//  Created by Дима Самойленко on 10.12.2023.
 //
 
 import UIKit
+import RxSwift
 
-class WorkoutMenuVC: UIViewController {
+class SearchFoodVC: UIViewController {
+    
     private var currentPage = 0
-    private let exercisePageBtn = UIButton()
-    private let programPageBtn = UIButton()
+    
+    private let findMealPageBtn = UIButton()
+    private let usedMealPageBtn = UIButton()
+    
     private var pageViewController = UIPageViewController()
-    private let contentControllers = [ExercisePageVC(), ProgramPageVC()]
+    private let contentControllers = [SearchNewFoodPageVC(), SearchOldFoogPageVC()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,18 +26,12 @@ class WorkoutMenuVC: UIViewController {
     
     private func setupLayout() {
         view.backgroundColor = DS.DesignColorTemplates.mainColor
-                
-        let searchExerciseBar = UISearchBar()
-        searchExerciseBar.placeholder = "Search an exercise"
-        searchExerciseBar.barTintColor = DS.DesignColorTemplates.mainColor
-        searchExerciseBar.delegate = self
-        view.addSubview(searchExerciseBar)
+
+        findMealPageBtn.isUserInteractionEnabled = false
+        usedMealPageBtn.isUserInteractionEnabled = false
         
-        exercisePageBtn.isUserInteractionEnabled = false
-        programPageBtn.isUserInteractionEnabled = false
-        
-        let btnArray = [(exercisePageBtn, "Exercises"),
-                        (programPageBtn, "Programs")]
+        let btnArray = [(findMealPageBtn, "Find food"),
+                        (usedMealPageBtn, "Recent food")]
         
         let pagesBtnSV = UIStackView(arrangedSubviews: btnArray.map({ item in
             let btn = item.0
@@ -42,7 +40,6 @@ class WorkoutMenuVC: UIViewController {
             btn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
             btn.setTitleColor(DS.DesignColorTemplates.customTextColor, for: .normal)
             btn.titleLabel?.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .heavy)
-            
             return btn
         }))
         
@@ -52,7 +49,6 @@ class WorkoutMenuVC: UIViewController {
         view.addSubview(pagesBtnSV)
         
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        
         pageViewController.dataSource = self
         pageViewController.delegate = self
         
@@ -60,54 +56,55 @@ class WorkoutMenuVC: UIViewController {
         self.addChild(pageViewController)
         view.addSubview(pageViewController.view)
         
-        //MARK: CONSTRAINTS
-
-        searchExerciseBar.snp.makeConstraints {
-            $0.top.trailing.leading.equalToSuperview().inset(DS.Paddings.padding)
-            $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
-        }
+        let backBtn = backBtn()
+        
+        // MARK: - CONSTRAINTS
         
         pagesBtnSV.snp.makeConstraints {
-            $0.top.equalTo(searchExerciseBar.snp.bottom).offset(DS.Paddings.spacing)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
             $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
             $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
         }
         
         pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(pagesBtnSV.snp.bottom).offset(DS.Paddings.spacing)
-            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.spacing)
+            $0.bottom.equalTo(backBtn.snp.top).offset(-DS.Paddings.spacing)
         }
         
+        backBtn.snp.removeConstraints()
+        
+        backBtn.snp.makeConstraints {
+            $0.height.width.equalTo(DS.SizeOFElements.heightForSingleElements)
+            $0.bottom.leading.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
+        }
+
     }
-    
+}
+
+//MARK: - Function
+extension SearchFoodVC {
     private func updateButtonColors() {
         switch currentPage {
         case 0:
-            exercisePageBtn.backgroundColor = DS.DesignColorTemplates.borderColor
-            programPageBtn.backgroundColor = DS.DesignColorTemplates.secondaryColor
+            findMealPageBtn.backgroundColor = DS.DesignColorTemplates.borderColor
+            usedMealPageBtn.backgroundColor = DS.DesignColorTemplates.secondaryColor
         case 1:
-            exercisePageBtn.backgroundColor = DS.DesignColorTemplates.secondaryColor
-            programPageBtn.backgroundColor = DS.DesignColorTemplates.borderColor
+            findMealPageBtn.backgroundColor = DS.DesignColorTemplates.secondaryColor
+            usedMealPageBtn.backgroundColor = DS.DesignColorTemplates.borderColor
         default:
             break
         }
     }
 }
 
-//MARK: SearchBar Delegate
-#warning("MAKE SEARCHBAR DELEGATE")
-extension WorkoutMenuVC: UISearchBarDelegate {
+//MARK: - UIPageViewControllerDelegate, UIPageViewControllerDataSource
+extension SearchFoodVC: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
-}
-
-//MARK: PAGECONTROL DELEGATE & DATASOURCE
-
-extension WorkoutMenuVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = contentControllers.firstIndex(of: viewController), index > 0 else {
             return nil
-        }
+        }       
         return contentControllers[index - 1]
     }
     

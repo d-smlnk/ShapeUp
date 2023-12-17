@@ -11,8 +11,8 @@ class AddWeightAndRepTVC: UITableViewCell {
     
     static let reuseIdentifier = "AddWeightAndRepTVC"
     var weightAndSetData: RealmPickedExercisePresenter?
-    static let weightTF = UITextField(image: UIImage(named: "scale") ?? UIImage(), placeholder: "Weight", contentType: .creditCardNumber)
-    static let repTF = UITextField(image: UIImage(named: "reps") ?? UIImage(), placeholder: "Rep", contentType: .creditCardNumber)
+    static let weightTF = UITextField(image: UIImage(named: "scale") ?? UIImage(), placeholder: "Weight", contentType: .numberPad)
+    static let repTF = UITextField(image: UIImage(named: "reps") ?? UIImage(), placeholder: "Rep", contentType: .numberPad)
     private let setAndRepSV = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -26,7 +26,8 @@ class AddWeightAndRepTVC: UITableViewCell {
     
     private func setupLayout() {
         contentView.backgroundColor = DS.DesignColorTemplates.borderColor
-                
+        selectionStyle = .none
+
         setAndRepSV.axis = .horizontal
         setAndRepSV.distribution = .fillEqually
         setAndRepSV.spacing = CGFloat(DS.Paddings.spacing)

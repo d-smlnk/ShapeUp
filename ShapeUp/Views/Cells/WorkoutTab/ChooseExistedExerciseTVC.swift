@@ -30,7 +30,8 @@ class ChooseExistedExerciseTVC: UITableViewCell {
     
     private func setupLayout() {
         backgroundColor = DS.DesignColorTemplates.secondaryColor
-        
+        selectionStyle = .none
+
         let addExerciseBtn = UIButton()
         addExerciseBtn.setImage(UIImage(named: "AddExercise"), for: .normal)
         contentView.addSubview(addExerciseBtn)

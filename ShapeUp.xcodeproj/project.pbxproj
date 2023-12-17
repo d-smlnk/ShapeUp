@@ -18,9 +18,8 @@
 		2201068B2AE2C2A500132B3A /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201068A2AE2C2A500132B3A /* UserVC.swift */; };
 		2201068D2AE2C2CD00132B3A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201068C2AE2C2CD00132B3A /* MainVC.swift */; };
 		2201068F2AE2C2E000132B3A /* WorkoutRoutineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201068E2AE2C2E000132B3A /* WorkoutRoutineVC.swift */; };
-		220106912AE2C30000132B3A /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106902AE2C30000132B3A /* NutritionView.swift */; };
+		220106912AE2C30000132B3A /* NutritionMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106902AE2C30000132B3A /* NutritionMainVC.swift */; };
 		220106932AE2C41800132B3A /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106922AE2C41800132B3A /* UserPresenter.swift */; };
-		220106952AE2C46600132B3A /* ExerciseListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106942AE2C46600132B3A /* ExerciseListPresenter.swift */; };
 		220106972AE2C49200132B3A /* NutritionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106962AE2C49200132B3A /* NutritionPresenter.swift */; };
 		220106992AE2C4E900132B3A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106982AE2C4E900132B3A /* UserModel.swift */; };
 		2201069B2AE2C50800132B3A /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201069A2AE2C50800132B3A /* ExerciseModel.swift */; };
@@ -35,6 +34,22 @@
 		22603E952AE564B700D2E183 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E942AE564B700D2E183 /* MainTabBarController.swift */; };
 		22603E982AE59F4300D2E183 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 22603E972AE59F4300D2E183 /* DGCharts */; };
 		22603E9C2AE5C3D900D2E183 /* MusclesGroupsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */; };
+		228C4E182B23622A00557359 /* QueryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E172B23622A00557359 /* QueryModel.swift */; };
+		228C4E1B2B23631600557359 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 228C4E1A2B23631600557359 /* Alamofire */; };
+		228C4E1D2B2367D600557359 /* ApiPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E1C2B2367D600557359 /* ApiPresenter.swift */; };
+		228C4E222B236B5900557359 /* NutritionMainTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E212B236B5900557359 /* NutritionMainTVC.swift */; };
+		228C4E252B24C2E600557359 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E242B24C2E600557359 /* CalendarView.swift */; };
+		228C4E272B26032100557359 /* NutritionInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E262B26032100557359 /* NutritionInfoTVC.swift */; };
+		228C4E292B2604FE00557359 /* SearchFoodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E282B2604FE00557359 /* SearchFoodVC.swift */; };
+		228C4E2B2B26063D00557359 /* RealmFoodNutritionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E2A2B26063D00557359 /* RealmFoodNutritionPresenter.swift */; };
+		228C4E2D2B2606CB00557359 /* RealmPickedFoodPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E2C2B2606CB00557359 /* RealmPickedFoodPresenter.swift */; };
+		228C4E2F2B2632AA00557359 /* SearchFoodTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E2E2B2632AA00557359 /* SearchFoodTVC.swift */; };
+		228C4E312B28C01400557359 /* MealVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E302B28C01400557359 /* MealVC.swift */; };
+		228C4E332B28CC6300557359 /* UIView_Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E322B28CC6300557359 /* UIView_Separator.swift */; };
+		228C4E352B28EC3500557359 /* NutritionFactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E342B28EC3500557359 /* NutritionFactsView.swift */; };
+		228C4E372B2B395200557359 /* UIViewController_DismissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E362B2B395200557359 /* UIViewController_DismissKeyboard.swift */; };
+		228C4E392B2B42C100557359 /* SearchNewFoodPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E382B2B42C100557359 /* SearchNewFoodPageVC.swift */; };
+		228C4E3B2B2B42D000557359 /* SearchOldFoogPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228C4E3A2B2B42D000557359 /* SearchOldFoogPageVC.swift */; };
 		22B5F2A02AF3F88800B47D6D /* CreateExerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F29F2AF3F88800B47D6D /* CreateExerciseVC.swift */; };
 		22B5F2A62AF40AA200B47D6D /* UIButton_Back.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2A52AF40AA200B47D6D /* UIButton_Back.swift */; };
 		22B5F2AA2AF552B900B47D6D /* UIViewController_HalfScreenPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5F2A92AF552B900B47D6D /* UIViewController_HalfScreenPresent.swift */; };
@@ -95,9 +110,8 @@
 		2201068A2AE2C2A500132B3A /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		2201068C2AE2C2CD00132B3A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		2201068E2AE2C2E000132B3A /* WorkoutRoutineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineVC.swift; sourceTree = "<group>"; };
-		220106902AE2C30000132B3A /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
+		220106902AE2C30000132B3A /* NutritionMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionMainVC.swift; sourceTree = "<group>"; };
 		220106922AE2C41800132B3A /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
-		220106942AE2C46600132B3A /* ExerciseListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListPresenter.swift; sourceTree = "<group>"; };
 		220106962AE2C49200132B3A /* NutritionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionPresenter.swift; sourceTree = "<group>"; };
 		220106982AE2C4E900132B3A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2201069A2AE2C50800132B3A /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
@@ -110,6 +124,21 @@
 		22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldTVC.swift; sourceTree = "<group>"; };
 		22603E942AE564B700D2E183 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusclesGroupsCVC.swift; sourceTree = "<group>"; };
+		228C4E172B23622A00557359 /* QueryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryModel.swift; sourceTree = "<group>"; };
+		228C4E1C2B2367D600557359 /* ApiPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiPresenter.swift; sourceTree = "<group>"; };
+		228C4E212B236B5900557359 /* NutritionMainTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionMainTVC.swift; sourceTree = "<group>"; };
+		228C4E242B24C2E600557359 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		228C4E262B26032100557359 /* NutritionInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionInfoTVC.swift; sourceTree = "<group>"; };
+		228C4E282B2604FE00557359 /* SearchFoodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFoodVC.swift; sourceTree = "<group>"; };
+		228C4E2A2B26063D00557359 /* RealmFoodNutritionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFoodNutritionPresenter.swift; sourceTree = "<group>"; };
+		228C4E2C2B2606CB00557359 /* RealmPickedFoodPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPickedFoodPresenter.swift; sourceTree = "<group>"; };
+		228C4E2E2B2632AA00557359 /* SearchFoodTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFoodTVC.swift; sourceTree = "<group>"; };
+		228C4E302B28C01400557359 /* MealVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealVC.swift; sourceTree = "<group>"; };
+		228C4E322B28CC6300557359 /* UIView_Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Separator.swift; sourceTree = "<group>"; };
+		228C4E342B28EC3500557359 /* NutritionFactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionFactsView.swift; sourceTree = "<group>"; };
+		228C4E362B2B395200557359 /* UIViewController_DismissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_DismissKeyboard.swift; sourceTree = "<group>"; };
+		228C4E382B2B42C100557359 /* SearchNewFoodPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNewFoodPageVC.swift; sourceTree = "<group>"; };
+		228C4E3A2B2B42D000557359 /* SearchOldFoogPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOldFoogPageVC.swift; sourceTree = "<group>"; };
 		22B5F29F2AF3F88800B47D6D /* CreateExerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExerciseVC.swift; sourceTree = "<group>"; };
 		22B5F2A52AF40AA200B47D6D /* UIButton_Back.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton_Back.swift; sourceTree = "<group>"; };
 		22B5F2A92AF552B900B47D6D /* UIViewController_HalfScreenPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_HalfScreenPresent.swift; sourceTree = "<group>"; };
@@ -139,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22CE76292B0FE97B001FA709 /* RxRealm in Frameworks */,
+				228C4E1B2B23631600557359 /* Alamofire in Frameworks */,
 				22DC55292AEFE1E100C3556C /* Realm in Frameworks */,
 				22DC552B2AEFE1E100C3556C /* RealmSwift in Frameworks */,
 				220106A92AE2E59100132B3A /* SnapKit in Frameworks */,
@@ -188,16 +218,8 @@
 		22000AC82B03C27200F16A09 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2236CCBC2AFEAE8A006F7880 /* ExerciseSetTVC.swift */,
-				22CE762E2B12773C001FA709 /* WorkoutHeaderCellTVC.swift */,
-				2236CCBA2AFE805F006F7880 /* AddWeightAndRepTVC.swift */,
-				22CE762A2B122396001FA709 /* AddSetBtnTVC.swift */,
-				22DC55342AF01FA800C3556C /* ExercisePageTVC.swift */,
-				22DC55472AF142ED00C3556C /* ChooseMuscleForNewExerciseTVC.swift */,
-				22B5F2AD2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift */,
-				22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */,
-				22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */,
-				22CE76342B1B749C001FA709 /* StatCVC.swift */,
+				228C4E1E2B236B0D00557359 /* WorkoutTab */,
+				228C4E202B236B2800557359 /* NutritionTab */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -260,10 +282,12 @@
 				22DC552C2AEFE20F00C3556C /* RealmExercisePresenter.swift */,
 				22B5F2B12AF917B300B47D6D /* RealmPickedExercisePresenter.swift */,
 				22000AC42B03A8C300F16A09 /* RealmWeightAndSetPresenter.swift */,
+				228C4E2A2B26063D00557359 /* RealmFoodNutritionPresenter.swift */,
+				228C4E2C2B2606CB00557359 /* RealmPickedFoodPresenter.swift */,
 				224498512AFAD80100557632 /* RealmPresenter.swift */,
 				220106922AE2C41800132B3A /* UserPresenter.swift */,
-				220106942AE2C46600132B3A /* ExerciseListPresenter.swift */,
 				220106962AE2C49200132B3A /* NutritionPresenter.swift */,
+				228C4E1C2B2367D600557359 /* ApiPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -271,6 +295,7 @@
 		220106882AE2C21800132B3A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				228C4E232B24C2BF00557359 /* CommonViews */,
 				22B5F2982AF3CCAA00B47D6D /* TabBar */,
 				22000AC82B03C27200F16A09 /* Cells */,
 			);
@@ -283,6 +308,7 @@
 				220106982AE2C4E900132B3A /* UserModel.swift */,
 				2201069A2AE2C50800132B3A /* ExerciseModel.swift */,
 				2201069C2AE2C53300132B3A /* NutritionModel.swift */,
+				228C4E172B23622A00557359 /* QueryModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -303,7 +329,9 @@
 				22B5F2A52AF40AA200B47D6D /* UIButton_Back.swift */,
 				22DC551E2AEAAFB100C3556C /* UITextField_Image .swift */,
 				22B5F2A92AF552B900B47D6D /* UIViewController_HalfScreenPresent.swift */,
+				228C4E362B2B395200557359 /* UIViewController_DismissKeyboard.swift */,
 				22CE76302B149D8E001FA709 /* UIImage_Size.swift */,
+				228C4E322B28CC6300557359 /* UIView_Separator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -322,6 +350,42 @@
 				2201068C2AE2C2CD00132B3A /* MainVC.swift */,
 			);
 			path = MainTab;
+			sourceTree = "<group>";
+		};
+		228C4E1E2B236B0D00557359 /* WorkoutTab */ = {
+			isa = PBXGroup;
+			children = (
+				2236CCBC2AFEAE8A006F7880 /* ExerciseSetTVC.swift */,
+				22CE762E2B12773C001FA709 /* WorkoutHeaderCellTVC.swift */,
+				2236CCBA2AFE805F006F7880 /* AddWeightAndRepTVC.swift */,
+				22CE762A2B122396001FA709 /* AddSetBtnTVC.swift */,
+				22DC55342AF01FA800C3556C /* ExercisePageTVC.swift */,
+				22DC55472AF142ED00C3556C /* ChooseMuscleForNewExerciseTVC.swift */,
+				22B5F2AD2AF5642600B47D6D /* ChooseExistedExerciseTVC.swift */,
+				22603E9B2AE5C3D900D2E183 /* MusclesGroupsCVC.swift */,
+				22603E922AE3FB9C00D2E183 /* CustomTextFieldTVC.swift */,
+				22CE76342B1B749C001FA709 /* StatCVC.swift */,
+			);
+			path = WorkoutTab;
+			sourceTree = "<group>";
+		};
+		228C4E202B236B2800557359 /* NutritionTab */ = {
+			isa = PBXGroup;
+			children = (
+				228C4E212B236B5900557359 /* NutritionMainTVC.swift */,
+				228C4E262B26032100557359 /* NutritionInfoTVC.swift */,
+				228C4E2E2B2632AA00557359 /* SearchFoodTVC.swift */,
+			);
+			path = NutritionTab;
+			sourceTree = "<group>";
+		};
+		228C4E232B24C2BF00557359 /* CommonViews */ = {
+			isa = PBXGroup;
+			children = (
+				228C4E242B24C2E600557359 /* CalendarView.swift */,
+				228C4E342B28EC3500557359 /* NutritionFactsView.swift */,
+			);
+			path = CommonViews;
 			sourceTree = "<group>";
 		};
 		22B5F2962AF3CC0400B47D6D /* Resources */ = {
@@ -344,7 +408,11 @@
 		22B5F2992AF3CCC000B47D6D /* NutritionTab */ = {
 			isa = PBXGroup;
 			children = (
-				220106902AE2C30000132B3A /* NutritionView.swift */,
+				220106902AE2C30000132B3A /* NutritionMainVC.swift */,
+				228C4E282B2604FE00557359 /* SearchFoodVC.swift */,
+				228C4E382B2B42C100557359 /* SearchNewFoodPageVC.swift */,
+				228C4E3A2B2B42D000557359 /* SearchOldFoogPageVC.swift */,
+				228C4E302B28C01400557359 /* MealVC.swift */,
 			);
 			path = NutritionTab;
 			sourceTree = "<group>";
@@ -396,6 +464,7 @@
 				22DC55282AEFE1E100C3556C /* Realm */,
 				22DC552A2AEFE1E100C3556C /* RealmSwift */,
 				22CE76282B0FE97B001FA709 /* RxRealm */,
+				228C4E1A2B23631600557359 /* Alamofire */,
 			);
 			productName = ShapeUp;
 			productReference = 220106532AE2BC9100132B3A /* ShapeUp.app */;
@@ -475,6 +544,7 @@
 				22DC55202AEB160900C3556C /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				22DC55272AEFE1E100C3556C /* XCRemoteSwiftPackageReference "realm-swift" */,
 				22CE76272B0FE97B001FA709 /* XCRemoteSwiftPackageReference "RxRealm" */,
+				228C4E192B23631600557359 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 220106542AE2BC9100132B3A /* Products */;
 			projectDirPath = "";
@@ -518,27 +588,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228C4E392B2B42C100557359 /* SearchNewFoodPageVC.swift in Sources */,
 				22DC55482AF142ED00C3556C /* ChooseMuscleForNewExerciseTVC.swift in Sources */,
 				22B5F2A02AF3F88800B47D6D /* CreateExerciseVC.swift in Sources */,
+				228C4E252B24C2E600557359 /* CalendarView.swift in Sources */,
 				22DC55462AF1418C00C3556C /* ChooseMuscleForNewExerciseVC.swift in Sources */,
 				22DC553B2AF107ED00C3556C /* DesignSystem.swift in Sources */,
+				228C4E2B2B26063D00557359 /* RealmFoodNutritionPresenter.swift in Sources */,
 				220106572AE2BC9100132B3A /* AppDelegate.swift in Sources */,
 				2201068D2AE2C2CD00132B3A /* MainVC.swift in Sources */,
+				228C4E272B26032100557359 /* NutritionInfoTVC.swift in Sources */,
+				228C4E3B2B2B42D000557359 /* SearchOldFoogPageVC.swift in Sources */,
 				220106972AE2C49200132B3A /* NutritionPresenter.swift in Sources */,
 				22DC55312AF009B600C3556C /* ExercisePageVC.swift in Sources */,
-				220106952AE2C46600132B3A /* ExerciseListPresenter.swift in Sources */,
+				228C4E312B28C01400557359 /* MealVC.swift in Sources */,
 				2201068B2AE2C2A500132B3A /* UserVC.swift in Sources */,
+				228C4E2F2B2632AA00557359 /* SearchFoodTVC.swift in Sources */,
+				228C4E372B2B395200557359 /* UIViewController_DismissKeyboard.swift in Sources */,
+				228C4E332B28CC6300557359 /* UIView_Separator.swift in Sources */,
 				220106932AE2C41800132B3A /* UserPresenter.swift in Sources */,
+				228C4E222B236B5900557359 /* NutritionMainTVC.swift in Sources */,
 				2236CCB92AFE7FC7006F7880 /* AddWeightAndRepVC.swift in Sources */,
 				22B5F2A62AF40AA200B47D6D /* UIButton_Back.swift in Sources */,
 				22DC551F2AEAAFB100C3556C /* UITextField_Image .swift in Sources */,
+				228C4E352B28EC3500557359 /* NutritionFactsView.swift in Sources */,
 				22B5F2B22AF917B300B47D6D /* RealmPickedExercisePresenter.swift in Sources */,
 				22DC552D2AEFE20F00C3556C /* RealmExercisePresenter.swift in Sources */,
 				22DC55372AF1078100C3556C /* CreateCustomPieChart.swift in Sources */,
+				228C4E292B2604FE00557359 /* SearchFoodVC.swift in Sources */,
 				22DC55352AF01FA800C3556C /* ExercisePageTVC.swift in Sources */,
 				2236CCBD2AFEAE8A006F7880 /* ExerciseSetTVC.swift in Sources */,
 				22B5F2AC2AF5627400B47D6D /* ChooseExistedExerciseVC.swift in Sources */,
-				220106912AE2C30000132B3A /* NutritionView.swift in Sources */,
+				220106912AE2C30000132B3A /* NutritionMainVC.swift in Sources */,
 				22DC55332AF009E400C3556C /* ProgramPageVC.swift in Sources */,
 				22603E9C2AE5C3D900D2E183 /* MusclesGroupsCVC.swift in Sources */,
 				2201068F2AE2C2E000132B3A /* WorkoutRoutineVC.swift in Sources */,
@@ -553,12 +634,15 @@
 				22DC551C2AEAAD6200C3556C /* WorkoutMenuVC.swift in Sources */,
 				22000AC52B03A8C300F16A09 /* RealmWeightAndSetPresenter.swift in Sources */,
 				220106592AE2BC9100132B3A /* SceneDelegate.swift in Sources */,
+				228C4E1D2B2367D600557359 /* ApiPresenter.swift in Sources */,
 				2236CCBB2AFE805F006F7880 /* AddWeightAndRepTVC.swift in Sources */,
 				2201069B2AE2C50800132B3A /* ExerciseModel.swift in Sources */,
 				22CE76332B1B73F7001FA709 /* ExerciseStatVC.swift in Sources */,
 				22603E932AE3FB9C00D2E183 /* CustomTextFieldTVC.swift in Sources */,
 				22B5F2AA2AF552B900B47D6D /* UIViewController_HalfScreenPresent.swift in Sources */,
+				228C4E182B23622A00557359 /* QueryModel.swift in Sources */,
 				22CE76352B1B749C001FA709 /* StatCVC.swift in Sources */,
+				228C4E2D2B2606CB00557359 /* RealmPickedFoodPresenter.swift in Sources */,
 				220106A42AE2CF7900132B3A /* UIColor_HEX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -916,6 +1000,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		228C4E192B23631600557359 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
 		22CE76272B0FE97B001FA709 /* XCRemoteSwiftPackageReference "RxRealm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxRealm.git";
@@ -952,6 +1044,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 22603E962AE59F4300D2E183 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		228C4E1A2B23631600557359 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 228C4E192B23631600557359 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		22CE76282B0FE97B001FA709 /* RxRealm */ = {
 			isa = XCSwiftPackageProductDependency;

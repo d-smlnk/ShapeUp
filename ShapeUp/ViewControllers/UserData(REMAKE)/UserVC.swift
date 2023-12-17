@@ -29,6 +29,7 @@ class UserVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        self.dismissKeyboardOnTap()
     }
     
    

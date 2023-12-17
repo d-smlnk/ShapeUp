@@ -19,7 +19,7 @@ class MainTabBarController: UITabBarController {
         viewControllers = [
             generateVC(vc: WorkoutRoutineVC(), title: "Workout", image: UIImage(named: "WorkoutImg")),
             generateVC(vc: MainVC(), title: "", image: UIImage(named: "mainTabBarBtn")),
-            generateVC(vc: NutritionVC(), title: "Meal", image: UIImage(named: "MealImg"))
+            generateVC(vc: NutritionMainVC(), title: "Meal", image: UIImage(named: "MealImg"))
         ]
         self.selectedIndex = 1
     }

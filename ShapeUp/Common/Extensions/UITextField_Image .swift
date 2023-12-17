@@ -11,13 +11,14 @@ import UIKit
 
 extension UITextField {
     
-    convenience init(image: UIImage, placeholder: String, contentType: UITextContentType) {
+    convenience init(image: UIImage, placeholder: String, contentType: UIKeyboardType) {
         self.init()
         
         // mainview setup
         self.backgroundColor = DS.DesignColorTemplates.secondaryColor
         self.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         self.autocapitalizationType = .sentences
+        self.keyboardType = contentType
         
         let mainViewPadding = UIView()
         self.leftView = mainViewPadding

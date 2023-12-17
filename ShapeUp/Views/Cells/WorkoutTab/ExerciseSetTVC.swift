@@ -14,8 +14,8 @@ class ExerciseSetTVC: UITableViewCell {
 
     static let reuseIdentifier = "ExerciseSetTVC"
     
-    private let weightTF = UITextField(image: UIImage(named: "scale") ?? UIImage(), placeholder: "Weight", contentType: .creditCardNumber)
-    private let repTF = UITextField(image: UIImage(named: "reps") ?? UIImage(), placeholder: "Rep", contentType: .creditCardNumber)
+    private let weightTF = UITextField(image: UIImage(named: "scale") ?? UIImage(), placeholder: "Weight", contentType: .numberPad)
+    private let repTF = UITextField(image: UIImage(named: "reps") ?? UIImage(), placeholder: "Rep", contentType: .numberPad)
     private let setAndRepSV = UIStackView()
     
     private let disposeBag = DisposeBag()
@@ -33,7 +33,8 @@ class ExerciseSetTVC: UITableViewCell {
     
     private func setupLayout() {
         contentView.backgroundColor = DS.DesignColorTemplates.mainColor
-        
+        selectionStyle = .none
+
         setAndRepSV.axis = .horizontal
         setAndRepSV.distribution = .fillEqually
         setAndRepSV.spacing = CGFloat(DS.Paddings.spacing)

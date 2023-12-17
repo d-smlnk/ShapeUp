@@ -10,12 +10,13 @@ import RealmSwift
 
 class CreateExerciseVC: UIViewController {
     
-    static let exerciseNameTF = UITextField(image: ChooseMuscleForNewExerciseVC.muscleGroupImageDelegate ?? UIImage(), placeholder: "Exercise name", contentType: .name)
+    static let exerciseNameTF = UITextField(image: ChooseMuscleForNewExerciseVC.muscleGroupImageDelegate ?? UIImage(), placeholder: "Exercise name", contentType: .default)
 
     private let choosenMuscleGroupName = ChooseMuscleForNewExerciseVC.muscleGroupNameDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.dismissKeyboardOnTap()
         setupLayout()
     }
 

@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.rootViewController = MainTabBarController()
-//        window?.rootViewController = AddSetAndRepVC()
+//        window?.rootViewController = SearchFoodVC()
+//        window?.rootViewController = MealVC()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

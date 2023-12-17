@@ -30,6 +30,17 @@ class RealmPresenter {
             .filter("exerciseName == %@", exerciseName)
         
         return data
+    } 
+    
+    static func filterByDateAndMealName<T: Object>(realmDB: T.Type, mealName: String) -> Results<T> {
+        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
+        
+        let data = RealmPresenter.realm.objects(realmDB)
+            .filter("date >= %@", dateOnly)
+            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+            .filter("name == %@", mealName)
+        
+        return data
     }
     
     static func addExerciseToRealm() {
