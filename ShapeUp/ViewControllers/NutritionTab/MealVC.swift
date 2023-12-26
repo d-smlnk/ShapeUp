@@ -73,7 +73,7 @@ class MealVC: UIViewController, SendDateAndMealTimeDelegate {
         }
 
     }
-    
+    #warning("here is the commented lines")
     func configure() {
         nutritionView.servingSizeLbl.text = "Serving Size \(nutritionData?.nutritionDataDelegate?.serving_size_g ?? 0)g"
         nutritionView.ccalLbl.text = "Calories \(nutritionData?.nutritionDataDelegate?.calories ?? 0)"
@@ -173,7 +173,6 @@ extension MealVC {
                     realmObject.foodList.append(nutritionObject)
                     RealmPresenter.realm.add(realmObject)
                 }
-                print(nutritionObject)
                 print(realmObject)
             }
         } else {

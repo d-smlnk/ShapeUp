@@ -32,13 +32,25 @@ class RealmPresenter {
         return data
     } 
     
-    static func filterByDateAndMealName<T: Object>(realmDB: T.Type, mealName: String) -> Results<T> {
+#warning("refactor this 2 method!")
+    static func filterByDate_TimeAndMealName<T: Object>(realmDB: T.Type, mealTime: String) -> Results<T> {
         let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
         
         let data = RealmPresenter.realm.objects(realmDB)
             .filter("date >= %@", dateOnly)
             .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
-            .filter("name == %@", mealName)
+            .filter("mealTime == %@", mealTime)
+        
+        return data
+    }  
+    
+    static func filterByDateAndMealTime<T: Object>(realmDB: T.Type, mealTime: String) -> Results<T> {
+        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
+        
+        let data = RealmPresenter.realm.objects(realmDB)
+            .filter("date >= %@", dateOnly)
+            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+            .filter("mealTime == %@", mealTime)
         
         return data
     }

@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import RealmSwift
 
 class NutritionMainTVC: UITableViewCell {
     
     static let reuseIdentifier = "NutritionMainTVC"
     
     var mealData: (String, UIImage?)?
+    
+    var mealTime: String?
+    
+    var realmFoodData: Results<RealmPickedFoodPresenter>?
     
     private let mealIV = UIImageView()
     private let mealTitle = UILabel()
@@ -59,7 +64,7 @@ class NutritionMainTVC: UITableViewCell {
         //MARK: - CONSTRAINTS
         
         mealIV.snp.makeConstraints {
-            $0.size.equalTo(50)
+            $0.size.equalTo(DS.SizeOFElements.heightForSingleElements)
             $0.top.leading.bottom.equalToSuperview().inset(DS.Paddings.spacing)
         }
         
@@ -84,7 +89,16 @@ class NutritionMainTVC: UITableViewCell {
         mealIV.image = mealData?.1
         mealTitle.text = mealData?.0
         ccalTitle.text = "Ccal"
-        ccalNumTitle.text = "2500"
+        
+        let filteredFoodData = self.realmFoodData?.filter("mealTime == %@", mealTime ?? "")
+        
+        guard let ccalNum = filteredFoodData?.flatMap({ element in
+            element.foodList.map { realmItem in
+                realmItem.calories
+            }
+        }).reduce(0, +) else { return }
+
+        ccalNumTitle.text = String(format: "%.1f", ccalNum)
     }
     
 }

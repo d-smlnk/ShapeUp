@@ -8,6 +8,8 @@
 import UIKit
 import FSCalendar
 import RealmSwift
+import RxRealm
+import RxSwift
 
 protocol SendDateAndMealTimeDelegate: AnyObject {
     func sendDateAndMealDelegate(_ date: Date, _ mealTime: String)
@@ -23,14 +25,24 @@ class NutritionMainVC: UIViewController {
     ]
     
     private let nutritionTV = UITableView()
+    
     private let calendarView = UIView()
     private let indicatorView = UIView()
+    
     private let nutritionCalendar = FSCalendar()
+    
+    private let proteinNumTitle = UILabel()
+    private let carbsNumTitle = UILabel()
+    private let fatNumTitle = UILabel()
+    private let ccalNumTitle = UILabel()
+    
     static var choosenDate = Date()
     static private var choosenSection = Int()
     private var isOpenedSections: [Int: Bool] = [:]
+    
     private var pickedFoodRealm: Results<RealmPickedFoodPresenter>?
-    private var didSelectMeal: RealmPickedFoodPresenter?
+    
+    private let disposeBag = DisposeBag()
     
     weak var sendDateAndMealDelegate: SendDateAndMealTimeDelegate?
 
@@ -38,6 +50,12 @@ class NutritionMainVC: UIViewController {
         super.viewDidLoad()
         self.dismissKeyboardOnTap()
         setupLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateTableView()
+        totalNutritionViewSetup()
     }
     
     private func setupLayout() {
@@ -95,17 +113,7 @@ class NutritionMainVC: UIViewController {
         let ccalTitle = UILabel()
         ccalTitle.text = "Ccal"
         ccalTitle.textAlignment = .right
-        
-        let proteinNumTitle = UILabel()
-        proteinNumTitle.text = "200"
-        let carbsNumTitle = UILabel()
-        carbsNumTitle.text = "400"
-        let fatNumTitle = UILabel()
-        fatNumTitle.text = "90"
-        let ccalNumTitle = UILabel()
-        ccalNumTitle.text = "2500"
-        ccalNumTitle.textAlignment = .right
-        
+                
         let nutrientsNumSV = UIStackView(arrangedSubviews: [proteinNumTitle, carbsNumTitle, fatNumTitle, ccalNumTitle].map ({
             $0.textColor = DS.DesignColorTemplates.customTextColor
             $0.font = .systemFont(ofSize: DS.Fonts.separateTextFontSize, weight: .semibold)
@@ -130,6 +138,7 @@ class NutritionMainVC: UIViewController {
         nutritionTV.showsVerticalScrollIndicator = false
         nutritionTV.register(NutritionMainTVC.self, forCellReuseIdentifier: NutritionMainTVC.reuseIdentifier)
         nutritionTV.register(NutritionInfoTVC.self, forCellReuseIdentifier: NutritionInfoTVC.reuseIdentifier)
+        nutritionTV.register(MealInfoTVC.self, forCellReuseIdentifier: MealInfoTVC.reuseIdentifier)
         view.addSubview(nutritionTV)
         
         //MARK: - CONSTRAINTS
@@ -180,22 +189,9 @@ class NutritionMainVC: UIViewController {
 }
 
 extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return mealDataArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let data = RealmPresenter.filterByDateAndMealName(realmDB: RealmPickedFoodPresenter.self, mealName: pickedFoodRealm?[section].name ?? "")
-        switch didSelectMeal != nil {
-        case true:
-            return isOpenedSections[section] ?? false ? (didSelectMeal?.foodList.count ?? 0) + 2 : 2
-        case false:
-            return isOpenedSections[section] ?? false ? data.map { $0.foodList.count }.reduce(0, +) + 2 : 2
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { // just visual spacing between sections
+        return CGFloat(DS.Paddings.spacing)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -204,28 +200,99 @@ extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return mealDataArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
+        
+        pickedFoodRealm = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
+            .filter("date >= %@", dateOnly)
+            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+            .filter("mealTime == %@", mealDataArray[section].0)
+
+        switch isOpenedSections[section] {
+        case true:
+            return (pickedFoodRealm?.count ?? 0) + 2
+        default:
+            return 2
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let numberOfCellsInSection = tableView.numberOfRows(inSection: indexPath.section)
+
+        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
+        
+        let pickedFoodDateOnly = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
+            .filter("date >= %@", dateOnly)
+            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+        
+        pickedFoodRealm = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
+            .filter("date >= %@", dateOnly)
+            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+            .filter("mealTime == %@", mealDataArray[indexPath.section].0)
+
+
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: NutritionMainTVC.reuseIdentifier, for: indexPath) as? NutritionMainTVC
             cell?.mealData = mealDataArray[indexPath.section]
-            cell?.configure()
+            cell?.realmFoodData = pickedFoodDateOnly
+            cell?.mealTime = mealDataArray[indexPath.section].0
             cell?.addMealBtn.tag = indexPath.section
             cell?.addMealBtn.addTarget(self, action: #selector(openSearchVC), for: .touchUpInside)
+            cell?.configure()
             return cell ?? UITableViewCell()
+            
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: NutritionInfoTVC.reuseIdentifier, for: indexPath) as? NutritionInfoTVC
-            cell?.mealLabel.text = pickedFoodRealm?[indexPath.section].name
-            print("realm", RealmPresenter.realm.objects(RealmPickedFoodPresenter.self))
+            cell?.realmFoodData = pickedFoodDateOnly
+            cell?.mealTime = mealDataArray[indexPath.section].0
             cell?.dropDownMenuBtn.addTarget(self, action: #selector(btn), for: .touchUpInside)
             cell?.dropDownMenuBtn.tag = indexPath.section
             cell?.dropDownMenuBtn.isSelected = isOpenedSections[indexPath.section] ?? false
+            cell?.configure()
+            
+            if isOpenedSections[indexPath.section] ?? false && numberOfCellsInSection > 2 {
+                cell?.contentView.layer.cornerRadius = 0
+            } else {
+                cell?.contentView.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
+                cell?.contentView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            }
+            
             return cell ?? UITableViewCell()
             
-        default: return UITableViewCell()
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MealInfoTVC.reuseIdentifier, for: indexPath) as? MealInfoTVC
+            cell?.foodData = pickedFoodRealm?[indexPath.row - 2]
+            cell?.nutritionData = pickedFoodRealm?[indexPath.row - 2].foodList
+            cell?.configure()
+            
+            if isOpenedSections[indexPath.section] ?? false {
+                                
+                switch indexPath.row {
+                case numberOfCellsInSection - 1:
+                    cell?.contentView.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
+                    cell?.contentView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+                    
+                default:
+                    cell?.contentView.layer.cornerRadius = 0
+                }
+                
+            }
+            
+            return cell ?? UITableViewCell()
         }
+        
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
     
 }
 
@@ -233,6 +300,7 @@ extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
 extension NutritionMainVC: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         NutritionMainVC.choosenDate = date
+        viewDidAppear(true)
         nutritionTV.reloadData()
     }
     
@@ -342,4 +410,59 @@ extension NutritionMainVC {
     func sendDataToVC() {
         sendDateAndMealDelegate?.sendDateAndMealDelegate(NutritionMainVC.choosenDate, mealDataArray[NutritionMainVC.choosenSection].0)
     }
+    #warning("resolve why this func doesnt work")
+    // Update tableview when new meal was added
+    private func updateTableView() {
+        guard let pickedFoodRealm = pickedFoodRealm else { return }
+        
+        Observable.changeset(from: pickedFoodRealm)
+            .subscribe(
+                onDisposed:  {
+                    self.nutritionTV.reloadData()
+                    print("Disposed")
+                }).disposed(by: disposeBag)
+    }
+    
+    //Setup displaying total daily nutrition data in the top of vc
+    private func totalNutritionViewSetup() {
+        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
+
+        let realmDailyMealData = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
+            .filter("date >= %@", dateOnly)
+            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
+        
+        let proteinNum = realmDailyMealData.flatMap { element in
+            element.foodList.map { realmItem in
+                return realmItem.protein_g
+            }
+        }.reduce(0, +)
+        
+        proteinNumTitle.text = String(format: "%.1f", proteinNum)
+        
+        let carbsNum = realmDailyMealData.flatMap { element in
+            element.foodList.map { realmItem in
+                return realmItem.carbohydrates_total_g
+            }
+        }.reduce(0, +)
+  
+        carbsNumTitle.text = String(format: "%.1f", carbsNum)
+        
+        let fatNum = realmDailyMealData.flatMap { element in
+            element.foodList.map { realmItem in
+                return realmItem.fat_total_g
+            }
+        }.reduce(0, +)
+        
+        fatNumTitle.text = String(format: "%.1f", fatNum)
+        
+        let ccalNum = realmDailyMealData.flatMap { element in
+            element.foodList.map { realmItem in
+                return realmItem.calories
+            }
+        }.reduce(0, +)
+        
+        ccalNumTitle.text =  String(format: "%.1f", ccalNum)
+        ccalNumTitle.textAlignment = .right
+    }
+    
 }

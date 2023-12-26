@@ -26,6 +26,7 @@
 		2201069D2AE2C53300132B3A /* NutritionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2201069C2AE2C53300132B3A /* NutritionModel.swift */; };
 		220106A42AE2CF7900132B3A /* UIColor_HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220106A32AE2CF7900132B3A /* UIColor_HEX.swift */; };
 		220106A92AE2E59100132B3A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 220106A82AE2E59000132B3A /* SnapKit */; };
+		221D10F92B30AE7A004E4428 /* MealInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D10F82B30AE7A004E4428 /* MealInfoTVC.swift */; };
 		2236CCB92AFE7FC7006F7880 /* AddWeightAndRepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236CCB82AFE7FC7006F7880 /* AddWeightAndRepVC.swift */; };
 		2236CCBB2AFE805F006F7880 /* AddWeightAndRepTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236CCBA2AFE805F006F7880 /* AddWeightAndRepTVC.swift */; };
 		2236CCBD2AFEAE8A006F7880 /* ExerciseSetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236CCBC2AFEAE8A006F7880 /* ExerciseSetTVC.swift */; };
@@ -117,6 +118,7 @@
 		2201069A2AE2C50800132B3A /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
 		2201069C2AE2C53300132B3A /* NutritionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModel.swift; sourceTree = "<group>"; };
 		220106A32AE2CF7900132B3A /* UIColor_HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_HEX.swift; sourceTree = "<group>"; };
+		221D10F82B30AE7A004E4428 /* MealInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealInfoTVC.swift; sourceTree = "<group>"; };
 		2236CCB82AFE7FC7006F7880 /* AddWeightAndRepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeightAndRepVC.swift; sourceTree = "<group>"; };
 		2236CCBA2AFE805F006F7880 /* AddWeightAndRepTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWeightAndRepTVC.swift; sourceTree = "<group>"; };
 		2236CCBC2AFEAE8A006F7880 /* ExerciseSetTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSetTVC.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				228C4E212B236B5900557359 /* NutritionMainTVC.swift */,
 				228C4E262B26032100557359 /* NutritionInfoTVC.swift */,
 				228C4E2E2B2632AA00557359 /* SearchFoodTVC.swift */,
+				221D10F82B30AE7A004E4428 /* MealInfoTVC.swift */,
 			);
 			path = NutritionTab;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				228C4E372B2B395200557359 /* UIViewController_DismissKeyboard.swift in Sources */,
 				228C4E332B28CC6300557359 /* UIView_Separator.swift in Sources */,
 				220106932AE2C41800132B3A /* UserPresenter.swift in Sources */,
+				221D10F92B30AE7A004E4428 /* MealInfoTVC.swift in Sources */,
 				228C4E222B236B5900557359 /* NutritionMainTVC.swift in Sources */,
 				2236CCB92AFE7FC7006F7880 /* AddWeightAndRepVC.swift in Sources */,
 				22B5F2A62AF40AA200B47D6D /* UIButton_Back.swift in Sources */,

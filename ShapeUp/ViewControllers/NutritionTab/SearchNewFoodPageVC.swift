@@ -36,22 +36,7 @@ class SearchNewFoodPageVC: UIViewController, SendQueryDelegate, SendNutritionDat
     }
     
     private func setupLayout() {
-        
-//        let a = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
-//        
-//        Observable.changeset(from: a)
-//            .subscribe(
-//                onNext: { _ , changeset in
-//                    let insertions = changeset?.inserted.map { $0 }
-//                    let modifications = changeset?.updated.map { $0 }
-//                    let deletions = changeset?.deleted.map { $0 }
-//                    
-//                    print("Inserted: \(insertions)")
-//                    print("Modified: \(modifications)")
-//                    print("Deleted: \(deletions)")
-//                })
-//            .disposed(by: disposeBag)
-//        
+ 
         view.backgroundColor = DS.DesignColorTemplates.mainColor
         
         searchBar.delegate = self
