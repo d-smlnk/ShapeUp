@@ -205,12 +205,8 @@ extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
-        
-        pickedFoodRealm = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
-            .filter("date >= %@", dateOnly)
-            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
-            .filter("mealTime == %@", mealDataArray[section].0)
+
+        pickedFoodRealm = RealmPresenter.filterByDateAndMealTime(realmDB: RealmPickedFoodPresenter.self, mealTime: mealDataArray[section].0)
 
         switch isOpenedSections[section] {
         case true:
@@ -224,18 +220,10 @@ extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let numberOfCellsInSection = tableView.numberOfRows(inSection: indexPath.section)
+    
+        let pickedFoodDateOnly = RealmPresenter.filterRealmByDate(realmDB: RealmPickedFoodPresenter.self, date: NutritionMainVC.choosenDate)
 
-        let dateOnly = Calendar.current.startOfDay(for: NutritionMainVC.choosenDate)
-        
-        let pickedFoodDateOnly = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
-            .filter("date >= %@", dateOnly)
-            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
-        
-        pickedFoodRealm = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
-            .filter("date >= %@", dateOnly)
-            .filter("date < %@", Calendar.current.date(byAdding: .day, value: 1, to: dateOnly) ?? Date())
-            .filter("mealTime == %@", mealDataArray[indexPath.section].0)
-
+        pickedFoodRealm = RealmPresenter.filterByDateAndMealTime(realmDB: RealmPickedFoodPresenter.self, mealTime: mealDataArray[indexPath.section].0)
 
         switch indexPath.row {
         case 0:
@@ -410,17 +398,18 @@ extension NutritionMainVC {
     func sendDataToVC() {
         sendDateAndMealDelegate?.sendDateAndMealDelegate(NutritionMainVC.choosenDate, mealDataArray[NutritionMainVC.choosenSection].0)
     }
-    #warning("resolve why this func doesnt work")
+
     // Update tableview when new meal was added
     private func updateTableView() {
         guard let pickedFoodRealm = pickedFoodRealm else { return }
         
         Observable.changeset(from: pickedFoodRealm)
-            .subscribe(
-                onDisposed:  {
-                    self.nutritionTV.reloadData()
-                    print("Disposed")
-                }).disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] changeset in
+                guard let self = self else { return }
+                self.nutritionTV.reloadData()
+                self.nutritionCalendar.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
     //Setup displaying total daily nutrition data in the top of vc
