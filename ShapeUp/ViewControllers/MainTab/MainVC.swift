@@ -25,11 +25,7 @@ class MainVC: UIViewController {
         (UIImage(named: "Cardio") ?? UIImage(), "Cardio", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Cardio")),
         (UIImage(named: "Yoga") ?? UIImage(), "Yoga", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Yoga")),
         (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Crossfit"))
-    ] {
-        didSet {
-            exercisesCV?.reloadData()
-        }
-    }
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +37,7 @@ class MainVC: UIViewController {
         view.backgroundColor = DS.DesignColorTemplates.mainColor
     
         let nameLabel = UILabel()
-        nameLabel.text = "Hi Dmytro Samoilenko,"
+        nameLabel.text = "Hi Your Name,"
         nameLabel.font = .systemFont(ofSize: DS.Fonts.titleFontSize, weight: .medium)
         nameLabel.textColor = DS.DesignColorTemplates.customTextColor
         view.addSubview(nameLabel)

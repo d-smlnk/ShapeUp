@@ -21,6 +21,7 @@ class MealInfoTVC: UITableViewCell {
     private let fatLabel = UILabel()
     private let ccalLabel = UILabel()
     private let goToFoodMenuBtn = UIButton()
+    private let mealSizeLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,6 +58,9 @@ class MealInfoTVC: UITableViewCell {
         
         let separatorView = UIView(height: 2, color: DS.DesignColorTemplates.borderColor ?? .black, cornered: true, addTo: contentView)
         
+        mealSizeLabel.textColor = .darkGray
+        contentView.addSubview(mealSizeLabel)
+        
         goToFoodMenuBtn.setImage(UIImage(named: "GoToFood"), for: .normal)
         contentView.addSubview(goToFoodMenuBtn)
         
@@ -85,9 +89,16 @@ class MealInfoTVC: UITableViewCell {
             $0.trailing.equalTo(goToFoodMenuBtn.snp.leading).offset(-Double(DS.Paddings.spacing) * 10.5)
         }
         
+        mealSizeLabel.snp.makeConstraints {
+            $0.top.equalTo(separatorView.snp.bottom).offset(DS.Paddings.spacing)
+            $0.trailing.equalTo(goToFoodMenuBtn.snp.leading).offset(-DS.Paddings.spacing)
+            $0.height.equalTo(nutritionSV.snp.height)
+        }
+        
         goToFoodMenuBtn.snp.makeConstraints {
             $0.size.equalTo(DS.SizeOFElements.heightForSingleElements / 3)
-            $0.top.trailing.equalToSuperview().inset(DS.Paddings.padding)
+            $0.trailing.equalToSuperview().inset(DS.Paddings.padding)
+            $0.centerY.equalTo(ccalLabel.snp.centerY)
         }
     }
 
@@ -105,5 +116,8 @@ class MealInfoTVC: UITableViewCell {
         
         guard let ccalNum = nutritionData?.value(forKey: "calories").first as? Double else { return }
         ccalLabel.text = "\(String(format: "%.1f", ccalNum)) Ccal"
+        
+        guard let mealSizeNum = nutritionData?.value(forKey: "serving_size_g").first as? Int else { return }
+        mealSizeLabel.text = ("\(mealSizeNum)g")
     }
 }
