@@ -11,12 +11,12 @@ class MealVC: UIViewController, SendDateAndMealTimeDelegate {
     
     private var nutritionView = NutritionFactsView()
     private let insertGramTF = UITextField(image: UIImage(named: "MealIcon") ?? UIImage(), placeholder: "Grams", contentType: .numberPad)
-
+    
     weak var nutritionData: SendNutritionDataDelegate?
     
     var delegatedData: Date?
     var delegatedMealTime: String?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let vc = NutritionMainVC()
@@ -45,7 +45,7 @@ class MealVC: UIViewController, SendDateAndMealTimeDelegate {
         saveBtn.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         saveBtn.addTarget(self, action: #selector(saveMeal), for: .touchUpInside)
         view.addSubview(saveBtn)
-
+        
         
         //MARK: - CONSTRAINTS
         
@@ -53,25 +53,40 @@ class MealVC: UIViewController, SendDateAndMealTimeDelegate {
             $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
         }
         
-        insertGramTF.snp.makeConstraints {
-            $0.top.equalTo(nameLbl.snp.bottom).offset(DS.Paddings.padding * 3)
-            $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-            $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
-        }
-        
-        saveBtn.snp.makeConstraints {
-            $0.top.equalTo(insertGramTF.snp.bottom).offset(DS.Paddings.spacing * 3)
-            $0.width.equalTo(view.frame.width / 2)
-            $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
-            $0.centerX.equalToSuperview()
-        }
-        
         nutritionView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.padding)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(view.frame.width - (view.frame.width / 4))
         }
-
+        
+        if UIScreen.main.bounds.width < 393 && UIScreen.main.bounds.height < 852 {
+            insertGramTF.snp.makeConstraints {
+                $0.top.equalTo(nameLbl.snp.bottom).offset(DS.Paddings.spacing)
+                $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
+                $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
+            }
+            saveBtn.snp.makeConstraints {
+                $0.top.equalTo(insertGramTF.snp.bottom).offset(DS.Paddings.spacing)
+                $0.width.equalTo(view.frame.width / 2)
+                $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
+                $0.centerX.equalToSuperview()
+            }
+            
+        } else {
+            insertGramTF.snp.makeConstraints {
+                $0.top.equalTo(nameLbl.snp.bottom).offset(DS.Paddings.padding * 3)
+                $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
+                $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
+            }
+            
+            saveBtn.snp.makeConstraints {
+                $0.top.equalTo(insertGramTF.snp.bottom).offset(DS.Paddings.spacing * 3)
+                $0.width.equalTo(view.frame.width / 2)
+                $0.height.equalTo(DS.SizeOFElements.heightForSingleElements)
+                $0.centerX.equalToSuperview()
+            }
+            
+        }
     }
     #warning("here is the commented lines")
     func configure() {

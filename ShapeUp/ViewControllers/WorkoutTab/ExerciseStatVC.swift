@@ -31,7 +31,7 @@ class ExerciseStatVC: UIViewController {
         data = RealmPresenter.realm.objects(RealmPickedExercisePresenter.self).filter("exerciseName == %@", exerciseNameDelegate?.exerciseNameTitle ?? "")
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 180, height: 200)
+        layout.itemSize = CGSize(width: view.frame.width / 2.5, height: view.frame.height / 5)
         layout.scrollDirection = .vertical
         
         let statCV = UICollectionView(frame: .zero, collectionViewLayout: layout)

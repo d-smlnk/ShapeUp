@@ -5,13 +5,11 @@
 //  Created by Дима Самойленко on 20.10.2023.
 //
 
-/*
- Представлення для відображення списку доступних фізичних вправ і тренувальних програм.
- */
-
 import UIKit
 import FSCalendar
 import RealmSwift
+import RxRealm
+import RxSwift
 
 protocol ExerciseNameDelegate: UIViewController {
     var exerciseNameTitle: String? { get }
@@ -35,10 +33,17 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDele
     static var choosenDate = Date()
     private var pickedExerciseDataArray: Results<RealmPickedExercisePresenter>?
     
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dismissKeyboardOnTap()
         setupLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateTableView()
     }
     
     private func setupLayout() {
@@ -157,83 +162,6 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDele
             $0.bottom.equalTo(addExerciseBtn.snp.top).offset(-DS.Paddings.spacing)
         }
     }
-    
-    @objc func dragMainView(_ gesture: UISwipeGestureRecognizer) {
-        switch gesture.direction {
-        case .down:
-            UIView.animate(withDuration: 0.3) {
-                
-                self.calendarView.snp.updateConstraints {
-                    $0.height.equalTo(self.view.frame.size.height / 2.3)
-                }
-                
-                self.indicatorView.backgroundColor = .darkGray
-                
-                self.indicatorView.snp.updateConstraints {
-                    $0.width.equalTo(self.view.frame.size.width / 4.3)
-                }
-                
-                self.view.layoutIfNeeded()
-            }
-            self.trainingsCalendar.setScope(.month, animated: true)
-            
-        case .up:
-            UIView.animate(withDuration: 0.3) {
-                
-                self.calendarView.snp.updateConstraints {
-                    $0.height.equalTo(self.view.frame.size.height / 5)
-                }
-                
-                self.indicatorView.backgroundColor = .lightGray
-                
-                self.indicatorView.snp.updateConstraints {
-                    $0.width.equalTo(self.view.frame.size.width / 7)
-                }
-                
-                self.view.layoutIfNeeded()
-                
-            }
-            self.trainingsCalendar.setScope(.week, animated: true)
-            
-        default: break
-        }
-    }
-    
-    @objc func addExercise() {
-        let addExercise = WorkoutMenuVC()
-        addExercise.modalPresentationStyle = .popover
-        present(addExercise, animated: true)
-    }
-    
-    @objc func btn(btn: UIButton) {
-        if let isOpened = isOpenedSections[btn.tag] {
-            btn.isSelected = !isOpened
-            isOpenedSections[btn.tag] = isOpened ? false : true
-        } else {
-            btn.isSelected = true
-            isOpenedSections[btn.tag] = true
-        }
-        exerciseListTV.reloadData()
-    }
-    
-    @objc func addSet(btn: UIButton) {
-        exerciseNameTitle = pickedExerciseDataArray?[btn.tag].exerciseName ?? ""
-        let vc = AddWeightAndRepVC()
-        vc.exerciseNameTitleDelegate = self
-        self.halfScreenPresent(vc)
-    }
-    
-    @objc func copySet(btn: UIButton) {
-        exerciseNameTitle = pickedExerciseDataArray?[btn.tag].exerciseName ?? ""
-        execiseDate = pickedExerciseDataArray?[btn.tag].exerciseDate ?? Date()
-        setDateDelegate = pickedExerciseDataArray?[btn.tag]
-
-        let vc = ExerciseStatVC()
-        vc.exerciseNameDelegate = self
-        vc.exerciseDateDelegate = self
-        vc.exerciseStatDelegate = self
-        present(vc, animated: true)
-    }
 }
 
 //MARK: FSCalendar Delegate & Data Source
@@ -242,6 +170,7 @@ extension WorkoutRoutineVC: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         WorkoutRoutineVC.choosenDate = date
         exerciseListTV.reloadData()
+        viewDidAppear(true)
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {
@@ -417,5 +346,102 @@ extension WorkoutRoutineVC: UITableViewDelegate, UITableViewDataSource {
         }
         action.backgroundColor = .systemRed
         return action
+    }
+}
+
+// MARK: - @objc METHODS
+extension WorkoutRoutineVC {
+    // Calendar animation
+    @objc func dragMainView(_ gesture: UISwipeGestureRecognizer) {
+        switch gesture.direction {
+        case .down:
+            UIView.animate(withDuration: 0.3) {
+                
+                self.calendarView.snp.updateConstraints {
+                    $0.height.equalTo(self.view.frame.size.height / 2.3)
+                }
+                
+                self.indicatorView.backgroundColor = .darkGray
+                
+                self.indicatorView.snp.updateConstraints {
+                    $0.width.equalTo(self.view.frame.size.width / 4.3)
+                }
+                
+                self.view.layoutIfNeeded()
+            }
+            self.trainingsCalendar.setScope(.month, animated: true)
+            
+        case .up:
+            UIView.animate(withDuration: 0.3) {
+                
+                self.calendarView.snp.updateConstraints {
+                    $0.height.equalTo(self.view.frame.size.height / 5)
+                }
+                
+                self.indicatorView.backgroundColor = .lightGray
+                
+                self.indicatorView.snp.updateConstraints {
+                    $0.width.equalTo(self.view.frame.size.width / 7)
+                }
+                
+                self.view.layoutIfNeeded()
+                
+            }
+            self.trainingsCalendar.setScope(.week, animated: true)
+            
+        default: break
+        }
+    }
+    //Navigation to WorkoutMenuVC to add an exercise
+    @objc func addExercise() {
+        let addExercise = WorkoutMenuVC()
+        addExercise.modalPresentationStyle = .popover
+        present(addExercise, animated: true)
+    }
+    
+    //Chevron method
+    @objc func btn(btn: UIButton) {
+        if let isOpened = isOpenedSections[btn.tag] {
+            btn.isSelected = !isOpened
+            isOpenedSections[btn.tag] = isOpened ? false : true
+        } else {
+            btn.isSelected = true
+            isOpenedSections[btn.tag] = true
+        }
+        exerciseListTV.reloadData()
+    }
+    
+    //Add set method
+    @objc func addSet(btn: UIButton) {
+        exerciseNameTitle = pickedExerciseDataArray?[btn.tag].exerciseName ?? ""
+        let vc = AddWeightAndRepVC()
+        vc.exerciseNameTitleDelegate = self
+        self.halfScreenPresent(vc)
+    }
+    
+    //Copy set method
+    @objc func copySet(btn: UIButton) {
+        exerciseNameTitle = pickedExerciseDataArray?[btn.tag].exerciseName ?? ""
+        execiseDate = pickedExerciseDataArray?[btn.tag].exerciseDate ?? Date()
+        setDateDelegate = pickedExerciseDataArray?[btn.tag]
+
+        let vc = ExerciseStatVC()
+        vc.exerciseNameDelegate = self
+        vc.exerciseDateDelegate = self
+        vc.exerciseStatDelegate = self
+        present(vc, animated: true)
+    }
+    
+    // Update tableview when new exercise was added
+    private func updateTableView() {
+        guard let pickedExerciseDataArray = pickedExerciseDataArray else { return }
+        
+        Observable.changeset(from: pickedExerciseDataArray)
+            .subscribe(onNext: { [weak self] changeset in
+                guard let self = self else { return }
+                self.exerciseListTV.reloadData()
+                self.trainingsCalendar.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
