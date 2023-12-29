@@ -385,6 +385,7 @@
 		228C4E232B24C2BF00557359 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
+				22DC55362AF1078100C3556C /* CreateCustomPieChart.swift */,
 				228C4E242B24C2E600557359 /* CalendarView.swift */,
 				228C4E342B28EC3500557359 /* NutritionFactsView.swift */,
 			);
@@ -423,7 +424,6 @@
 		22DC55382AF107C700C3556C /* Methods */ = {
 			isa = PBXGroup;
 			children = (
-				22DC55362AF1078100C3556C /* CreateCustomPieChart.swift */,
 			);
 			path = Methods;
 			sourceTree = "<group>";

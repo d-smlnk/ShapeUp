@@ -9,7 +9,7 @@ import Foundation
 import DGCharts
 import UIKit
 
-class CreateCustomPieChart {
+class CreateCustomPieChart: UIView {
     static func createPieChart(doneNum: Int, totalNum: Int, labelText: String) -> UIStackView {
         let pieChartSvWithDesc = UIStackView()
         pieChartSvWithDesc.axis = .vertical
@@ -18,8 +18,6 @@ class CreateCustomPieChart {
         let pieChart = PieChartView()
         pieChart.highlightPerTapEnabled = false
         pieChart.rotationEnabled = false
-        pieChart.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        pieChart.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
         let chartDoneLabel = String(doneNum)
         let chartDoneLabelText = chartDoneLabel.count > 4 ? "..." : chartDoneLabel

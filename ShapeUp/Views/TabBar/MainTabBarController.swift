@@ -39,7 +39,16 @@ class MainTabBarController: UITabBarController {
         
         let roundLayer = CAShapeLayer()
         
-        let bezierPath = UIBezierPath(roundedRect: CGRect(x: positionOnX, y: tabBar.bounds.minY - positionOnY, width: width, height: height), cornerRadius: height / 2)
+        var bezierPath = UIBezierPath()
+        
+        if UIScreen.main.bounds.width < 393 && UIScreen.main.bounds.height < 852 {
+            bezierPath = UIBezierPath(roundedRect: CGRect(x: 0, y: tabBar.bounds.minY - positionOnY, width: tabBar.bounds.width, height: height),
+                                      byRoundingCorners: [.topLeft, .topRight],
+                                      cornerRadii: CGSize(width: width, height: height))
+            
+        } else {
+            bezierPath = UIBezierPath(roundedRect: CGRect(x: positionOnX, y: tabBar.bounds.minY - positionOnY, width: width, height: height), cornerRadius: height / 2)
+        }
         
         roundLayer.path = bezierPath.cgPath
         tabBar.layer.insertSublayer(roundLayer, at: 0)

@@ -27,10 +27,20 @@ class MainVC: UIViewController {
         (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Crossfit"))
     ]
     
+    private let infoView = UIView()
+    private var centerY_exCV_infoView = CGFloat()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dismissKeyboardOnTap()
         setupLayout()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let exercisesCV = exercisesCV {
+            centerY_exCV_infoView = (exercisesCV.frame.minY - infoView.frame.maxY) / 2
+        }
     }
     
     private func setupLayout() {
@@ -48,7 +58,6 @@ class MainVC: UIViewController {
         staticLabel.textColor = DS.DesignColorTemplates.customTextColor
         view.addSubview(staticLabel)
         
-        let infoView = UIView()
         infoView.backgroundColor = DS.DesignColorTemplates.secondaryColor
         infoView.layer.cornerRadius = DS.SizeOFElements.customCornerRadius
         view.addSubview(infoView)
@@ -59,10 +68,12 @@ class MainVC: UIViewController {
         infoView.addSubview(imageView)
         
         let weightPiechart = CreateCustomPieChart.createPieChart(doneNum: 70, totalNum: 80, labelText: "Goal Weight")
-        infoView.addSubview(weightPiechart)
         
         let ccalPiechart = CreateCustomPieChart.createPieChart(doneNum: 1200, totalNum: 1500, labelText: "Eaten today")
-        infoView.addSubview(ccalPiechart)
+        
+        let pieChartSV = UIStackView(arrangedSubviews: [weightPiechart, ccalPiechart])
+        pieChartSV.distribution = .fillEqually
+        infoView.addSubview(pieChartSV)
         
         let infoArray: [(String, String?, Int?)] = [
             ("Goal:", "Losing weight", nil),
@@ -85,6 +96,10 @@ class MainVC: UIViewController {
             label.setContentHuggingPriority(.required, for: .vertical)
             container.addSubview(label)
             
+            container.snp.makeConstraints {
+                $0.height.equalTo(50)
+            }
+            
             label.snp.makeConstraints {
                 $0.edges.equalTo(container).inset(DS.Paddings.spacing)
             }
@@ -98,6 +113,7 @@ class MainVC: UIViewController {
         
         infoSV.axis = .vertical
         infoSV.spacing = CGFloat(DS.Paddings.spacing)
+        infoSV.distribution = .fillEqually
         infoView.addSubview(infoSV)
          
         let separatorView = UIView()
@@ -111,7 +127,7 @@ class MainVC: UIViewController {
         view.addSubview(cellTitle)
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 180, height: 200)
+        layout.itemSize = CGSize(width: view.frame.width / 2.5, height: view.frame.height / 5)
         layout.scrollDirection = .horizontal
         
         exercisesCV = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -125,7 +141,7 @@ class MainVC: UIViewController {
         //MARK: CONSTRAINTS
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing * 7)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(DS.Paddings.spacing * 5)
             $0.leading.equalToSuperview().inset(DS.Paddings.padding)
         }
         
@@ -135,46 +151,45 @@ class MainVC: UIViewController {
         }
         
         infoView.snp.makeConstraints {
-            $0.top.equalTo(staticLabel.snp.bottom).offset(DS.Paddings.spacing * 7)
+            $0.top.equalTo(staticLabel.snp.bottom).offset(DS.Paddings.spacing * 2)
             $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-            $0.height.equalTo(250)
         }
-        
+                
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(-80)
             $0.bottom.trailing.equalToSuperview()
             $0.width.equalTo(imageView.snp.height).dividedBy(2.4)
         }
         
-        weightPiechart.snp.makeConstraints {
+        pieChartSV.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
-        }
-        
-        ccalPiechart.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(weightPiechart.snp.trailing)
+            $0.trailing.equalTo(imageView.snp.leading)
+            $0.bottom.equalTo(infoView.snp.centerY)
         }
         
         infoSV.snp.makeConstraints {
+            $0.top.equalTo(pieChartSV.snp.bottom).offset(DS.Paddings.spacing)
             $0.leading.equalToSuperview().inset(DS.Paddings.padding)
             $0.bottom.equalToSuperview().inset(DS.Paddings.spacing)
         }
-
+        
         separatorView.snp.makeConstraints {
-            $0.top.equalTo(infoView.snp.bottom).offset(DS.Paddings.spacing * 5)
             $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
             $0.height.equalTo(2)
+            $0.bottom.equalTo(cellTitle.snp.top)
         }
         
-        cellTitle.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(DS.Paddings.padding)
-            $0.leading.equalToSuperview().inset(DS.Paddings.padding)
+        DispatchQueue.main.async {
+            cellTitle.snp.makeConstraints {
+                $0.centerY.equalTo(self.infoView.snp.bottom).offset(self.centerY_exCV_infoView)
+                $0.leading.equalToSuperview().inset(DS.Paddings.padding)
+            }
         }
         
         exercisesCV?.snp.makeConstraints {
-            $0.top.equalTo(cellTitle.snp.bottom).offset(DS.Paddings.spacing)
+            $0.height.equalTo(view.frame.height / 5)
             $0.leading.trailing.equalToSuperview().inset(DS.Paddings.padding)
-            $0.bottom.equalToSuperview().inset(150)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(DS.Paddings.padding * 3)
         }
         
     }
