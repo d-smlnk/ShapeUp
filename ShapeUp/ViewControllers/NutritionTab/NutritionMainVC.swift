@@ -52,8 +52,8 @@ class NutritionMainVC: UIViewController {
         setupLayout()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateTableView()
         totalNutritionViewSetup()
     }
@@ -288,7 +288,7 @@ extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
 extension NutritionMainVC: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         NutritionMainVC.choosenDate = date
-        viewDidAppear(true)
+        viewWillAppear(true)
         nutritionTV.reloadData()
     }
     

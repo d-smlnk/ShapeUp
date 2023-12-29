@@ -41,8 +41,8 @@ class WorkoutRoutineVC: UIViewController, ExerciseNameDelegate, ExerciseStatDele
         setupLayout()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateTableView()
     }
     
@@ -170,7 +170,7 @@ extension WorkoutRoutineVC: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         WorkoutRoutineVC.choosenDate = date
         exerciseListTV.reloadData()
-        viewDidAppear(true)
+        viewWillAppear(true)
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {

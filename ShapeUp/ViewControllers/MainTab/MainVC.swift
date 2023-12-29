@@ -7,33 +7,33 @@
 
 import UIKit
 import DGCharts
+import RxSwift
+import RealmSwift
 
 class MainVC: UIViewController {
     
     private var exercisesCV: UICollectionView?
-    private var musclesDataArray: [(UIImage, String, Int)] = [
-        (UIImage(named: "Neck") ?? UIImage(), "Neck", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Neck")),
-        (UIImage(named: "ChestMuscle") ?? UIImage(), "Chest", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Chest")),
-        (UIImage(named: "BackMuscle") ?? UIImage(), "Back", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Back")),
-        (UIImage(named: "LegMuscle") ?? UIImage(), "Legs", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Legs")),
-        (UIImage(named: "ShouldersMuscle") ?? UIImage(), "Shoulders", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Shoulders")),
-        (UIImage(named: "HandsMuscles") ?? UIImage(), "Biceps", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Biceps")),
-        (UIImage(named: "TricepsMuscle") ?? UIImage(), "Triceps", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Triceps")),
-        (UIImage(named: "Forearm") ?? UIImage(), "Forearm", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Forearm")),
-        (UIImage(named: "PrelumMuscle") ?? UIImage(), "Core", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Core")),
-        (UIImage(named: "CalvesMuscle") ?? UIImage(), "Calves", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Calves")),
-        (UIImage(named: "Cardio") ?? UIImage(), "Cardio", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Cardio")),
-        (UIImage(named: "Yoga") ?? UIImage(), "Yoga", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Yoga")),
-        (UIImage(named: "Crossfit") ?? UIImage(), "Crossfit", RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: "Crossfit"))
-    ]
-    
+    private var musclesDataArray: [(UIImage, String, Int)] = [] {
+        didSet {
+            exercisesCV?.reloadData()
+        }
+    }
+        
+    private let disposeBag = DisposeBag()
+
     private let infoView = UIView()
     private var centerY_exCV_infoView = CGFloat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dismissKeyboardOnTap()
+        setupMuscleDataArray()
         setupLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateCount()
     }
     
     override func viewDidLayoutSubviews() {
@@ -208,5 +208,50 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
         cell?.musclesDataArrayInCVC = musclesData
         cell?.configure()
         return cell ?? UICollectionViewCell()
+    }
+}
+
+// MARK: - OTHER METHODS
+extension MainVC {
+    // Create exercises for Collection view
+    private func createMuscleData(imageName: String, title: String) -> (UIImage, String, Int) {
+        let image = UIImage(named: imageName) ?? UIImage()
+        let realmExercise = RealmPresenter.realm.objects(RealmExercisePresenter.self)
+        var count = RealmPresenter.numberOfFilteredElements(realmDB: RealmExercisePresenter.self, filterBy: "muscleGroupOfExercise", for: title)
+
+        return (image, title, count)
+    }
+    // setup data for collection view
+    private func setupMuscleDataArray() {
+        musclesDataArray = [
+        createMuscleData(imageName: "Neck", title: "Neck"),
+        createMuscleData(imageName: "ChestMuscle", title: "Chest"),
+        createMuscleData(imageName: "BackMuscle", title: "Back"),
+        createMuscleData(imageName: "LegMuscle", title: "Legs"),
+        createMuscleData(imageName: "ShouldersMuscle", title: "Shoulders"),
+        createMuscleData(imageName: "HandsMuscles", title: "Biceps"),
+        createMuscleData(imageName: "TricepsMuscle", title: "Triceps"),
+        createMuscleData(imageName: "Forearm", title: "Forearm"),
+        createMuscleData(imageName: "PrelumMuscle", title: "Core"),
+        createMuscleData(imageName: "CalvesMuscle", title: "Calves"),
+        createMuscleData(imageName: "Cardio", title: "Cardio"),
+        createMuscleData(imageName: "Yoga", title: "Yoga"),
+        createMuscleData(imageName: "Crossfit", title: "Crossfit")
+        ]
+    }
+    
+    // Update collectionview when new exercise was added
+    private func updateCount() {
+        let realmExercise = RealmPresenter.realm.objects(RealmExercisePresenter.self)
+        Observable.changeset(from: realmExercise)
+            .subscribe(onNext: { [weak self] changeset in
+                guard let self = self else { return }
+                guard let inserted = changeset.1?.inserted, !inserted.isEmpty else { return }
+                
+                self.setupMuscleDataArray()
+                
+                print("Inserted: \(inserted.count)")
+            })
+            .disposed(by: disposeBag)
     }
 }
