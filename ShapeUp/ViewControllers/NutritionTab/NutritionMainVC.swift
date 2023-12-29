@@ -288,7 +288,6 @@ extension NutritionMainVC: UITableViewDelegate, UITableViewDataSource {
 extension NutritionMainVC: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         NutritionMainVC.choosenDate = date
-        viewWillAppear(true)
         nutritionTV.reloadData()
     }
     
@@ -401,13 +400,17 @@ extension NutritionMainVC {
 
     // Update tableview when new meal was added
     private func updateTableView() {
-        guard let pickedFoodRealm = pickedFoodRealm else { return }
+        let realmPickedFood = RealmPresenter.realm.objects(RealmPickedFoodPresenter.self)
         
-        Observable.changeset(from: pickedFoodRealm)
+        Observable.changeset(from: realmPickedFood)
             .subscribe(onNext: { [weak self] changeset in
                 guard let self = self else { return }
-                self.nutritionTV.reloadData()
+                guard let inserted = changeset.1?.inserted, !inserted.isEmpty else { return }
+                
                 self.nutritionCalendar.reloadData()
+                self.nutritionTV.reloadData()
+                
+                print("Inserted: \(inserted.count)")
             })
             .disposed(by: disposeBag)
     }

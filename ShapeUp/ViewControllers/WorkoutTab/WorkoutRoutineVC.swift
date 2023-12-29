@@ -170,7 +170,6 @@ extension WorkoutRoutineVC: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         WorkoutRoutineVC.choosenDate = date
         exerciseListTV.reloadData()
-        viewWillAppear(true)
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {
@@ -434,13 +433,16 @@ extension WorkoutRoutineVC {
     
     // Update tableview when new exercise was added
     private func updateTableView() {
-        guard let pickedExerciseDataArray = pickedExerciseDataArray else { return }
-        
-        Observable.changeset(from: pickedExerciseDataArray)
+        let realmExercise = RealmPresenter.realm.objects(RealmPickedExercisePresenter.self)
+        Observable.changeset(from: realmExercise)
             .subscribe(onNext: { [weak self] changeset in
                 guard let self = self else { return }
-                self.exerciseListTV.reloadData()
+                guard let inserted = changeset.1?.inserted, !inserted.isEmpty else { return }
+                
                 self.trainingsCalendar.reloadData()
+                self.exerciseListTV.reloadData()
+                
+                print("Inserted: \(inserted.count)")
             })
             .disposed(by: disposeBag)
     }
