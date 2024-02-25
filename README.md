@@ -1,5 +1,5 @@
 Name: ShapeUp!
-
+![](https://github.com/d-smlnk/ShapeUp/blob/main/ShapeUp_Preview.png)
   ● Description: 
   
 ShapeUp! is a fitness application designed to help users keep a training diary, monitor their diet and count calories. The application will help users to create a diet based on the user's physical data and goals.
